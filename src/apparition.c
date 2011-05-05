@@ -17,6 +17,24 @@
 #include <stdio.h>
 #include <stdlib.h>
 
+#include "backup.h"
+
 int main(void) {
+	int err = 0;
+
+	// Create an empty backup_t object
+	backup_t* backup = backup_create();
+	if(backup == NULL) {
+		printf("Unable to create backup object\n");
+		return -1;
+	}
+
+	err = backup_add_file(backup, "./whatever", "/tmp/whatever");
+	if(err < 0) {
+		printf("Unable to add file to backup\n");
+		backup_free(backup);
+	}
+
+	backup_free(backup);
 	return 0;
 }
