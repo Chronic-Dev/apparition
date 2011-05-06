@@ -13,8 +13,8 @@
 #include "device.h"
 
 typedef struct lockdown_t {
-	device_t device;
-	lockdownd_client_t client;
+	device_t* device;
+	lockdownd_client_t* client;
 } lockdown_t;
 
 lockdown_t* lockdown_open(device_t* device);

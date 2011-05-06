@@ -25,6 +25,7 @@
 #include "mbdx.h"
 #include "backup.h"
 #include "device.h"
+#include "lockdown.h"
 #include "apparition.h"
 
 int main(int argc, char* argv[]) {
@@ -55,10 +56,19 @@ int main(int argc, char* argv[]) {
 		return -1;
 	}
 
+	// Open connection with the lockdownd service daemon
+	lockdown_t* lockdown = lockdown_open(device);
+	if(lockdown == NULL) {
+		printf("Unable to connect to lockdownd\n");
+		backup_free(backup);
+		return -1;
+	}
+
 	// Open and initialize the afc connection
-	afc_t* afc = afc_open(device);
+	afc_t* afc = afc_open(lockdown);
 	if(afc == NULL) {
 		printf("Unable to open connection to afc service\n");
+		lockdown_free(lockdown);
 		device_free(device);
 		backup_free(backup);
 		return -1;
@@ -69,6 +79,7 @@ int main(int argc, char* argv[]) {
 	if(err < 0) {
 		printf("Unable to send file over apple file conduit\n");
 		afc_free(afc);
+		lockdown_free(lockdown);
 		device_free(device);
 		backup_free(backup);
 		return -1;
@@ -77,10 +88,11 @@ int main(int argc, char* argv[]) {
 	afc_close(afc);
 
 	// Open and initialize the mb2 connection
-	mb2_t* mb2 = mb2_open(device);
+	mb2_t* mb2 = mb2_open(lockdown);
 	if(mb2 == NULL) {
 		printf("Unable to open connection to mobilebackup2 service");
 		afc_free(afc);
+		lockdown_free(lockdown);
 		device_free(device);
 		backup_free(backup);
 	}
@@ -91,6 +103,7 @@ int main(int argc, char* argv[]) {
 		printf("Unable to restore our backup object\n");
 		mb2_free(mb2);
 		afc_free(afc);
+		lockdown_free(lockdown);
 		device_free(device);
 		backup_free(backup);
 	}
@@ -99,6 +112,7 @@ int main(int argc, char* argv[]) {
 	// If open, then close and free structures
 	if(mb2) mb2_free(mb2);
 	if(afc) afc_free(afc);
+	if(lockdown) lockdown_free(lockdown);
 	if(device) device_free(device);
 	if(backup) backup_free(backup);
 	return 0;

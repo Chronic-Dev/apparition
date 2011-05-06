@@ -14,7 +14,7 @@
 #include "device.h"
 #include "lockdown.h"
 
-afc_t* afc_open(device_t* device) {
+afc_t* afc_open(lockdown_t* lockdown) {
 	int err = 0;
 	afc_t* afc = NULL;
 
@@ -23,6 +23,8 @@ afc_t* afc_open(device_t* device) {
 		return NULL;
 	}
 	memset(afc, '\0', sizeof(afc_t));
+
+	afc->lockdown = lockdown;
 
 	return afc;
 }

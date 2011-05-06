@@ -17,7 +17,7 @@
 
 #include "backup.h"
 
-backup_t* backup_create(lockdown_t* lockdown) {
+backup_t* backup_create() {
 	int err = 0;
 	backup_t* backup = NULL;
 

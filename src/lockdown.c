@@ -22,7 +22,7 @@ lockdown_t* lockdown_open(device_t* device) {
 	if(lockdown == NULL) {
 		return NULL;
 	}
-	memset(lockdown, '\0', sizeof(device_t));
+	memset(lockdown, '\0', sizeof(lockdown_t));
 
 	lockdown->device = device;
 

@@ -10,10 +10,10 @@
 #include <string.h>
 
 #include "mb2.h"
-#include "device.h"
 #include "backup.h"
+#include "lockdown.h"
 
-mb2_t* mb2_open(device_t* device) {
+mb2_t* mb2_open(lockdown_t* lockdown) {
 	int err = 0;
 	mb2_t* mb2 = NULL;
 	
@@ -37,5 +37,7 @@ int mb2_close(mb2_t* mb2) {
 }
 
 void mb2_free(mb2_t* mb2) {
-	//TODO: Implement Me
+	if(mb2) {
+		free(mb2);
+	}
 }

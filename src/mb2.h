@@ -13,12 +13,14 @@
 
 #include "device.h"
 #include "backup.h"
+#include "lockdown.h"
 
 typedef struct mb2_t {
+	lockdown_t* lockdown;
 	mobilebackup2_client_t client;
 } mb2_t;
 
-mb2_t* mb2_open(device_t* device);
+mb2_t* mb2_open(lockdown_t* lockdown);
 int mb2_restore(mb2_t* mb2, backup_t* backup);
 int mb2_close(mb2_t* mb2);
 void mb2_free(mb2_t* mb2);
