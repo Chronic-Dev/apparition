@@ -14,3 +14,10 @@ compile
 config.h.in
 stamp-h1
 config.h
+*.o*
+.deps
+.libs
+build/
+*.perspectivev3
+*.pbxuser
+
