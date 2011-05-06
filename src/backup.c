@@ -15,6 +15,8 @@
 #include <stdlib.h>
 #include <string.h>
 
+#include "mbdb.h"
+#include "mbdx.h"
 #include "backup.h"
 
 backup_t* backup_create() {
@@ -27,6 +29,9 @@ backup_t* backup_create() {
 	}
 	memset(backup, '\0', sizeof(backup_t));
 
+	backup->mbdb = mbdb_create();
+	backup->mbdx = mbdx_create();
+
 	return backup;
 }
 
@@ -37,6 +42,12 @@ int backup_add_file(backup_t* backup, const char* local, const char* remote){
 
 void backup_free(backup_t* backup) {
 	if(backup) {
+		if(backup->mbdb) {
+			mbdb_free(backup->mbdb);
+		}
+		if(backup->mbdx) {
+			mbdx_free(backup->mbdx);
+		}
 		free(backup);
 	}
 }

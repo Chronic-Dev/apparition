@@ -15,7 +15,10 @@ typedef struct mbdx_record_t {
 typedef struct mbdx_t {
 	mbdx_header_t* header;
 	mbdx_record_t** records;
-} mdbx_t;
+} mbdx_t;
+
+mbdx_t* mbdx_create();
+void mbdx_free(mbdx_t* mbdx);
 
 #endif
 

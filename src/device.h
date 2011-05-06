@@ -16,7 +16,7 @@ typedef struct device_t {
 	unsigned char* ecid;
 } device_t;
 
-device_t* device_open(char* uuid);
+device_t* device_open(const char* uuid);
 void device_free(device_t* device);
 
 #endif /* DEVICE_H_ */

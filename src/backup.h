@@ -8,7 +8,12 @@
 #ifndef BACKUP_H_
 #define BACKUP_H_
 
+#include "mbdb.h"
+#include "mbdx.h"
+
 typedef struct backup_t {
+	mbdx_t* mbdx;
+	mbdb_t* mbdb;
 } backup_t;
 
 backup_t* backup_create();

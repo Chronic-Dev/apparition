@@ -23,6 +23,8 @@ mb2_t* mb2_open(lockdown_t* lockdown) {
 	}
 	memset(mb2, '\0', sizeof(mb2_t));
 	
+	mb2->lockdown = lockdown;
+
 	return mb2;
 }
 

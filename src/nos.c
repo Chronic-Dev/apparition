@@ -14,7 +14,18 @@
 #include "lockdown.h"
 
 nos_t* nos_open(lockdown_t* lockdown) {
-	return NULL;
+		int err = 0;
+		nos_t* nos = NULL;
+
+		nos = (nos_t*) malloc(sizeof(nos_t));
+		if(nos == NULL) {
+			return NULL;
+		}
+		memset(nos, '\0', sizeof(nos_t));
+
+		nos->lockdown = lockdown;
+
+		return nos;
 }
 
 int nos_register(nos_t* nos, char* callback, void* whatever) {

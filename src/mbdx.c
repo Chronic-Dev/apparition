@@ -10,3 +10,12 @@
 #include <string.h>
 
 #include "mbdx.h"
+
+mbdx_t* mbdx_create() {
+	//TODO: Implement Me
+	return NULL;
+}
+
+void mbdx_free(mbdx_t* mbdx) {
+	//TODO: Implement Me
+}

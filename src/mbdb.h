@@ -38,5 +38,8 @@ typedef struct mbdb_t {
     mbdb_property_t** properties;
 } mbdb_t;
 
+mbdb_t* mbdb_create();
+void mbdb_free(mbdb_t* mbdb);
+
 #endif
 
