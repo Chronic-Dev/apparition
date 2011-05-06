@@ -6,13 +6,23 @@
  */
 
 #include <stdio.h>
+#include <stdlib.h>
+#include <libimobiledevice/afc.h>
 
 #include "afc.h"
 #include "device.h"
+#include "lockdown.h"
 
 afc_t* afc_open(device_t* device) {
-	//TODO: Implement Me
-	return NULL;
+	int err = 0;
+	afc_t* afc = NULL;
+
+	afc = (afc_t*) malloc(sizeof(afc_t));
+	if(afc == NULL) {
+		return NULL;
+	}
+
+	return afc;
 }
 
 
@@ -28,5 +38,7 @@ int afc_close(afc_t* afc) {
 }
 
 void afc_free(afc_t* afc) {
-	//TODO: Implement Me
+	if(afc) {
+		free(afc);
+	}
 }

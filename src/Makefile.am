@@ -10,6 +10,6 @@ AM_LDFLAGS =                   \
 
 bin_PROGRAMS = apparition
 
-apparition_SOURCES = apparition.c device.c backup.c afc.c mb2.c nos.c mbdb.c mbdx.c
+apparition_SOURCES = apparition.c device.c backup.c lockdown.c afc.c mb2.c nos.c mbdb.c mbdx.c
 apparition_CFLAGS = $(AM_CFLAGS)
 apparition_LDFLAGS = $(AM_LDFLAGS)
