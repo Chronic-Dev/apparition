@@ -8,6 +8,8 @@
 #ifndef LOCKDOWN_H_
 #define LOCKDOWN_H_
 
+#include <libimobiledevice/lockdown.h>
+
 typedef struct lockdown_t {
 	idevice_t* device;
 	lockdownd_client_t client;
