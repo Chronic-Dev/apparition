@@ -10,12 +10,17 @@
 
 #include <libimobiledevice/lockdown.h>
 
+#include "device.h"
+
 typedef struct lockdown_t {
-	idevice_t* device;
+	device_t device;
 	lockdownd_client_t client;
 } lockdown_t;
 
-int lockdown_start_service(const char* service, int* port);
-int lockdown_stop_service(const char* service);
+lockdown_t* lockdown_open(device_t* device);
+int lockdown_start_service(lockdown_t* lockdown, const char* service, int* port);
+int lockdown_stop_service(lockdown_t* lockdown, const char* service);
+int lockdown_close(lockdown_t* lockdown);
+void lockdown_free(lockdown_t* lockdown);
 
 #endif /* LOCKDOWN_H_ */

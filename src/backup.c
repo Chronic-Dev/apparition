@@ -12,19 +12,31 @@
  */
 
 #include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
 
 #include "backup.h"
 
-backup_t* backup_create() {
-	//TODO: Implement Me
-	return NULL;
-}
+backup_t* backup_create(lockdown_t* lockdown) {
+	int err = 0;
+	backup_t* backup = NULL;
 
-void backup_free(backup_t* backup) {
-	//TODO: Implement Me
+	backup = (backup_t*) malloc(sizeof(backup_t));
+	if(backup == NULL) {
+		return NULL;
+	}
+	memset(backup, '\0', sizeof(backup_t));
+
+	return backup;
 }
 
 int backup_add_file(backup_t* backup, const char* local, const char* remote){
 	//TODO: Implement Me
 	return -1;
+}
+
+void backup_free(backup_t* backup) {
+	if(backup) {
+		free(backup);
+	}
 }
