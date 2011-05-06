@@ -17,7 +17,7 @@
 
 #include "device.h"
 
-device_t* device_create(char* uuid) {
+device_t* device_create(const char* uuid) {
 	int err = 0;
 	device_t* device = NULL;
 	
@@ -30,6 +30,8 @@ device_t* device_create(char* uuid) {
 	return device;
 }
 
-void device_free() {
-	//TODO: Implement Me
+void device_free(device_t* device) {
+	if(device) {
+		free(device);
+	}
 }
