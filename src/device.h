@@ -12,7 +12,7 @@ typedef struct device_t {
 
 } device_t;
 
-device_t* device_open(const char* uuid);
+device_t* device_open(char* uuid);
 void device_free();
 
 #endif /* DEVICE_H_ */

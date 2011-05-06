@@ -17,7 +17,7 @@
 
 #include "device.h"
 
-device_t* device_create(const char* uuid) {
+device_t* device_create(char* uuid) {
 	int err = 0;
 	device_t* device = NULL;
 	

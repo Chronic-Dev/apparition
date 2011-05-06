@@ -11,3 +11,6 @@ depcomp
 install-sh
 missing
 compile
+config.h.in
+stamp-h1
+config.h
