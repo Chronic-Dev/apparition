@@ -17,12 +17,19 @@
 #include <stdio.h>
 #include <stdlib.h>
 
+#include "afc.h"
+#include "mb2.h"
+#include "nos.h"
+#include "mbdb.h"
+#include "mbdx.h"
 #include "backup.h"
 #include "device.h"
+#include "apparition.h"
 
-int main(void) {
+int main(int argc, char* argv[]) {
 	int err = 0;
 
+	// First step is to create our fake backup
 	// Create an empty backup_t object
 	backup_t* backup = backup_create();
 	if(backup == NULL) {
@@ -37,9 +44,10 @@ int main(void) {
 		backup_free(backup);
 	}
 
+	// Now we need to
 	// Pass a UUID here if you want to target a single device,
 	//  or NULL to select the first one it finds
-	device_t* device = device_open(NULL);
+	device_t* device = device_create(NULL);
 	if(device == NULL) {
 		printf("Unable to find a device to use\n");
 		backup_free(backup);

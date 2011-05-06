@@ -11,3 +11,15 @@
  *  the afc, mb2, and nos services and should handle messages.
  */
 
+#include <stdio.h>
+
+#include "device.h"
+
+device_t* device_create(const char* uuid) {
+	//TODO: Implement Me
+	return NULL;
+}
+
+void device_free() {
+	//TODO: Implement Me
+}

@@ -1,21 +1,21 @@
 #ifndef MBDX_H
 #define MBDX_H
 
-#include <unistd.h>
+typedef struct mbdx_header_t {
+    unsigned char magic[4];		  // "mbdx\2\0"
+    unsigned int count;		  // count
+} mbdx_header_t;
 
-struct mbdx_record {
-    uint8_t key[20];		  // key / filename
-    uint32_t offset;		  // offset of the mbdb file (+ 7 bytes)
-    uint16_t mode;		  // filemode: Axxx = symlink, 4xxx = dir, 8xxx = file
-    
-    struct mbdx_record *next;
-};
+typedef struct mbdx_record_t {
+    unsigned char key[20];		  // key / filename
+    unsigned int offset;		  // offset of the mbdb file (+ 7 bytes)
+    unsigned short mode;		  // filemode: Axxx = symlink, 4xxx = dir, 8xxx = file
+} mbdx_record_t;
 
-struct mbdx_file {
-    uint8_t magic[4];		  // "mbdx\2\0"
-    uint32_t count;		  // count
-    struct mbdx_record *record;    
-};
+typedef struct mbdx_t {
+	mbdx_header_t* header;
+	mbdx_record_t** records;
+} mdbx_t;
 
 #endif
 
