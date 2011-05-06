@@ -4,6 +4,8 @@
 #include <unistd.h>
 #include <time.h>
 
+#define MBDB_MAGIC "\x6d\x62\x64\x62\x05\x00"
+
 typedef struct mbdb_property_t {
     char* name;
     char* value;
