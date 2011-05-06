@@ -1,6 +1,8 @@
 #ifndef MBDX_H
 #define MBDX_H
 
+#define MBDX_MAGIC "\x6d\x62\x64\x78\x02\x00"
+
 typedef struct mbdx_header_t {
     unsigned char magic[4];		  // "mbdx\2\0"
     unsigned int count;		  // count
