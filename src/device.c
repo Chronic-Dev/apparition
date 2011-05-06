@@ -14,19 +14,22 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-
-#include "device.h"
-#include "nos.h"
+#include <libimobiledevice/mobilebackup2.h>
 #include <libimobiledevice/libimobiledevice.h>
 #include <libimobiledevice/lockdown.h>
+
+#include "lockdown.h"
+#include "device.h"
+#include "nos.h"
 
 static mobilebackup2_client_t mobilebackup2 = NULL;
 static lockdownd_client_t client = NULL;
 static idevice_t phone = NULL;
-static nos_t nos = NULL;
+static nos_t* nos = NULL;
 
 device_t* device_create(const char* uuid) {
 	int err = 0;
+	int ret = 0;
 	device_t* device = NULL;
 	int i;
 	
@@ -58,7 +61,7 @@ device_t* device_create(const char* uuid) {
 		return NULL;
 	}
 	
-	nos = nos_open(client);
+	nos = nos_open((lockdown_t*)client); //FIXME
 	
 	if (nos == NULL)
 	{
@@ -67,7 +70,7 @@ device_t* device_create(const char* uuid) {
 		return NULL;
 	}
 	int nosStatus = 0;
-	nosStatus = nos_register(nos, notify_cb, phone);
+	//nosStatus = nos_register(nos, notify_cb, phone); //FIXME
 	
 	if (nosStatus != 0)
 	{
@@ -640,5 +643,5 @@ idevice_free(phone);
 return 0;
 }
  
- 
+ */
 
