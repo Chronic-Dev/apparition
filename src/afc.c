@@ -21,6 +21,7 @@ afc_t* afc_open(device_t* device) {
 	if(afc == NULL) {
 		return NULL;
 	}
+	memset(afc, '\0', sizeof(afc_t));
 
 	return afc;
 }

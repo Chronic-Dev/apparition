@@ -9,10 +9,11 @@
 #ifndef AFC_H_
 #define AFC_H_
 
+#include <libimobiledevice/afc.h>
 #include "device.h"
 
 typedef struct afc_t {
-
+	afc_client_t client;
 } afc_t;
 
 afc_t* afc_open(device_t* device);

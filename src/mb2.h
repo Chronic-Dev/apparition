@@ -9,11 +9,13 @@
 #ifndef MB2_H_
 #define MB2_H_
 
+#include <libimobiledevice/mobilebackup2.h>
+
 #include "device.h"
 #include "backup.h"
 
 typedef struct mb2_t {
-
+	mobilebackup2_client_t client;
 } mb2_t;
 
 mb2_t* mb2_open(device_t* device);
