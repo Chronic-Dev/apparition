@@ -12,8 +12,16 @@
 #include "backup.h"
 
 mb2_t* mb2_open(device_t* device) {
-	//TODO: Implement Me
-	return NULL;
+	int err = 0;
+	mb2_t* mb2 = NULL;
+	
+	mb2 = (mb2_t*) malloc(sizeof(mb2_t));
+	if(mb2 == NULL) {
+		return NULL;
+	}
+	memset(mb2, '\0', sizeof(mb2_t));
+	
+	return mb2;
 }
 
 int mb2_restore(mb2_t* mb2, backup_t* backup) {

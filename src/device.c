@@ -16,8 +16,16 @@
 #include "device.h"
 
 device_t* device_create(const char* uuid) {
-	//TODO: Implement Me
-	return NULL;
+	int err = 0;
+	device_t* device = NULL;
+	
+	device = (device_t*) malloc(sizeof(device_t));
+	if(device == NULL) {
+		return NULL;
+	}
+	memset(device, '\0', sizeof(device_t));
+	
+	return device;
 }
 
 void device_free() {
