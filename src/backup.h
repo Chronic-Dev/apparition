@@ -17,7 +17,8 @@ typedef struct backup_t {
 } backup_t;
 
 backup_t* backup_create();
-void backup_free(backup_t* backup);
+backup_t* backup_open(const char* directory);
 int backup_add_file(backup_t* backup, const char* local, const char* remote);
+void backup_free(backup_t* backup);
 
 #endif /* BACKUP_H_ */

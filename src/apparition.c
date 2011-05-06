@@ -60,6 +60,27 @@ int main(int argc, char* argv[]) {
 	lockdown_t* lockdown = lockdown_open(device);
 	if(lockdown == NULL) {
 		printf("Unable to connect to lockdownd\n");
+		lockdown_free(lockdown);
+		device_free(device);
+		backup_free(backup);
+		return -1;
+	}
+
+	nos_t* nos = nos_open(lockdown);
+	if (nos == NULL) {
+		printf("Unable to open notification center!!");
+		lockdown_free(lockdown);
+		device_free(device);
+		backup_free(backup);
+		return NULL;
+	}
+
+	//int err = nos_register(nos, notify_cb, phone);
+	if(err < 0) {
+		printf("Unable to register for notification callback!!");
+		nos_free(nos);
+		lockdown_free(lockdown);
+		device_free(device);
 		backup_free(backup);
 		return -1;
 	}

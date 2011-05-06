@@ -14,7 +14,7 @@
 #include "lockdown.h"
 
 
-lockdown_t* lockdown_open(device_t* device) {
+lockdown_t* lockdown_open(struct device_t* device) {
 	int err = 0;
 	lockdown_t* lockdown = NULL;
 
@@ -24,7 +24,13 @@ lockdown_t* lockdown_open(device_t* device) {
 	}
 	memset(lockdown, '\0', sizeof(lockdown_t));
 
-	lockdown->device = device;
+	lockdownd_client_t lockdownd = NULL;
+	if (lockdownd_client_new_with_handshake(device->client, &lockdownd, "apparition") != LOCKDOWN_E_SUCCESS) {
+		device_free(device);
+		return NULL;
+	}
+
+	lockdown->client = lockdownd;
 
 	return lockdown;
 }
@@ -47,8 +53,9 @@ int lockdown_close(lockdown_t* lockdown) {
 
 void lockdown_free(lockdown_t* lockdown) {
 	if(lockdown) {
-		if(lockdown->device) {
-			device_free(lockdown->device);
+		if(lockdown->client) {
+			lockdownd_goodbye(lockdown->client);
+			lockdown->client = NULL;
 		}
 		free(lockdown);
 	}

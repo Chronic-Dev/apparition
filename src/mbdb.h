@@ -41,6 +41,8 @@ typedef struct mbdb_t {
 } mbdb_t;
 
 mbdb_t* mbdb_create();
+mbdb_t* mbdb_open(unsigned char* file);
+mbdb_t* mbdb_parse(unsigned char* data, unsigned int size);
 void mbdb_free(mbdb_t* mbdb);
 
 #endif

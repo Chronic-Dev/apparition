@@ -10,18 +10,11 @@
 #include <string.h>
 
 #include "mbdx.h"
-
-static unsigned int flip32(unsigned int value) {
-	unsigned int ret = 0;
-	ret |= (value & 0xFF000000) >> (8*2);
-	ret |= (value & 0x00FF0000) >> (8*1);
-	ret |= (value & 0x0000FF00) << (8*1);
-	ret |= (value & 0x000000FF) << (8*2);
-	return ret;
-}
+#include "byteorder.h"
 
 mbdx_t* mbdx_create() {
 	int err = 0;
+	unsigned int offset = 0;
 	unsigned int db_size = 0;
 	unsigned char* db_data = NULL;
 
@@ -36,47 +29,77 @@ mbdx_t* mbdx_create() {
 	}
 	memset(mbdx, '\0', sizeof(mbdx_t));
 
-	err = file_read("Manifest.mbdx", &db_data, &db_size);
-	if(err < 0) {
-		fprintf(stderr, "Unable to read mbdx file\n");
-		free(mbdx);
-		return NULL;
-	}
 
-	header = (mbdx_header_t*) db_data;
-	if(memcmp(header->magic, MBDX_MAGIC, 6) != 0) {
-		free(db_data);
-		free(mbdx);
+
+
+	return mbdx;
+}
+
+mbdx_t* mbdx_parse(unsigned char* data, unsigned int size)  {
+	int err = 0;
+	unsigned int offset = 0;
+
+	mbdx_t* mbdx = NULL;
+	mbdx_header_t* header = NULL;
+	mbdx_record_t* record = NULL;
+
+	header = (mbdx_header_t*) &data[offset];
+	if(strncmp(header->magic, MBDX_MAGIC, 6) != 0) {
 		return NULL;
 	}
 
 	mbdx->header = malloc(sizeof(mbdx_header_t));
 	if(mbdx->header == NULL) {
-		free(db_data);
-		free(mbdx);
 		return NULL;
 	}
 	memset(mbdx->header, '\0', sizeof(mbdx_header_t));
-	memcpy(mbdx->header, db_data, sizeof(mbdx_header_t));
+	memcpy(mbdx->header, &data[offset], sizeof(mbdx_header_t));
 
-	if(header->count != 0) {
-		mbdx->records = (mbdx_record_t**) malloc(sizeof(mbdx_record_t*) * header->count);
-	}
+	offset += sizeof(mbdx_header_t);
 
+	fprintf(stderr, "Found %u records\n", flip32(header->count));
+	//mbdx->records = (mbdx_record_t**) malloc(sizeof(mbdx_record_t*) * (flip32(header->count)+1));
+
+/*
 	int i = 0;
 	for(i = 0; i < header->count; i++) {
-		record =  (mbdx_record_t*) &db_data[sizeof(mbdx_record_t) * i];
+		record =  (mbdx_record_t*) &db_data[offset];
 		if(record->offset != 0) {
+
+			printf("Number: %d\n", i);
 			mbdx->records[i] = (mbdx_record_t*) malloc(sizeof(mbdx_record_t));
 			if(mbdx->records[i] == NULL) {
 				break;
 			}
 			memset(mbdx->records[i], '\0', sizeof(mbdx_record_t));
-			memcpy(mbdx->records[i], &db_data[sizeof(mbdx_record_t) * i], sizeof(mbdx_record_t));
-			mbdx_debug_header(mbdx->header);
+			memcpy(mbdx->records[i], &db_data[offset], sizeof(mbdx_record_t));
 			mbdx_debug_record(mbdx->records[i]);
+			mbdx_debug_header(mbdx->header);
+			offset += sizeof(mbdx_record_t);
 		}
 	}
+*/
+}
+
+mbdx_t* mbdx_open(const char* file) {
+	int err = 0;
+	unsigned int size = 0;
+	unsigned char* data = NULL;
+
+	mbdx_t* mbdx = NULL;
+
+	err = file_read(file, &data, &size);
+	if(err < 0) {
+		fprintf(stderr, "Unable to open mbdx file\n");
+		return NULL;
+	}
+
+	mbdx = mbdx_parse(data, size);
+	if(mbdx == NULL) {
+		fprintf(stderr, "Unable to parse mbdx file\n");
+	}
+	free(data);
+	return mbdx;
 }
 
 void mbdx_free(mbdx_t* mbdx) {
@@ -93,8 +116,8 @@ typedef struct mbdx_header_t {
  */
 void mbdx_debug_header(mbdx_header_t* header) {
 	fprintf(stderr, "mbdx header:\n");
-	fprintf(stderr, "\tmagic: %02x %02x %02x %02x %02x %02x\n", header->magic[0], header->magic[1], header->magic[2], header->magic[3], header->magic[4], header->magic[5]);
-	fprintf(stderr, "\tcount: %u\n",  flip32(header->count));
+	fprintf(stderr, "\tmagic: 0x%x\n", header->magic);
+	fprintf(stderr, "\tcount: %d\n",  flip32(header->count));
 	fprintf(stderr, "\n");
 }
 

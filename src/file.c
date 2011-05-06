@@ -6,6 +6,7 @@
  */
 
 #include <stdio.h>
+#include <stdlib.h>
 
 #include "file.h"
 
@@ -24,8 +25,10 @@ int file_read(const char* file, unsigned char** buf, unsigned int* length) {
 
 	int bytes = fread(data, 1, size, fd);
 	if(bytes != size) {
+		fclose(fd);
 		return -1;
 	}
+	fclose(fd);
 
 	*buf = data;
 	return bytes;

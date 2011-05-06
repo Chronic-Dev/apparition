@@ -17,8 +17,6 @@ mbdb_t* mbdb_create() {
 	unsigned char* db_data = NULL;
 
 	mbdb_t* mbdb = NULL;
-	mbdb_header_t* header = NULL;
-	mbdb_record_t* record = NULL;
 
 	mbdb = (mbdb_t*) malloc(sizeof(mbdb_t));
 	if(mbdb == NULL) {
@@ -26,21 +24,50 @@ mbdb_t* mbdb_create() {
 	}
 	memset(mbdb, '\0', sizeof(mbdb_t));
 
-	err = file_read("Manifest.mbdb", &db_data, &db_size);
+	return mbdb;
+}
+
+mbdb_t* mbdb_parse(unsigned char* data, unsigned int size) { NULL;
+	mbdb_t* mbdb = NULL;
+	mbdb_header_t* header = NULL;
+	mbdb_record_t* record = NULL;
+
+	mbdb = mbdb_create();
+	if(mbdb == NULL) {
+		fprintf(stderr, "Unable to create mbdb\n");
+		return NULL;
+	}
+
+	header = (mbdb_header_t*) data;
+	if(strncmp(header->magic, MBDB_MAGIC, 6) != 0) {
+		fprintf(stderr, "Unable to identify this filetype\n");
+		return NULL;
+	}
+
+	mbdb->header = header;
+	return mbdb;
+}
+
+mbdb_t* mbdb_open(unsigned char* file) {
+	int err = 0;
+	unsigned int size = 0;
+	unsigned char* data = NULL;
+
+	mbdb_t* mbdb = NULL;
+
+	err = file_read(file, &data, &size);
 	if(err < 0) {
 		fprintf(stderr, "Unable to read mbdb file\n");
-		free(mbdb);
 		return NULL;
 	}
 
-	header = (mbdb_header_t*) db_data;
-	if(strncmp(header->magic, MBDB_MAGIC, 6) != 0) {
-		free(db_data);
-		free(mbdb);
+	mbdb = mbdb_parse(data, size);
+	if(mbdb == NULL) {
+		fprintf(stderr, "Unable to parse mbdb file\n");
 		return NULL;
 	}
 
-
+	free(data);
 	return mbdb;
 }
 

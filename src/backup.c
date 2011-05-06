@@ -35,6 +35,17 @@ backup_t* backup_create() {
 	return backup;
 }
 
+backup_t* backup_open(const char* directory) {
+	int err = 0;
+	backup_t* backup = backup_create();
+	if(backup == NULL) {
+		fprintf(stderr, "Unable to create backup object\n");
+		return NULL;
+	}
+
+	return backup;
+}
+
 int backup_add_file(backup_t* backup, const char* local, const char* remote){
 	//TODO: Implement Me
 	return -1;
