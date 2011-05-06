@@ -39,11 +39,12 @@ int main(int argc, char* argv[]) {
 		return -1;
 	}
 
+	
 	// Append a file to the current backup object
 	err = backup_add_file(backup, "./whatever", "/tmp/whatever");
 	if(err < 0) {
 		printf("Unable to add file to backup\n");
-		backup_free(backup);
+			backup_free(backup);
 	}
 
 	// Now we need to
@@ -55,7 +56,7 @@ int main(int argc, char* argv[]) {
 		backup_free(backup);
 		return -1;
 	}
-
+	printf("before lockdown\n");
 	// Open connection with the lockdownd service daemon
 	lockdown_t* lockdown = lockdown_open(device);
 	if(lockdown == NULL) {

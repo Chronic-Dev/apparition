@@ -7,20 +7,6 @@
 	objects = {
 
 /* Begin PBXFileReference section */
-		32446FA413749D6000FB6AB0 /* aclocal.m4 */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = aclocal.m4; sourceTree = "<group>"; };
-		32446FA513749D6000FB6AB0 /* AUTHORS */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = AUTHORS; sourceTree = "<group>"; };
-		32446FA613749D6000FB6AB0 /* compile */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.script.sh; path = compile; sourceTree = "<group>"; };
-		32446FA713749D6000FB6AB0 /* config.guess */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.script.sh; path = config.guess; sourceTree = "<group>"; };
-		32446FA813749D6000FB6AB0 /* config.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = config.h; sourceTree = "<group>"; };
-		32446FA913749D6000FB6AB0 /* config.h.in */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = config.h.in; sourceTree = "<group>"; };
-		32446FAA13749D6000FB6AB0 /* config.log */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = config.log; sourceTree = "<group>"; };
-		32446FAB13749D6000FB6AB0 /* config.status */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.script.sh; path = config.status; sourceTree = "<group>"; };
-		32446FAC13749D6000FB6AB0 /* config.sub */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.script.sh; path = config.sub; sourceTree = "<group>"; };
-		32446FAD13749D6000FB6AB0 /* configure */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.script.sh; path = configure; sourceTree = "<group>"; };
-		32446FAE13749D6000FB6AB0 /* configure.ac */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = configure.ac; sourceTree = "<group>"; };
-		32446FAF13749D6000FB6AB0 /* COPYING */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = COPYING; sourceTree = "<group>"; };
-		32446FB013749D6000FB6AB0 /* COPYING.LESSER */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = COPYING.LESSER; sourceTree = "<group>"; };
-		32446FB113749D6000FB6AB0 /* depcomp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.script.sh; path = depcomp; sourceTree = "<group>"; };
 		32446FB413749D6000FB6AB0 /* afccheck-afccheck.Po */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = "afccheck-afccheck.Po"; sourceTree = "<group>"; };
 		32446FB513749D6000FB6AB0 /* filerelaytest-filerelaytest.Po */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = "filerelaytest-filerelaytest.Po"; sourceTree = "<group>"; };
 		32446FB613749D6000FB6AB0 /* housearresttest-housearresttest.Po */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = "housearresttest-housearresttest.Po"; sourceTree = "<group>"; };
@@ -116,8 +102,6 @@
 		3244701213749D6000FB6AB0 /* Makefile */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.make; path = Makefile; sourceTree = "<group>"; };
 		3244701313749D6000FB6AB0 /* Makefile.am */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = Makefile.am; sourceTree = "<group>"; };
 		3244701413749D6000FB6AB0 /* Makefile.in */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = Makefile.in; sourceTree = "<group>"; };
-		3244701513749D6000FB6AB0 /* doxygen.cfg */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = doxygen.cfg; sourceTree = "<group>"; };
-		3244701613749D6000FB6AB0 /* doxygen.cfg.in */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = doxygen.cfg.in; sourceTree = "<group>"; };
 		3244701913749D6000FB6AB0 /* afc.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = afc.h; sourceTree = "<group>"; };
 		3244701A13749D6000FB6AB0 /* file_relay.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = file_relay.h; sourceTree = "<group>"; };
 		3244701B13749D6000FB6AB0 /* house_arrest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = house_arrest.h; sourceTree = "<group>"; };
@@ -135,27 +119,6 @@
 		3244702713749D6000FB6AB0 /* Makefile */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.make; path = Makefile; sourceTree = "<group>"; };
 		3244702813749D6000FB6AB0 /* Makefile.am */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = Makefile.am; sourceTree = "<group>"; };
 		3244702913749D6000FB6AB0 /* Makefile.in */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = Makefile.in; sourceTree = "<group>"; };
-		3244702A13749D6000FB6AB0 /* install-sh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.script.sh; path = "install-sh"; sourceTree = "<group>"; };
-		3244702B13749D6000FB6AB0 /* libimobiledevice-1.0.pc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = "libimobiledevice-1.0.pc"; sourceTree = "<group>"; };
-		3244702C13749D6000FB6AB0 /* libimobiledevice-1.0.pc.in */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = "libimobiledevice-1.0.pc.in"; sourceTree = "<group>"; };
-		3244702D13749D6000FB6AB0 /* libtool */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.script.sh; path = libtool; sourceTree = "<group>"; };
-		3244702E13749D6000FB6AB0 /* ltmain.sh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.script.sh; path = ltmain.sh; sourceTree = "<group>"; };
-		3244703013749D6000FB6AB0 /* ac_pkg_swig.m4 */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = ac_pkg_swig.m4; sourceTree = "<group>"; };
-		3244703113749D6000FB6AB0 /* ac_python_devel.m4 */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = ac_python_devel.m4; sourceTree = "<group>"; };
-		3244703213749D6000FB6AB0 /* as-compiler-flag.m4 */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = "as-compiler-flag.m4"; sourceTree = "<group>"; };
-		3244703313749D6000FB6AB0 /* ax_swig_enable_cxx.m4 */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = ax_swig_enable_cxx.m4; sourceTree = "<group>"; };
-		3244703413749D6000FB6AB0 /* libtool.m4 */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = libtool.m4; sourceTree = "<group>"; };
-		3244703513749D6000FB6AB0 /* ltoptions.m4 */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = ltoptions.m4; sourceTree = "<group>"; };
-		3244703613749D6000FB6AB0 /* ltsugar.m4 */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = ltsugar.m4; sourceTree = "<group>"; };
-		3244703713749D6000FB6AB0 /* ltversion.m4 */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = ltversion.m4; sourceTree = "<group>"; };
-		3244703813749D6000FB6AB0 /* lt~obsolete.m4 */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = "lt~obsolete.m4"; sourceTree = "<group>"; };
-		3244703913749D6000FB6AB0 /* swig_python.m4 */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = swig_python.m4; sourceTree = "<group>"; };
-		3244703A13749D6000FB6AB0 /* Makefile */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.make; path = Makefile; sourceTree = "<group>"; };
-		3244703B13749D6000FB6AB0 /* Makefile.am */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = Makefile.am; sourceTree = "<group>"; };
-		3244703C13749D6000FB6AB0 /* Makefile.in */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = Makefile.in; sourceTree = "<group>"; };
-		3244703D13749D6000FB6AB0 /* missing */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.script.sh; path = missing; sourceTree = "<group>"; };
-		3244703E13749D6000FB6AB0 /* NEWS */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = NEWS; sourceTree = "<group>"; };
-		3244703F13749D6000FB6AB0 /* py-compile */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.script.sh; path = "py-compile"; sourceTree = "<group>"; };
 		3244704013749D6000FB6AB0 /* README */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = README; sourceTree = "<group>"; };
 		3244704313749D6000FB6AB0 /* afc.Plo */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = afc.Plo; sourceTree = "<group>"; };
 		3244704413749D6000FB6AB0 /* debug.Plo */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = debug.Plo; sourceTree = "<group>"; };
@@ -214,13 +177,6 @@
 		3244707913749D6000FB6AB0 /* screenshotr.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = screenshotr.h; sourceTree = "<group>"; };
 		3244707A13749D6000FB6AB0 /* userpref.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = userpref.c; sourceTree = "<group>"; };
 		3244707B13749D6000FB6AB0 /* userpref.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = userpref.h; sourceTree = "<group>"; };
-		3244707C13749D6000FB6AB0 /* stamp-h1 */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = "stamp-h1"; sourceTree = "<group>"; };
-		3244707F13749D6000FB6AB0 /* imobiledevice_wrap.Plo */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = imobiledevice_wrap.Plo; sourceTree = "<group>"; };
-		3244708013749D6000FB6AB0 /* __init__.py */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.script.python; path = __init__.py; sourceTree = "<group>"; };
-		3244708113749D6000FB6AB0 /* imobiledevice.i */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c.preprocessed; path = imobiledevice.i; sourceTree = "<group>"; };
-		3244708213749D6000FB6AB0 /* Makefile */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.make; path = Makefile; sourceTree = "<group>"; };
-		3244708313749D6000FB6AB0 /* Makefile.am */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = Makefile.am; sourceTree = "<group>"; };
-		3244708413749D6000FB6AB0 /* Makefile.in */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = Makefile.in; sourceTree = "<group>"; };
 		3244708713749D6000FB6AB0 /* idevice_id-idevice_id.Po */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = "idevice_id-idevice_id.Po"; sourceTree = "<group>"; };
 		3244708813749D6000FB6AB0 /* idevicebackup-idevicebackup.Po */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = "idevicebackup-idevicebackup.Po"; sourceTree = "<group>"; };
 		3244708913749D6000FB6AB0 /* idevicebackup2-idevicebackup2.Po */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = "idevicebackup2-idevicebackup2.Po"; sourceTree = "<group>"; };
@@ -298,41 +254,11 @@
 		32446FA313749D6000FB6AB0 /* libimobiledevice-1.1.1 */ = {
 			isa = PBXGroup;
 			children = (
-				32446FA413749D6000FB6AB0 /* aclocal.m4 */,
-				32446FA513749D6000FB6AB0 /* AUTHORS */,
-				32446FA613749D6000FB6AB0 /* compile */,
-				32446FA713749D6000FB6AB0 /* config.guess */,
-				32446FA813749D6000FB6AB0 /* config.h */,
-				32446FA913749D6000FB6AB0 /* config.h.in */,
-				32446FAA13749D6000FB6AB0 /* config.log */,
-				32446FAB13749D6000FB6AB0 /* config.status */,
-				32446FAC13749D6000FB6AB0 /* config.sub */,
-				32446FAD13749D6000FB6AB0 /* configure */,
-				32446FAE13749D6000FB6AB0 /* configure.ac */,
-				32446FAF13749D6000FB6AB0 /* COPYING */,
-				32446FB013749D6000FB6AB0 /* COPYING.LESSER */,
-				32446FB113749D6000FB6AB0 /* depcomp */,
 				32446FB213749D6000FB6AB0 /* dev */,
 				32446FC113749D6000FB6AB0 /* docs */,
-				3244701513749D6000FB6AB0 /* doxygen.cfg */,
-				3244701613749D6000FB6AB0 /* doxygen.cfg.in */,
 				3244701713749D6000FB6AB0 /* include */,
-				3244702A13749D6000FB6AB0 /* install-sh */,
-				3244702B13749D6000FB6AB0 /* libimobiledevice-1.0.pc */,
-				3244702C13749D6000FB6AB0 /* libimobiledevice-1.0.pc.in */,
-				3244702D13749D6000FB6AB0 /* libtool */,
-				3244702E13749D6000FB6AB0 /* ltmain.sh */,
-				3244702F13749D6000FB6AB0 /* m4 */,
-				3244703A13749D6000FB6AB0 /* Makefile */,
-				3244703B13749D6000FB6AB0 /* Makefile.am */,
-				3244703C13749D6000FB6AB0 /* Makefile.in */,
-				3244703D13749D6000FB6AB0 /* missing */,
-				3244703E13749D6000FB6AB0 /* NEWS */,
-				3244703F13749D6000FB6AB0 /* py-compile */,
 				3244704013749D6000FB6AB0 /* README */,
 				3244704113749D6000FB6AB0 /* src */,
-				3244707C13749D6000FB6AB0 /* stamp-h1 */,
-				3244707D13749D6000FB6AB0 /* swig */,
 				3244708513749D6000FB6AB0 /* tools */,
 			);
 			name = "libimobiledevice-1.1.1";
@@ -496,23 +422,6 @@
 			path = libimobiledevice;
 			sourceTree = "<group>";
 		};
-		3244702F13749D6000FB6AB0 /* m4 */ = {
-			isa = PBXGroup;
-			children = (
-				3244703013749D6000FB6AB0 /* ac_pkg_swig.m4 */,
-				3244703113749D6000FB6AB0 /* ac_python_devel.m4 */,
-				3244703213749D6000FB6AB0 /* as-compiler-flag.m4 */,
-				3244703313749D6000FB6AB0 /* ax_swig_enable_cxx.m4 */,
-				3244703413749D6000FB6AB0 /* libtool.m4 */,
-				3244703513749D6000FB6AB0 /* ltoptions.m4 */,
-				3244703613749D6000FB6AB0 /* ltsugar.m4 */,
-				3244703713749D6000FB6AB0 /* ltversion.m4 */,
-				3244703813749D6000FB6AB0 /* lt~obsolete.m4 */,
-				3244703913749D6000FB6AB0 /* swig_python.m4 */,
-			);
-			path = m4;
-			sourceTree = "<group>";
-		};
 		3244704113749D6000FB6AB0 /* src */ = {
 			isa = PBXGroup;
 			children = (
@@ -581,27 +490,6 @@
 				3244705213749D6000FB6AB0 /* sbservices.Plo */,
 				3244705313749D6000FB6AB0 /* screenshotr.Plo */,
 				3244705413749D6000FB6AB0 /* userpref.Plo */,
-			);
-			path = .deps;
-			sourceTree = "<group>";
-		};
-		3244707D13749D6000FB6AB0 /* swig */ = {
-			isa = PBXGroup;
-			children = (
-				3244707E13749D6000FB6AB0 /* .deps */,
-				3244708013749D6000FB6AB0 /* __init__.py */,
-				3244708113749D6000FB6AB0 /* imobiledevice.i */,
-				3244708213749D6000FB6AB0 /* Makefile */,
-				3244708313749D6000FB6AB0 /* Makefile.am */,
-				3244708413749D6000FB6AB0 /* Makefile.in */,
-			);
-			path = swig;
-			sourceTree = "<group>";
-		};
-		3244707E13749D6000FB6AB0 /* .deps */ = {
-			isa = PBXGroup;
-			children = (
-				3244707F13749D6000FB6AB0 /* imobiledevice_wrap.Plo */,
 			);
 			path = .deps;
 			sourceTree = "<group>";
