@@ -21,6 +21,7 @@ mbdx_t* mbdx_create();
 mbdx_t* mbdx_open(unsigned char* file);
 mbdx_t* mbdx_parse(unsigned char* data, unsigned int size);
 void mbdx_free(mbdx_t* mbdx);
+void mbdx_header_debug(mbdx_header_t* header);
 
 #endif
 

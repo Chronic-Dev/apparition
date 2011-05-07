@@ -13,45 +13,52 @@
 #include "mbdb_record.h"
 
 mbdb_record_t* mbdb_record_create() {
-	mbdb_record_t* mbdb_record = (mbdb_record_t*) malloc(sizeof(mbdb_record_t));
-	if(mbdb_record == NULL) {
+	mbdb_record_t* record = (mbdb_record_t*) malloc(sizeof(mbdb_record_t));
+	if(record == NULL) {
 		return NULL;
 	}
-	memset(mbdb_record, '\0', sizeof(mbdb_record_t));
-	return mbdb_record;
+	memset(record, '\0', sizeof(mbdb_record_t));
+	return record;
 }
 
 
 mbdb_record_t* mbdb_record_parse(unsigned char* data, unsigned int size) {
-	mbdb_record_t* mbdb_record  = mbdb_record_create();
-	if(mbdb_record == NULL) {
-		fprintf(stderr, "Unable to parse mbdx record\n");
+	mbdb_record_t* record  = mbdb_record_create();
+	if(record == NULL) {
+		fprintf(stderr, "Unable to parse mbdb record\n");
 		return NULL;
 	}
 
-	if(size < sizeof(mbdb_record)) {
+	if(size < sizeof(mbdb_record_t)) {
 		fprintf(stderr, "Invalid record\n");
 		return NULL;
 	}
-	memcpy(mbdb_record, data, sizeof(mbdb_record));
-	return mbdb_record;
+	memcpy(record, data, sizeof(mbdb_record_t));
+	return record;
 }
 
-void mbdb_record_free(mbdb_record_t* mbdb_record) {
-	if(mbdb_record) {
-		free(mbdb_record);
+void mbdb_record_free(mbdb_record_t* record) {
+	if(record) {
+		free(record);
 	}
 }
 
 void mbdb_record_debug(mbdb_record_t* record) {
-	/*
-	fprintf(stderr, "mbdx record:\n");
-	fprintf(stderr, "\tkey: %02x%02x%02x%02x%02x%02x%02x%02x%02x%02x%02x%02x%02x%02x%02x%02x%02x%02x%02x%02x\n", record->key[0],
-			record->key[1], record->key[2], record->key[3], record->key[4], record->key[5], record->key[6], record->key[7],
-			record->key[8], record->key[9], record->key[10], record->key[11], record->key[12], record->key[13], record->key[14],
-			record->key[15], record->key[16], record->key[17], record->key[18], record->key[19]);
-	fprintf(stderr, "\toffset: %u\n",  flip32(record->offset));
-	fprintf(stderr, "\tmode: %d\n", record->mode);
-	fprintf(stderr, "\n");
-	*/
+	fprintf(stderr, "mbdb record\n");
+	fprintf(stderr, "\tdatahash = %%s\n", record->datahash);
+	fprintf(stderr, "\tdomain = %s\n", record->domain);
+	fprintf(stderr, "\tflag = %x\n", record->flag);
+	fprintf(stderr, "\tgid = %x\n", record->gid);
+	fprintf(stderr, "\tlength = %llu\n", record->length);
+	fprintf(stderr, "\tmode = %x\n", record->mode);
+	fprintf(stderr, "\tpath = %s\n", record->path);
+	fprintf(stderr, "\tproperties = %x\n", record->properties);
+	fprintf(stderr, "\ttarget = %s\t\n", record->target);
+	fprintf(stderr, "\ttime1 = %x\n", record->time1);
+	fprintf(stderr, "\ttime2 = %x\n", record->time2);
+	fprintf(stderr, "\ttime3 = %x\n", record->time3);
+	fprintf(stderr, "\tuid = %x\n", record->uid);
+	fprintf(stderr, "\tunknown1 = %s\n", record->unknown1);
+	fprintf(stderr, "\tunknown2 = 0x%x\n", record->unknown2);
+	fprintf(stderr, "\tunknown3 = 0x%x\n", record->unknown3);
 }

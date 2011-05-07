@@ -57,16 +57,21 @@ mbdx_t* mbdx_parse(unsigned char* data, unsigned int size) {
 	}
 	memset(mbdx->header, '\0', sizeof(mbdx_header_t));
 	memcpy(mbdx->header, &data[offset], sizeof(mbdx_header_t));
+	mbdx_header_debug(mbdx->header);
 	offset += sizeof(mbdx_header_t);
 
-	count = mbdx->header->count;
+	count = flip32(mbdx->header->count);
 	if(count > 0) {
 		// Allocate our struct array
 		mbdx->records = (mbdx_record_t**) malloc(sizeof(mbdx_record_t*) * count);
 		for(i = 0; i < count; i++) {
 			record = mbdx_record_parse(&data[offset], sizeof(mbdx_record_t));
+			if(record == NULL) {
+				fprintf(stderr, "Unable to parse mbdx record\n");
+				return NULL;
+			}
 			mbdx->records[i] = record;
-			mbdx_record_debug(record);
+			mbdx_record_debug(mbdx->records[i]);
 			offset += sizeof(mbdx_record_t);
 		}
 	}
@@ -105,4 +110,11 @@ void mbdx_free(mbdx_t* mbdx) {
 		}
 		free(mbdx);
 	}
+}
+
+void mbdx_header_debug(mbdx_header_t* header) {
+	fprintf(stderr, "mbdx header:");
+	fprintf(stderr, "\tmagic = %x\n", flip32(header->magic));
+	fprintf(stderr, "\tcount = %x\n", flip32(header->count));
+	fprintf(stderr, "\n");
 }

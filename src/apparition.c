@@ -80,7 +80,7 @@ int main(int argc, char* argv[]) {
 		lockdown_free(lockdown);
 		device_free(device);
 		backup_free(backup);
-		return NULL;
+		return -1;
 	}
 
 	err = nos_register(nos, notify_cb, device->client);

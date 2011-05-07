@@ -1,29 +1,19 @@
 #ifndef mbdx_record_H
 #define mbdx_record_H
 
-typedef struct mbdx_property_t {
-    char* name;
-    char* value;
-} mbdx_property_t;
+struct mbdx_record_t {
+    unsigned char key[20];  //the Key of the file, it's also the filename in the backup directory
+    //It's the same key as 9.1 backups.
+    unsigned int offset;     //offset of file record in .mbdb file
+    //Offsets are counted from the 7th byte. So you have to add 6 to this number to get the absolute position in the file.
+    unsigned short mode;     //file mode
+    //Axxx  symbolic link
+    //4xxx  directory
+    //8xxx  regular file
+    //The meaning of xxx is unknown to me, it corresponds to the Mode field in the old backup data.
+}  __attribute__((__packed__));
 
-typedef struct mbdx_record_t {
-    char* domain;
-    char* path;
-    char* target;	                  // absolute path
-    char* datahash;	                  // SHA1 hash
-    char* unknown1;
-    unsigned short mode;	          // Axxx = symlink, 4xxx = dir, 8xxx = file
-    unsigned int unknown2;
-    unsigned int unknown3;
-    unsigned int uid;
-    unsigned int gid;
-    unsigned int time1;
-    unsigned int time2;
-    unsigned int time3;
-    unsigned long long length;	      // 0 if link or dir
-    unsigned char flag;	              // 0 if link or dir
-    unsigned char properties;	      // number of properties
-} mbdx_record_t;
+typedef struct mbdx_record_t mbdx_record_t;
 
 mbdx_record_t* mbdx_record_create();
 mbdx_record_t* mbdx_record_parse(unsigned char* data, unsigned int size);
