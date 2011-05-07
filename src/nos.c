@@ -36,12 +36,13 @@ nos_t* nos_open(lockdown_t* lockdown) {
 		return nos;
 }
 
-int nos_register(nos_t* nos, char* callback, idevice_t* phone) {
+int nos_register(nos_t* nos, np_notify_cb_t callback, idevice_t phone) {
 	
 	 idevice_error_t ret = IDEVICE_E_UNKNOWN_ERROR;
 	uint16_t port = 0;
 	np_client_t np = NULL;
-	ret = lockdownd_start_service(nos->lockdown, ANP_SERVICE_NAME, &port);
+	lockdown_t *ld = nos->lockdown;
+	ret = lockdownd_start_service(ld->client, ANP_SERVICE_NAME, &port);
 	if ((ret == LOCKDOWN_E_SUCCESS) && port) {
 		np_client_new(phone, port, &np);
 		np_set_notify_callback(np, callback, NULL);
@@ -57,7 +58,7 @@ int nos_register(nos_t* nos, char* callback, idevice_t* phone) {
 		printf("ERROR: Could not start service %s.\n", ANP_SERVICE_NAME);
 		return -1;
 	}
-	return -1;
+	return nos;
 }
 
 void nos_free(nos_t* nos) {

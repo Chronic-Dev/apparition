@@ -25,16 +25,17 @@ device_t* device_create(const char* uuid) {
 	int ret = 0;
 	device_t* device = NULL;
 	device = (device_t*) malloc(sizeof(device_t));
+		//device->client = (idevice_t) malloc(sizeof(idevice_t));
 	if (device == NULL) {
 		return NULL;
 	}
 	memset(device, '\0', sizeof(device_t));
 	if (uuid == NULL)
 	{
-		err = idevice_new(&device->client, NULL);
+		err = idevice_new(&(device->client), NULL);
 	} else
 	{
-		err = idevice_new(&device->client, uuid);
+		err = idevice_new(&(device->client), uuid);
 	}
 	if (err != IDEVICE_E_SUCCESS) {
 		fprintf(stderr, "No device found with uuid %s, is it plugged in?\n", uuid);

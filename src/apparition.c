@@ -28,9 +28,17 @@
 #include "lockdown.h"
 #include "apparition.h"
 
+static void notify_cb(const char *notification, void *userdata)
+{
+	if (!strcmp(notification, NP_SYNC_CANCEL_REQUEST)) {
+		printf("User has cancelled the backup process on the device.\n");
+	} else {
+		printf("Unhandled notification '%s' (TODO: implement)\n", notification);
+	}
+}
+
 int main(int argc, char* argv[]) {
 	int err = 0;
-
 	// First step is to create our fake backup
 	// Create an empty backup_t object
 	backup_t* backup = backup_create();
@@ -44,7 +52,7 @@ int main(int argc, char* argv[]) {
 	err = backup_add_file(backup, "./whatever", "/tmp/whatever");
 	if(err < 0) {
 		printf("Unable to add file to backup\n");
-			backup_free(backup);
+			//backup_free(backup);
 	}
 
 	// Now we need to
@@ -53,10 +61,10 @@ int main(int argc, char* argv[]) {
 	device_t* device = device_create(NULL);
 	if(device == NULL) {
 		printf("Unable to find a device to use\n");
-		backup_free(backup);
+			backup_free(backup);
+		
 		return -1;
 	}
-	printf("before lockdown\n");
 	// Open connection with the lockdownd service daemon
 	lockdown_t* lockdown = lockdown_open(device);
 	if(lockdown == NULL) {
@@ -66,19 +74,18 @@ int main(int argc, char* argv[]) {
 		backup_free(backup);
 		return -1;
 	}
-
 	nos_t* nos = nos_open(lockdown);
 	if (nos == NULL) {
-		printf("Unable to open notification center!!");
+		printf("Unable to open notification center!!\n");
 		lockdown_free(lockdown);
 		device_free(device);
 		backup_free(backup);
 		return NULL;
 	}
 
-	//int err = nos_register(nos, notify_cb, phone);
+	err = nos_register(nos, notify_cb, device->client);
 	if(err < 0) {
-		printf("Unable to register for notification callback!!");
+		printf("Unable to register for notification callback!!\n");
 		nos_free(nos);
 		lockdown_free(lockdown);
 		device_free(device);

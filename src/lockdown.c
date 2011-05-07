@@ -14,7 +14,7 @@
 #include "lockdown.h"
 
 
-lockdown_t* lockdown_open(struct device_t* device) {
+lockdown_t* lockdown_open(device_t* device) {
 	int err = 0;
 	lockdown_t* lockdown = NULL;
 
