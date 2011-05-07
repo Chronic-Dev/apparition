@@ -9,6 +9,7 @@
 #include <stdlib.h>
 #include <string.h>
 
+#include "mbdb.h"
 #include "mbdx.h"
 #include "mbdx_record.h"
 
@@ -63,15 +64,15 @@ mbdx_t* mbdx_parse(unsigned char* data, unsigned int size) {
 	count = flip32(mbdx->header->count);
 	if(count > 0) {
 		// Allocate our struct array
-		mbdx->records = (mbdx_record_t**) malloc(sizeof(mbdx_record_t*) * count);
+		mbdx->mbdx_records = (mbdx_record_t**) malloc(sizeof(mbdx_record_t*) * count);
 		for(i = 0; i < count; i++) {
-			record = mbdx_record_parse(&data[offset], sizeof(mbdx_record_t));
+			record = mbdx_record_parse(mbdx, &data[offset], sizeof(mbdx_record_t));
 			if(record == NULL) {
 				fprintf(stderr, "Unable to parse mbdx record\n");
 				return NULL;
 			}
-			mbdx->records[i] = record;
-			mbdx_record_debug(mbdx->records[i]);
+			mbdx->mbdx_records[i] = record;
+			mbdx_record_debug(mbdx->mbdx_records[i]);
 			offset += sizeof(mbdx_record_t);
 		}
 	}

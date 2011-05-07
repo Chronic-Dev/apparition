@@ -9,21 +9,26 @@
 #include <stdlib.h>
 #include <string.h>
 
+#include "mbdx.h"
 #include "byteorder.h"
 #include "mbdx_record.h"
 
-mbdx_record_t* mbdx_record_create() {
+mbdx_t* apparition_mbdx = NULL;
+
+mbdx_record_t* mbdx_record_create(mbdx_t* mbdx) {
 	mbdx_record_t* record = (mbdx_record_t*) malloc(sizeof(mbdx_record_t));
 	if(record == NULL) {
 		return NULL;
 	}
 	memset(record, '\0', sizeof(mbdx_record_t));
+
+	apparition_mbdx = mbdx;
 	return record;
 }
 
 
-mbdx_record_t* mbdx_record_parse(unsigned char* data, unsigned int size) {
-	mbdx_record_t* record  = mbdx_record_create();
+mbdx_record_t* mbdx_record_parse(mbdx_t* mbdx, unsigned char* data, unsigned int size) {
+	mbdx_record_t* record  = mbdx_record_create(mbdx);
 	if(record == NULL) {
 		fprintf(stderr, "Unable to parse mbdx record\n");
 		return NULL;

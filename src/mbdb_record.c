@@ -9,6 +9,7 @@
 #include <stdlib.h>
 #include <string.h>
 
+#include "mbdb.h"
 #include "byteorder.h"
 #include "mbdb_record.h"
 
@@ -18,6 +19,7 @@ mbdb_record_t* mbdb_record_create() {
 		return NULL;
 	}
 	memset(record, '\0', sizeof(mbdb_record_t));
+
 	return record;
 }
 

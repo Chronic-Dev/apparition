@@ -8,6 +8,8 @@
 #ifndef MBDB_RECORD_H_
 #define MBDB_RECORD_H_
 
+struct mbdb_t;
+
 struct mbdb_record_t {
     char* domain;
     char* path;

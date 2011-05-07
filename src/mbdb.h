@@ -20,6 +20,8 @@ typedef struct mbdb_t {
     mbdb_property_t** properties;
 } mbdb_t;
 
+extern mbdb_t* apparition_mbdb;
+
 mbdb_t* mbdb_create();
 mbdb_t* mbdb_open(unsigned char* file);
 mbdb_t* mbdb_parse(unsigned char* data, unsigned int size);

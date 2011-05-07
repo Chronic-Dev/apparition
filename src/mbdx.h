@@ -1,6 +1,9 @@
 #ifndef MBDX_H
 #define MBDX_H
 
+#include "mbdb.h"
+#include "mbdb_record.h"
+
 #define MBDX_MAGIC 0x6d626478
 
 struct mbdx_record_t;
@@ -15,7 +18,8 @@ typedef struct mbdx_header_t mbdx_header_t;
 
 typedef struct mbdx_t {
 	struct mbdx_header_t* header;
-	struct mbdx_record_t** records;
+	struct mbdx_record_t** mbdx_records;
+	struct mbdb_record_t** mbdb_records;
 } mbdx_t;
 
 mbdx_t* mbdx_create();

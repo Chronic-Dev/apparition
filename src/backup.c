@@ -30,7 +30,7 @@ backup_t* backup_create() {
 	memset(backup, '\0', sizeof(backup_t));
 
 	backup->mbdb = mbdb_create();
-	backup->mbdx = mbdx_create();
+	backup->mbdx = mbdx_create(backup->mbdb);
 
 	return backup;
 }

@@ -11,16 +11,20 @@
 
 #include "mbdb.h"
 
+mbdb_t* apparition_mbdb = NULL;
+
 mbdb_t* mbdb_create() {
-	mbdb_t* mbdb = NULL;
+	if(apparition_mbdb == NULL) {
+		mbdb_t* mbdb = NULL;
 
-	mbdb = (mbdb_t*) malloc(sizeof(mbdb_t));
-	if(mbdb == NULL) {
-		return NULL;
+		mbdb = (mbdb_t*) malloc(sizeof(mbdb_t));
+		if(mbdb == NULL) {
+			return NULL;
+		}
+		memset(mbdb, '\0', sizeof(mbdb_t));
+		apparition_mbdb = mbdb;
 	}
-	memset(mbdb, '\0', sizeof(mbdb_t));
-
-	return mbdb;
+	return apparition_mbdb;
 }
 
 mbdb_t* mbdb_parse(unsigned char* data, unsigned int size) {

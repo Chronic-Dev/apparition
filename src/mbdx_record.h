@@ -1,6 +1,8 @@
 #ifndef mbdx_record_H
 #define mbdx_record_H
 
+#include "mbdb.h"
+
 struct mbdx_record_t {
     unsigned char key[20];  //the Key of the file, it's also the filename in the backup directory
     //It's the same key as 9.1 backups.
@@ -12,11 +14,12 @@ struct mbdx_record_t {
     //8xxx  regular file
     //The meaning of xxx is unknown to me, it corresponds to the Mode field in the old backup data.
 }  __attribute__((__packed__));
-
 typedef struct mbdx_record_t mbdx_record_t;
 
-mbdx_record_t* mbdx_record_create();
-mbdx_record_t* mbdx_record_parse(unsigned char* data, unsigned int size);
+extern mbdx_t* apparition_mbdx;
+
+mbdx_record_t* mbdx_record_create(mbdx_t* mbdx);
+mbdx_record_t* mbdx_record_parse(mbdx_t* mbdx, unsigned char* data, unsigned int size);
 void mbdx_record_free(mbdx_record_t* mbdx_record);
 void mbdx_record_debug(mbdx_record_t* record);
 
