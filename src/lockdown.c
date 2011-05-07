@@ -31,12 +31,26 @@ lockdown_t* lockdown_open(device_t* device) {
 	}
 
 	lockdown->client = lockdownd;
+	lockdown->device = device;
 
 	return lockdown;
 }
 
-int lockdown_start_service(lockdown_t* lockdown, const char* service, int* port) {
-	//TODO: Implement Me
+int lockdown_start_service(lockdown_t* lockdown, const char* service, int* port) { //cant figure out hwo to get this working, too many levels of pointers for the port between this and lockdownd_start_service
+	
+	lockdownd_start_service(lockdown->client, service, &port);
+	
+	if (port)
+	{
+		printf("Started %s successfully!\n", service);
+		return 0;
+	} else {
+		
+		printf("%s failed to start!\n", service);
+		return -1;
+	}
+	
+	
 	return -1;
 }
 

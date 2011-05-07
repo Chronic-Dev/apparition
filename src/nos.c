@@ -51,6 +51,7 @@ int nos_register(nos_t* nos, np_notify_cb_t callback, idevice_t phone) {
 			NP_SYNC_SUSPEND_REQUEST,
 			NP_SYNC_RESUME_REQUEST,
 			NP_BACKUP_DOMAIN_CHANGED,
+			NP_ITDBPREP_DID_END,
 			NULL
 		};
 		np_observe_notifications(np, noties);
