@@ -44,21 +44,12 @@ void mbdx_record_free(mbdx_record_t* mbdx_record) {
 }
 
 void mbdx_record_debug(mbdx_record_t* record) {
-	fprintf(stderr, "mbdb record\n");
-	fprintf(stderr, "\tdatahash = %x\n", record->datahash);
-	fprintf(stderr, "\tdomain = %x\n", record->domain);
-	fprintf(stderr, "\tflag = %x\n", record->flag);
-	fprintf(stderr, "\tgid = %x\n", record->gid);
-	fprintf(stderr, "\tlength = %x\n", record->length);
-	fprintf(stderr, "\tmode = %x\n", record->mode);
-	fprintf(stderr, "\tpath = %s\n", record->path);
-	fprintf(stderr, "\tproperties = %x\n", record->properties);
-	fprintf(stderr, "\ttarget = %s\t\n", record->target);
-	fprintf(stderr, "\ttime1 = %x\n", record->time1);
-	fprintf(stderr, "\ttime2 = %x\n", record->time2);
-	fprintf(stderr, "\ttime3 = %x\n", record->time3);
-	fprintf(stderr, "\tuid = %x\n", record->uid);
-	fprintf(stderr, "\tunknown1 = 0x%x\n", record->unknown1);
-	fprintf(stderr, "\tunknown2 = 0x%x\n", record->unknown2);
-	fprintf(stderr, "\tunknown3 = 0x%x\n", record->unknown3);
+	fprintf(stderr, "mbdx record:\n");
+	fprintf(stderr, "\tkey: %02x%02x%02x%02x%02x%02x%02x%02x%02x%02x%02x%02x%02x%02x%02x%02x%02x%02x%02x%02x\n", record->key[0],
+			record->key[1], record->key[2], record->key[3], record->key[4], record->key[5], record->key[6], record->key[7],
+			record->key[8], record->key[9], record->key[10], record->key[11], record->key[12], record->key[13], record->key[14],
+			record->key[15], record->key[16], record->key[17], record->key[18], record->key[19]);
+	fprintf(stderr, "\toffset: %u\n",  flip32(record->offset));
+	fprintf(stderr, "\tmode: %d\n", record->mode);
+	fprintf(stderr, "\n");
 }
