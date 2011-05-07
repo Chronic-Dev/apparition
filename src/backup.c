@@ -35,20 +35,30 @@ backup_t* backup_create() {
 	return backup;
 }
 
-backup_t* backup_open(const char* directory) {
+backup_t* backup_open(const char* directory, const char* uuid) {
 	int err = 0;
+	char mbdb_manifest[512];
+	char mbdx_manifest[512];
 	backup_t* backup = backup_create();
 	if(backup == NULL) {
 		fprintf(stderr, "Unable to create backup object\n");
 		return NULL;
 	}
 
+	memset(mbdb_manifest, '\0', sizeof(mbdb_manifest));
+	snprintf(mbdb_manifest, sizeof(mbdb_manifest)-1, "%s/%s/Manifest.mbdb", directory, uuid);
+	backup->mbdb = mbdb_open(mbdb_manifest);
+
+	memset(mbdx_manifest, '\0', sizeof(mbdx_manifest));
+	snprintf(mbdx_manifest, sizeof(mbdx_manifest)-1, "%s/%s/Manifest.mbdx", directory, uuid);
+	backup->mbdx = mbdx_open(mbdx_manifest);
+
 	return backup;
 }
 
 int backup_add_file(backup_t* backup, const char* local, const char* remote){
 	//TODO: Implement Me
-	return -1;
+	return 0;
 }
 
 void backup_free(backup_t* backup) {

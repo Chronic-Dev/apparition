@@ -41,7 +41,7 @@ int main(int argc, char* argv[]) {
 	int err = 0;
 	// First step is to create our fake backup
 	// Create an empty backup_t object
-	backup_t* backup = backup_open("Backup2");
+	backup_t* backup = backup_open("Backup2", "2e284f1a9bdc8be302d43f935784a1a5cc66fa78");
 	if(backup == NULL) {
 		printf("Unable to create backup object\n");
 		return -1;

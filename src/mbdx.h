@@ -18,9 +18,9 @@ typedef struct mbdx_t {
 } mbdx_t;
 
 mbdx_t* mbdx_create();
+mbdx_t* mbdx_open(unsigned char* file);
+mbdx_t* mbdx_parse(unsigned char* data, unsigned int size);
 void mbdx_free(mbdx_t* mbdx);
-void mbdx_debug_header(mbdx_header_t* header);
-void mbdx_debug_record(mbdx_record_t* record);
 
 #endif
 

@@ -12,10 +12,6 @@
 #include "mbdb.h"
 
 mbdb_t* mbdb_create() {
-	int err = 0;
-	unsigned int db_size = 0;
-	unsigned char* db_data = NULL;
-
 	mbdb_t* mbdb = NULL;
 
 	mbdb = (mbdb_t*) malloc(sizeof(mbdb_t));
@@ -27,7 +23,11 @@ mbdb_t* mbdb_create() {
 	return mbdb;
 }
 
-mbdb_t* mbdb_parse(unsigned char* data, unsigned int size) { NULL;
+mbdb_t* mbdb_parse(unsigned char* data, unsigned int size) {
+	int i = 0;
+	unsigned int count = 0;
+	unsigned int offset = 0;
+
 	mbdb_t* mbdb = NULL;
 	mbdb_header_t* header = NULL;
 	mbdb_record_t* record = NULL;
@@ -44,7 +44,16 @@ mbdb_t* mbdb_parse(unsigned char* data, unsigned int size) { NULL;
 		return NULL;
 	}
 
-	mbdb->header = header;
+	// Copy in our header data
+	mbdb->header = (mbdb_header_t*) malloc(sizeof(mbdb_header_t));
+	if(mbdb->header == NULL) {
+		fprintf(stderr, "Allocation error\n");
+		return NULL;
+	}
+	memset(mbdb->header, '\0', sizeof(mbdb_header_t));
+	memcpy(mbdb->header, &data[offset], sizeof(mbdb_header_t));
+	offset += sizeof(mbdb_header_t);
+
 	return mbdb;
 }
 
@@ -73,6 +82,10 @@ mbdb_t* mbdb_open(unsigned char* file) {
 
 void mbdb_free(mbdb_t* mbdb) {
 	if(mbdb) {
+		if(mbdb->header) {
+			free(mbdb->header);
+			mbdb->header = NULL;
+		}
 		free(mbdb);
 	}
 }

@@ -30,6 +30,8 @@ struct mbdb_record_t {
 typedef struct mbdb_record_t mbdb_record_t;
 
 mbdb_record_t* mbdb_record_create();
-mbdb_record_t* mbdb_record_free();
+mbdb_record_t* mbdb_record_parse(unsigned char* data, unsigned int size);
+void mbdb_record_debug(mbdb_record_t* record);
+//void mbdb_record_free(mbdb_record_t* record);
 
 #endif /* MBDB_RECORD_H_ */
