@@ -19,7 +19,7 @@ typedef struct nos_t {
 } nos_t;
 
 nos_t* nos_open(lockdown_t* lockdown);
-int nos_register(nos_t* nos, char* callback, idevice_t* phone);
+int nos_register(nos_t* nos, np_notify_cb_t callback, idevice_t phone);
 void nos_free(nos_t* nos);
 
 #endif /* NOS_H_ */
