@@ -44,7 +44,7 @@ mbdx_t* mbdx_parse(unsigned char* data, unsigned int size) {
 	}
 
 	header = (mbdx_header_t*) data;
-	if(strncmp(header->magic, MBDX_MAGIC, 6) != 0) {
+	if(header->magic == MBDX_MAGIC) {
 		fprintf(stderr, "Unable to identify this filetype\n");
 		return NULL;
 	}
@@ -115,6 +115,7 @@ void mbdx_free(mbdx_t* mbdx) {
 void mbdx_header_debug(mbdx_header_t* header) {
 	fprintf(stderr, "mbdx header:");
 	fprintf(stderr, "\tmagic = %x\n", flip32(header->magic));
+	fprintf(stderr, "\tversion = %x\n", flip16(header->version));
 	fprintf(stderr, "\tcount = %x\n", flip32(header->count));
 	fprintf(stderr, "\n");
 }

@@ -1,12 +1,13 @@
 #ifndef MBDX_H
 #define MBDX_H
 
-#define MBDX_MAGIC "\x6d\x62\x64\x78\x02\x00"
+#define MBDX_MAGIC 0x6d626478
 
 struct mbdx_record_t;
 
 struct mbdx_header_t {
-    unsigned char magic[6];		  // "mbdx\2\0"
+    unsigned int magic;		  // "mbdx"
+    unsigned short version;
     unsigned int count;		  // count
 } __attribute__((__packed__));
 

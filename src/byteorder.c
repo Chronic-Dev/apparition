@@ -9,10 +9,10 @@
 
 unsigned int flip32(unsigned int value) {
 	unsigned int ret = 0;
-	ret |= (value & 0xFF000000) >> 16;
+	ret |= (value & 0xFF000000) >> 24;
 	ret |= (value & 0x00FF0000) >> 8;
 	ret |= (value & 0x0000FF00) << 8;
-	ret |= (value & 0x000000FF) << 16;
+	ret |= (value & 0x000000FF) << 24;
 	return ret;
 }
 
