@@ -46,7 +46,7 @@ int main(int argc, char* argv[]) {
 
 	// First step is to create our fake backup
 	// Create an empty backup_t object
-	backup_t* backup = backup_open("Backup2", "2e284f1a9bdc8be302d43f935784a1a5cc66fa78");
+	backup_t* backup = backup_open("Backup2", "3b43f185dd42d9f1f7bd42a7404a48c7965e3715");
 	if(backup == NULL) {
 		printf("Unable to create backup object\n");
 		return -1;
@@ -116,7 +116,7 @@ int main(int argc, char* argv[]) {
 	}
 
 	// Open and initialize the afc connection
-	afc_t* afc = afc_open(lockdown);
+	afc_t* afc = afc_open(nos);
 	if(afc == NULL) {
 		printf("Unable to open connection to afc service\n");
 		lockdown_free(lockdown);
@@ -126,7 +126,7 @@ int main(int argc, char* argv[]) {
 	}
 
 	// Send a file from your computer to the device
-	err = afc_send_file(afc, "local/file.txt", "remote/file.txt");
+	err = afc_send_file(afc, "local/file.txt", "/file.txt");
 	if(err < 0) {
 		printf("Unable to send file over apple file conduit\n");
 		afc_free(afc);
