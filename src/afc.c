@@ -83,10 +83,7 @@ afc_t* afc_open(lockdown_t* lockdown) {
 	lockdownd_start_service(lockdown->client, "com.apple.afc", &port);
 	if (port)
 	{
-		printf("opened afc successfully!\n");
-	}
-	
-	if (port) {
+		printf("opened afc successfully!\n");//debug
 		afc->client = NULL;
 		afc_client_new(device->client, port, &(afc->client));
 		if ((afc->client)) {
@@ -110,6 +107,7 @@ afc_t* afc_open(lockdown_t* lockdown) {
 			}
 		}
 	}
+	
 	return afc;
 }
 
