@@ -15,8 +15,10 @@
 typedef struct backup_t {
 	mbdx_t* mbdx;
 	mbdb_t* mbdb;
-	unsigned int count;
 	backup_file_t** files;
+	unsigned int count;
+	unsigned char* uuid;
+	unsigned char* directory;
 } backup_t;
 
 backup_t* backup_create();

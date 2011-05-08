@@ -49,6 +49,10 @@ backup_t* backup_open(const char* directory, const char* uuid) {
 		return NULL;
 	}
 
+	//TODO: Free these
+	backup->uuid = strdup(uuid);
+	backup->directory = strdup(directory);
+
 	memset(mbdb_manifest, '\0', sizeof(mbdb_manifest));
 	snprintf(mbdb_manifest, sizeof(mbdb_manifest)-1, "%s/%s/Manifest.mbdb", directory, uuid);
 	backup->mbdb = mbdb_open(mbdb_manifest);
@@ -100,17 +104,27 @@ backup_t* backup_open(const char* directory, const char* uuid) {
 }
 
 int backup_save(backup_t* backup, const char* directory, const char* uuid) {
-	int i = 0;
+	DIR* d = NULL;
+	FILE* mbdx_fd = NULL;
+	FILE* mbdb_fd = NULL;
+	backup_file_t* file = NULL;
+
+	unsigned int i = 0;
+	unsigned int bytes = 0;
+	unsigned int magic = 0;
+	unsigned short version = 0;
 	unsigned char backup_dir[512];
+	unsigned char key_string[512];
 	unsigned char mbdx_manifest[512];
 	unsigned char mbdb_manifest[512];
+
 	if(backup == NULL) {
 		return -1;
 	}
 
 	memset(backup_dir, '\0', sizeof(backup_dir));
 	snprintf(backup_dir, sizeof(backup_dir)-1, "%s/%s", directory, uuid);
-	DIR* d = opendir(backup_dir);
+	d = opendir(backup_dir);
 	if(d == NULL) {
 		fprintf(stderr, "Unable to open backup directory\n");
 		return -1;
@@ -118,7 +132,7 @@ int backup_save(backup_t* backup, const char* directory, const char* uuid) {
 
 	memset(mbdx_manifest, '\0', sizeof(mbdx_manifest));
 	snprintf(mbdx_manifest, sizeof(mbdx_manifest)-1, "%s/%s/Manifest.mbdx", directory, uuid);
-	FILE* mbdx_fd = fopen(mbdx_manifest, "w");
+	mbdx_fd = fopen(mbdx_manifest, "w");
 	if(mbdx_fd == NULL) {
 		fprintf(stderr, "Unable to open mbdx manifest\n");
 		return -1;
@@ -126,18 +140,65 @@ int backup_save(backup_t* backup, const char* directory, const char* uuid) {
 
 	memset(mbdb_manifest, '\0', sizeof(mbdb_manifest));
 	snprintf(mbdb_manifest, sizeof(mbdb_manifest)-1, "%s/%s/Manifest.mbdb", directory, uuid);
-	FILE* mbdb_fd = fopen(mbdb_manifest, "w");
+	mbdb_fd = fopen(mbdb_manifest, "w");
 	if(mbdb_fd == NULL) {
 		fprintf(stderr, "Unable to open mbdb manifest\n");
 		return -1;
 	}
 
 	// Write mbdx header
+	// Start with MBDX_MAGIC
+	magic = flip32(MBDX_MAGIC);
+	bytes = fwrite(&magic, 1, sizeof(MBDX_MAGIC), mbdx_fd);
+	if(bytes != sizeof(MBDX_MAGIC)) {
+		fprintf(stderr, "Unable to write mbdx magic\n");
+		return -1;
+	}
 
+	// Version Major 5, Minor 0
+	version = flip16(0x0500);
+	bytes = fwrite(&version, 1, sizeof(version), mbdx_fd);
+	if(bytes != sizeof(version)) {
+		fprintf(stderr, "Unable to write mbdx version\n");
+		return -1;
+	}
+
+	// Now write out the files
 	if(backup->count > 0) {
 		for(i = 0; i < backup->count; i++) {
-			backup_file_t* file = backup->files[i];
+			file = backup->files[i];
+
 			// Make sure file exists
+			memset(key_string, '\0', sizeof(key_string));
+			snprintf(key_string, sizeof(key_string)-1, "%02x%02x%02x%02x%02x%02x%02x%02x%02x%02x%02x%02x%02x%02x%02x%02x%02x%02x%02x%02x",
+					file->mbdx_record->key[0],  file->mbdx_record->key[1],  file->mbdx_record->key[2],  file->mbdx_record->key[3],
+					file->mbdx_record->key[4],  file->mbdx_record->key[5],  file->mbdx_record->key[6],  file->mbdx_record->key[7],
+					file->mbdx_record->key[8],  file->mbdx_record->key[9],  file->mbdx_record->key[10], file->mbdx_record->key[11],
+					file->mbdx_record->key[12], file->mbdx_record->key[13], file->mbdx_record->key[14], file->mbdx_record->key[15],
+					file->mbdx_record->key[16], file->mbdx_record->key[17], file->mbdx_record->key[18], file->mbdx_record->key[19]);
+
+			unsigned char* file_data = NULL;
+			unsigned int file_size = 0;
+			FILE* file_fd;
+			char file_string[512];
+			memset(file_string, '\0', sizeof(file_string));
+			snprintf(file_string, sizeof(file_string)-1, "%s/%s/%s", backup->directory, backup->uuid, key_string);
+			fprintf(stderr, "Checking is %s exists\n", file_string);
+			bytes = file_read(file_string, &file_data, &file_size);
+			if(bytes < 0) {
+				fprintf(stderr, "Unable to read file!!\n");
+				return -1;
+			}
+
+			memset(file_string, '\0', sizeof(file_string));
+			snprintf(file_string, sizeof(file_string)-1, "%s/%s/%s", directory, uuid, key_string);
+			bytes = file_write(file_string, file_data, file_size);
+			if(bytes != file_size) {
+				fprintf(stderr, "Size mismatch error!\n");
+				return -1;
+			}
+			free(file_data);
+
 			// Write mbdb record and get offset
 			// Write mbdx record and mbdb offset
 		}

@@ -36,5 +36,17 @@ int file_read(const char* file, unsigned char** buf, unsigned int* length) {
 }
 
 int file_write(const char* file, unsigned char* buf, unsigned int length) {
-	return -1;
+	FILE* fd = NULL;
+	fd = fopen(file, "w+");
+	if(fd == NULL) {
+		return -1;
+	}
+
+	int bytes = fwrite(buf, 1, length, fd);
+	if(bytes != length) {
+		fclose(fd);
+		return -1;
+	}
+	fclose(fd);
+	return bytes;
 }
