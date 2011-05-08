@@ -38,7 +38,7 @@ lockdown_t* lockdown_open(device_t* device) {
 
 int lockdown_start_service(lockdown_t* lockdown, const char* service, int* port) { //cant figure out hwo to get this working, too many levels of pointers for the port between this and lockdownd_start_service
 	
-	lockdownd_start_service(lockdown->client, service, &port);
+	lockdownd_start_service(lockdown->client, service, port);
 	
 	if (port)
 	{

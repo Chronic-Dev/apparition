@@ -58,3 +58,15 @@ void mbdx_record_debug(mbdx_record_t* record) {
 	fprintf(stderr, "\tmode: %d\n", record->mode);
 	fprintf(stderr, "\n");
 }
+
+int mbdx_record_build(mbdx_record_t* record, unsigned char** data, unsigned int* size) {
+	unsigned char* buf = (unsigned char*) malloc(sizeof(mbdx_record_t));
+	if(buf == NULL) {
+		return -1;
+	}
+	memcpy(buf, record, sizeof(mbdx_record_t));
+
+	*data = buf;
+	*size = sizeof(mbdx_record_t);
+	return 0;
+}

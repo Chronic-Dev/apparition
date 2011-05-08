@@ -15,7 +15,7 @@
 
 mbdb_record_t* mbdb_record_create() {
 	mbdb_record_t* record = (mbdb_record_t*) malloc(sizeof(mbdb_record_t));
-	if(record == NULL) {
+	if (record == NULL) {
 		return NULL;
 	}
 	memset(record, '\0', sizeof(mbdb_record_t));
@@ -23,11 +23,10 @@ mbdb_record_t* mbdb_record_create() {
 	return record;
 }
 
-
 mbdb_record_t* mbdb_record_parse(unsigned char* data) {
 	unsigned int offset = 0;
-	mbdb_record_t* record  = mbdb_record_create();
-	if(record == NULL) {
+	mbdb_record_t* record = mbdb_record_create();
+	if (record == NULL) {
 		fprintf(stderr, "Unable to parse mbdb record\n");
 		return NULL;
 	}
@@ -35,11 +34,11 @@ mbdb_record_t* mbdb_record_parse(unsigned char* data) {
 	//memcpy(record, data, sizeof(mbdb_record_t));
 
 	// Parse Domain
-	unsigned char strsize = *((unsigned char*)&data[offset]);
+	unsigned char strsize = *((unsigned char*) &data[offset]);
 	fprintf(stderr, "%d\n", strsize);
-	if(strsize > 0) {
+	if (strsize > 0) {
 		record->domain = (char*) malloc(strsize);
-		if(record->domain == NULL) {
+		if (record->domain == NULL) {
 			fprintf(stderr, "Allocation Error!\n");
 			return NULL;
 		}
@@ -53,15 +52,16 @@ mbdb_record_t* mbdb_record_parse(unsigned char* data) {
 	}
 
 	// Parse Path
-	strsize = *((unsigned char*)&data[offset]);
+	strsize = *((unsigned char*) &data[offset]);
 	fprintf(stderr, "%d\n", strsize);
-	if(strsize > 0) {
+	if (strsize > 0) {
 		record->path = (char*) malloc(strsize);
-		if(record->path == NULL) {
+		if (record->path == NULL) {
 			fprintf(stderr, "Allocation Error!\n");
 			return NULL;
 		}
-		offset++;;
+		offset++;
+		;
 		memcpy(record->path, &data[offset], strsize);
 		offset += strlen(record->path);
 
@@ -71,15 +71,16 @@ mbdb_record_t* mbdb_record_parse(unsigned char* data) {
 	}
 
 	// Parse Target
-	strsize = *((unsigned char*)&data[offset]);
+	strsize = *((unsigned char*) &data[offset]);
 	fprintf(stderr, "%d\n", strsize);
-	if(strsize > 0) {
+	if (strsize > 0) {
 		record->target = (char*) malloc(strsize);
-		if(record->target == NULL) {
+		if (record->target == NULL) {
 			fprintf(stderr, "Allocation Error!\n");
 			return NULL;
 		}
-		offset++;;
+		offset++;
+		;
 		memcpy(record->target, &data[offset], strsize);
 		offset += strlen(record->target);
 
@@ -92,80 +93,79 @@ mbdb_record_t* mbdb_record_parse(unsigned char* data) {
 	memcpy(record->datahash, &data[offset], 6);
 	offset += 6;
 
-	record->mode = flip16(*((unsigned short*)&data[offset]));
+	record->mode = flip16(*((unsigned short*) &data[offset]));
 	offset += 2;
 
-	record->unknown2 = flip32(*((unsigned int*)&data[offset]));
+	record->unknown2 = flip32(*((unsigned int*) &data[offset]));
 	offset += 4;
 
-	record->unknown3 = flip32(*((unsigned int*)&data[offset]));
+	record->unknown3 = flip32(*((unsigned int*) &data[offset]));
 	offset += 4;
 
-	record->uid = flip32(*((unsigned int*)&data[offset]));
+	record->uid = flip32(*((unsigned int*) &data[offset]));
 	offset += 4;
 
-	record->gid = flip32(*((unsigned int*)&data[offset]));
+	record->gid = flip32(*((unsigned int*) &data[offset]));
 	offset += 4;
 
-	record->time1 = flip32(*((unsigned int*)&data[offset]));
+	record->time1 = flip32(*((unsigned int*) &data[offset]));
 	offset += 4;
 
-	record->time2 = flip32(*((unsigned int*)&data[offset]));
+	record->time2 = flip32(*((unsigned int*) &data[offset]));
 	offset += 4;
 
-	record->time3 = flip32(*((unsigned int*)&data[offset]));
+	record->time3 = flip32(*((unsigned int*) &data[offset]));
 	offset += 4;
 
-	record->length = flip64(*((unsigned long long*)&data[offset]));
+	record->length = flip64(*((unsigned long long*) &data[offset]));
 	offset += 8;
 
-	record->flag = *((unsigned char*)&data[offset]);
+	record->flag = *((unsigned char*) &data[offset]);
 	offset += 1;
 
-	record->properties = *((unsigned char*)&data[offset]);
+	record->properties = *((unsigned char*) &data[offset]);
 	offset += 1;
-
 
 	/*
-	strsize = *((unsigned char*)&data[offset]);
-	fprintf(stderr, "%d\n", strsize);
-	record->target = (char*) malloc(strsize);
-	if(record->target == NULL) {
-		fprintf(stderr, "Allocation Error!\n");
-		return NULL;
-	}
-	offset++;
-	memcpy(record->target, &data[offset], strsize);
-	offset += strlen(record->target) + 1;
-	offset += 6;
-	*/
+	 strsize = *((unsigned char*)&data[offset]);
+	 fprintf(stderr, "%d\n", strsize);
+	 record->target = (char*) malloc(strsize);
+	 if(record->target == NULL) {
+	 fprintf(stderr, "Allocation Error!\n");
+	 return NULL;
+	 }
+	 offset++;
+	 memcpy(record->target, &data[offset], strsize);
+	 offset += strlen(record->target) + 1;
+	 offset += 6;
+	 */
 
 	return record;
 }
 
 /*
-struct mbdb_record_t {
-    char* domain;
-    char* path;
-    char* target;	                  // absolute path
-    char* datahash;	                  // SHA1 hash
-    char* unknown1;
-    unsigned short mode;	          // Axxx = symlink, 4xxx = dir, 8xxx = file
-    unsigned int unknown2;
-    unsigned int unknown3;
-    unsigned int uid;
-    unsigned int gid;
-    unsigned int time1;
-    unsigned int time2;
-    unsigned int time3;
-    unsigned long long length;	      // 0 if link or dir
-    unsigned char flag;	              // 0 if link or dir
-    unsigned char properties;	      // number of properties
-} __attribute__((__packed__));
+ struct mbdb_record_t {
+ char* domain;
+ char* path;
+ char* target;	                  // absolute path
+ char* datahash;	                  // SHA1 hash
+ char* unknown1;
+ unsigned short mode;	          // Axxx = symlink, 4xxx = dir, 8xxx = file
+ unsigned int unknown2;
+ unsigned int unknown3;
+ unsigned int uid;
+ unsigned int gid;
+ unsigned int time1;
+ unsigned int time2;
+ unsigned int time3;
+ unsigned long long length;	      // 0 if link or dir
+ unsigned char flag;	              // 0 if link or dir
+ unsigned char properties;	      // number of properties
+ } __attribute__((__packed__));
  */
 
 void mbdb_record_free(mbdb_record_t* record) {
-	if(record) {
+	if (record) {
 		free(record);
 	}
 }
@@ -188,4 +188,84 @@ void mbdb_record_debug(mbdb_record_t* record) {
 	//fprintf(stderr, "\tunknown1 = %x\n", record->unknown1);
 	fprintf(stderr, "\tunknown2 = 0x%x\n", record->unknown2);
 	fprintf(stderr, "\tunknown3 = 0x%x\n", record->unknown3);
+}
+
+int mbdb_record_build(mbdb_record_t* record, unsigned char** data,
+		unsigned int* size) {
+	unsigned int offset = 0;
+	unsigned char* buf = NULL;
+	unsigned char strsize = '\0';
+	unsigned char data_buf[0x400];
+
+	// Parse Domain
+	if (record->domain != NULL) {
+		strsize = strlen(record->domain);
+		data_buf[offset] = strsize;
+		offset++;
+
+		memcpy(&data_buf[offset], record->domain, strsize);
+		offset += strsize;
+	}
+
+	// Parse Path
+	if (record->path != NULL) {
+		strsize = strlen(record->path);
+		data_buf[offset] = strsize;
+		offset++;
+
+		memcpy(&data_buf[offset], record->path, strsize);
+		offset += strsize;
+	}
+
+	// Parse Target
+	if (record->target != NULL) {
+		strsize = strlen(record->target);
+		data_buf[offset] = strsize;
+		offset++;
+
+		memcpy(&data_buf[offset], record->target, strsize);
+		offset += strsize;
+	}
+
+	/*
+	 record->datahash = (char*) malloc(6);
+	 memcpy(record->datahash, &data[offset], 6);
+	 offset += 6;
+
+	 record->mode = flip16(*((unsigned short*)&data[offset]));
+	 offset += 2;
+
+	 record->unknown2 = flip32(*((unsigned int*)&data[offset]));
+	 offset += 4;
+
+	 record->unknown3 = flip32(*((unsigned int*)&data[offset]));
+	 offset += 4;
+
+	 record->uid = flip32(*((unsigned int*)&data[offset]));
+	 offset += 4;
+
+	 record->gid = flip32(*((unsigned int*)&data[offset]));
+	 offset += 4;
+
+	 record->time1 = flip32(*((unsigned int*)&data[offset]));
+	 offset += 4;
+
+	 record->time2 = flip32(*((unsigned int*)&data[offset]));
+	 offset += 4;
+
+	 record->time3 = flip32(*((unsigned int*)&data[offset]));
+	 offset += 4;
+
+	 record->length = flip64(*((unsigned long long*)&data[offset]));
+	 offset += 8;
+
+	 record->flag = *((unsigned char*)&data[offset]);
+	 offset += 1;
+
+	 record->properties = *((unsigned char*)&data[offset]);
+	 offset += 1;
+	 */
+	*data = data_buf;
+	*size = offset;
+	return 0;
 }

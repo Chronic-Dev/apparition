@@ -22,6 +22,7 @@ mbdx_record_t* mbdx_record_create(mbdx_t* mbdx);
 mbdx_record_t* mbdx_record_parse(mbdx_t* mbdx, unsigned char* data, unsigned int size);
 void mbdx_record_free(mbdx_record_t* mbdx_record);
 void mbdx_record_debug(mbdx_record_t* record);
+int mbdx_record_build(mbdx_record_t* record, unsigned char** data, unsigned int* size);
 
 #endif
 
