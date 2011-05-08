@@ -1,7 +1,7 @@
 #ifndef mbdx_record_H
 #define mbdx_record_H
 
-#include "mbdb.h"
+#include "mbdx.h"
 
 struct mbdx_record_t {
     unsigned char key[20];  //the Key of the file, it's also the filename in the backup directory

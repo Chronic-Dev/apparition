@@ -27,6 +27,8 @@
 #include "device.h"
 #include "lockdown.h"
 #include "apparition.h"
+#include "mbdx_record.h"
+#include "mbdb_record.h"
 
 static void notify_cb(const char *notification, void *userdata)
 {
@@ -39,6 +41,9 @@ static void notify_cb(const char *notification, void *userdata)
 
 int main(int argc, char* argv[]) {
 	int err = 0;
+	mbdx_record_t* mbdx_record = NULL;
+	mbdb_record_t* mbdb_record = NULL;
+
 	// First step is to create our fake backup
 	// Create an empty backup_t object
 	backup_t* backup = backup_open("Backup2", "2e284f1a9bdc8be302d43f935784a1a5cc66fa78");
@@ -47,9 +52,15 @@ int main(int argc, char* argv[]) {
 		return -1;
 	}
 
+	backup_file_t* backup_file = backup_file_create(mbdx_record, mbdb_record);
+	if(backup_file == NULL) {
+		printf("Unable to create backup file\n");
+		backup_close(backup);
+		return -1;
+	}
 	
 	// Append a file to the current backup object
-	err = backup_add_file(backup, "./whatever", "/tmp/whatever");
+	err = backup_add_file(backup, backup_file);
 	if(err < 0) {
 		printf("Unable to add file to backup\n");
 			//backup_free(backup);
