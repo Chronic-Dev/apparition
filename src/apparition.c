@@ -52,15 +52,27 @@ int main(int argc, char* argv[]) {
 		return -1;
 	}
 
-	backup_file_t* backup_file = backup_file_create(mbdx_record, mbdb_record);
-	if(backup_file == NULL) {
+	backup_file_t* file = backup_file_create();
+	if(file == NULL) {
 		printf("Unable to create backup file\n");
-		backup_close(backup);
+		backup_free(backup);
 		return -1;
 	}
 	
+	file->mbdx_record = mbdx_record_create(backup->mbdx);
+	file->mbdb_record = mbdb_record_create();
+
+	mbdb_record = file->mbdb_record;
+	mbdb_record->target = "";
+	mbdb_record->domain = "";
+	mbdb_record->path = "";
+	mbdb_record->length = 0;
+	mbdb_record->mode = 0;
+	mbdb_record->gid = 0;
+	mbdb_record->uid = 0;
+
 	// Append a file to the current backup object
-	err = backup_add_file(backup, backup_file);
+	err = backup_add_file(backup, file);
 	if(err < 0) {
 		printf("Unable to add file to backup\n");
 			//backup_free(backup);
@@ -72,7 +84,7 @@ int main(int argc, char* argv[]) {
 	device_t* device = device_create(NULL);
 	if(device == NULL) {
 		printf("Unable to find a device to use\n");
-			backup_free(backup);
+		backup_free(backup);
 		
 		return -1;
 	}

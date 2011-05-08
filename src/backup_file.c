@@ -13,16 +13,13 @@
 #include "mbdx_record.h"
 #include "mbdb_record.h"
 
-backup_file_t* backup_file_create(mbdx_record_t* mbdx_record, mbdb_record_t* mbdb_record) {
+backup_file_t* backup_file_create() {
 	backup_file_t* file = (backup_file_t*) malloc(sizeof(backup_file_t));
 	if(file == NULL) {
 		fprintf(stderr, "Allocation Error\n");
 		return NULL;
 	}
 	memset(file, '\0', sizeof(backup_file_t));
-
-	file->mbdb_record = mbdb_record;
-	file->mbdx_record = mbdx_record;
 
 	return file;
 }

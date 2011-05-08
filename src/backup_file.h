@@ -8,14 +8,14 @@
 #ifndef BACKUP_FILE_H_
 #define BACKUP_FILE_H_
 
-struct mbdx_record_t;
-struct mbdb_record_t;
+#include "mbdx_record.h"
+#include "mbdb_record.h"
 
 typedef struct backup_file_t {
-	struct mbdx_record* mbdx_record;
-	struct mbdb_record* mbdb_record;
+	mbdx_record_t* mbdx_record;
+	mbdb_record_t* mbdb_record;
 } backup_file_t;
 
-backup_file_t* backup_file_create(struct mbdx_record_t* mbdx_record, struct mbdb_record_t* mbdb_record);
+backup_file_t* backup_file_create();
 
 #endif /* BACKUP_FILE_H_ */
