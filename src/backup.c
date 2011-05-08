@@ -64,9 +64,17 @@ backup_t* backup_open(const char* directory, const char* uuid) {
 
 			for(i = 0; i < count; i++) {
 				// Now allocate a backup_file_t object for each item in the array
-				//backup_file_t* file =
+				backup_file_t* file = (backup_file_t**) malloc(sizeof(backup_file_t));
+				if(file == NULL) {
+					fprintf(stderr, "Allocation Error!!\n");
+					return NULL;
+				}
+				memset(file, '\0', sizeof(backup_file_t));
+				backup->files[i] = file;
+
 				// Link appropriate mbdx record entry and mbdb record
-				//backup->files[i] =
+				file->mbdx_record = backup->mbdx->mbdx_records[i];
+				file->mbdb_record = backup->mbdx->mbdb_records[i];
 			}
 		}
 	}

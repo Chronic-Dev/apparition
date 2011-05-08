@@ -85,7 +85,6 @@ int main(int argc, char* argv[]) {
 	if(device == NULL) {
 		printf("Unable to find a device to use\n");
 		backup_free(backup);
-		
 		return -1;
 	}
 	// Open connection with the lockdownd service daemon
