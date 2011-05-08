@@ -12,7 +12,7 @@
 uint16_t flip16(uint16_t value) {
 	uint16_t ret = 0;
 	ret |= (value & 0xFF00) >> 8;
-	ret |= (value & 0x000FF) << 8;
+	ret |= (value & 0x00FF) << 8;
 	return ret;
 }
 

@@ -59,12 +59,39 @@ mbdb_record_t* mbdb_record_parse(unsigned char* data) {
 	offset += strlen(record->path);
 	offset += 6;
 
-
 	record->mode = flip16(*((unsigned short*)&data[offset]));
 	offset += 2;
 
+	record->unknown2 = flip32(*((unsigned int*)&data[offset]));
+	offset += 4;
+
+	record->unknown3 = flip32(*((unsigned int*)&data[offset]));
+	offset += 4;
+
+	record->uid = flip32(*((unsigned int*)&data[offset]));
+	offset += 4;
+
+	record->gid = flip32(*((unsigned int*)&data[offset]));
+	offset += 4;
+
+	record->time1 = flip32(*((unsigned int*)&data[offset]));
+	offset += 4;
+
+	record->time2 = flip32(*((unsigned int*)&data[offset]));
+	offset += 4;
+
+	record->time3 = flip32(*((unsigned int*)&data[offset]));
+	offset += 4;
+
 	record->length = flip64(*((unsigned long long*)&data[offset]));
 	offset += 8;
+
+	record->flag = *((unsigned char*)&data[offset]);
+	offset += 1;
+
+	record->properties = *((unsigned char*)&data[offset]);
+	offset += 1;
+
 
 	/*
 	strsize = *((unsigned char*)&data[offset]);
@@ -115,16 +142,16 @@ void mbdb_record_debug(mbdb_record_t* record) {
 	//fprintf(stderr, "\tdatahash = %x\n", record->datahash);
 	fprintf(stderr, "\tdomain = %s\n", record->domain);
 	fprintf(stderr, "\tflag = %x\n", record->flag);
-	fprintf(stderr, "\tgid = %x\n", record->gid);
+	fprintf(stderr, "\tgid = %d\n", record->gid);
 	fprintf(stderr, "\tlength = %llu\n", record->length);
 	fprintf(stderr, "\tmode = %x\n", record->mode);
 	fprintf(stderr, "\tpath = %s\n", record->path);
 	fprintf(stderr, "\tproperties = %x\n", record->properties);
-	fprintf(stderr, "\ttarget = %s\t\n", record->target);
-	fprintf(stderr, "\ttime1 = %x\n", record->time1);
-	fprintf(stderr, "\ttime2 = %x\n", record->time2);
-	fprintf(stderr, "\ttime3 = %x\n", record->time3);
-	fprintf(stderr, "\tuid = %x\n", record->uid);
+	fprintf(stderr, "\ttarget = %x\n", record->target);
+	fprintf(stderr, "\ttime1 = %d\n", record->time1);
+	fprintf(stderr, "\ttime2 = %d\n", record->time2);
+	fprintf(stderr, "\ttime3 = %d\n", record->time3);
+	fprintf(stderr, "\tuid = %d\n", record->uid);
 	fprintf(stderr, "\tunknown1 = %x\n", record->unknown1);
 	fprintf(stderr, "\tunknown2 = 0x%x\n", record->unknown2);
 	fprintf(stderr, "\tunknown3 = 0x%x\n", record->unknown3);
