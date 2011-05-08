@@ -58,6 +58,15 @@ mbdb_t* mbdb_parse(unsigned char* data, unsigned int size) {
 	memcpy(mbdb->header, &data[offset], sizeof(mbdb_header_t));
 	offset += sizeof(mbdb_header_t);
 
+	mbdb->data = (unsigned char*) malloc(size);
+	if(mbdb->data == NULL) {
+		fprintf(stderr, "Allocation Error!!\n");
+		return NULL;
+	}
+	memset(mbdb->data, '\0', size);
+	memcpy(mbdb->data, data, size);
+	mbdb->size = size;
+
 	return mbdb;
 }
 
@@ -82,6 +91,16 @@ mbdb_t* mbdb_open(unsigned char* file) {
 
 	free(data);
 	return mbdb;
+}
+
+mbdb_record_t* mbdb_get_record(mbdb_t* mbdb, unsigned int offset) {
+	unsigned int off = flip32(offset)+7;
+	fprintf(stderr, "offset = %x; off = %x\n", offset, off);
+	fprintf(stderr, "%02x %02x %02x %02x\n", mbdb->data[off], mbdb->data[off+1], mbdb->data[off+2], mbdb->data[off+3]);
+	fprintf(stderr, "%02x %02x %02x %02x\n", mbdb->data[off+4], mbdb->data[off+5], mbdb->data[off+6], mbdb->data[off+7]);
+	fprintf(stderr, "%02x %02x %02x %02x\n", mbdb->data[off+8], mbdb->data[off+9], mbdb->data[off+10], mbdb->data[off+11]);
+	mbdb_record_t* record = mbdb_record_parse(&(mbdb->data)[off]);
+	return record;
 }
 
 void mbdb_free(mbdb_t* mbdb) {

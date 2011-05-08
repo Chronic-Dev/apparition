@@ -15,6 +15,8 @@ typedef struct mbdb_header {
 } mbdb_header_t;
 
 typedef struct mbdb_t {
+    unsigned int size;
+    unsigned char* data;
 	mbdb_header_t* header;
     mbdb_record_t** records;
     mbdb_property_t** properties;
@@ -25,6 +27,7 @@ extern mbdb_t* apparition_mbdb;
 mbdb_t* mbdb_create();
 mbdb_t* mbdb_open(unsigned char* file);
 mbdb_t* mbdb_parse(unsigned char* data, unsigned int size);
+mbdb_record_t* mbdb_get_record(mbdb_t* mbdb, unsigned int offset);
 void mbdb_free(mbdb_t* mbdb);
 
 #endif

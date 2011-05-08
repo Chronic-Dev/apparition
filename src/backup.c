@@ -18,6 +18,7 @@
 #include "mbdb.h"
 #include "mbdx.h"
 #include "backup.h"
+#include "byteorder.h"
 
 backup_t* backup_create() {
 	int err = 0;
@@ -47,12 +48,24 @@ backup_t* backup_open(const char* directory, const char* uuid) {
 		return NULL;
 	}
 
+	memset(mbdb_manifest, '\0', sizeof(mbdb_manifest));
+	snprintf(mbdb_manifest, sizeof(mbdb_manifest)-1, "%s/%s/Manifest.mbdb", directory, uuid);
+	backup->mbdb = mbdb_open(mbdb_manifest);
+	if(backup->mbdb == NULL) {
+		fprintf(stderr, "Unable to open mbdb manifest\n");
+		return NULL;
+	}
+
 	memset(mbdx_manifest, '\0', sizeof(mbdx_manifest));
 	snprintf(mbdx_manifest, sizeof(mbdx_manifest)-1, "%s/%s/Manifest.mbdx", directory, uuid);
 	backup->mbdx = mbdx_open(mbdx_manifest);
+	if(backup->mbdx == NULL) {
+		fprintf(stderr, "Unable to open mbdx manifest\n");
+		return NULL;
+	}
 
 	if(backup->mbdx) {
-		count = backup->mbdx->header->count;
+		count = flip32(backup->mbdx->header->count);
 		if(count > 0) {
 			// Allocate backup_t backup_file pointer array
 			backup->files = (backup_file_t**) malloc(sizeof(backup_file_t*) * count);
@@ -64,7 +77,7 @@ backup_t* backup_open(const char* directory, const char* uuid) {
 
 			for(i = 0; i < count; i++) {
 				// Now allocate a backup_file_t object for each item in the array
-				backup_file_t* file = (backup_file_t**) malloc(sizeof(backup_file_t));
+				backup_file_t* file = (backup_file_t*) malloc(sizeof(backup_file_t));
 				if(file == NULL) {
 					fprintf(stderr, "Allocation Error!!\n");
 					return NULL;
@@ -74,14 +87,12 @@ backup_t* backup_open(const char* directory, const char* uuid) {
 
 				// Link appropriate mbdx record entry and mbdb record
 				file->mbdx_record = backup->mbdx->mbdx_records[i];
-				file->mbdb_record = backup->mbdx->mbdb_records[i];
+				mbdx_record_debug(file->mbdx_record);
+				file->mbdb_record = mbdb_get_record(backup->mbdb, file->mbdx_record->offset);
+				mbdb_record_debug(file->mbdb_record);
 			}
 		}
 	}
-
-	memset(mbdb_manifest, '\0', sizeof(mbdb_manifest));
-	snprintf(mbdb_manifest, sizeof(mbdb_manifest)-1, "%s/%s/Manifest.mbdb", directory, uuid);
-	backup->mbdb = mbdb_open(mbdb_manifest);
 
 	return backup;
 }

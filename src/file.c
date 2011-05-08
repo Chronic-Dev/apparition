@@ -31,6 +31,7 @@ int file_read(const char* file, unsigned char** buf, unsigned int* length) {
 	fclose(fd);
 
 	*buf = data;
+	*length = bytes;
 	return bytes;
 }
 
