@@ -148,7 +148,7 @@ int main(int argc, char* argv[]) {
 	afc_close(afc);
 
 	// Open and initialize the mb2 connection
-	mb2_t* mb2 = mb2_open(lockdown);
+	mb2_t* mb2 = mb2_open(lockdown, afc);
 	if(mb2 == NULL) {
 		printf("Unable to open connection to mobilebackup2 service");
 		afc_free(afc);

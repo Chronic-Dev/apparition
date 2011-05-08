@@ -22,6 +22,71 @@
  
  */
 
+static void afc_free_dictionary(char **dictionary) //ghetto i know, not sure where/how to put a global function for this
+{
+	int i = 0;
+	
+	if (!dictionary)
+		return;
+	
+	for (i = 0; dictionary[i]; i++) {
+		free(dictionary[i]);
+	}
+	free(dictionary);
+}
+
+void apparition_afc_get_file_contents(afc_t* afc, const char *filename, char **data, uint64_t *size)
+{
+	if (!afc || !data || !size) {
+		return;
+	}
+	
+	char **fileinfo = NULL;
+	uint32_t fsize = 0;
+	
+	afc_get_file_info(afc->client, filename, &fileinfo);
+	if (!fileinfo) {
+		return;
+	}
+	int i;
+	for (i = 0; fileinfo[i]; i+=2) {
+		if (!strcmp(fileinfo[i], "st_size")) {
+			fsize = atol(fileinfo[i+1]);
+			break;
+		}
+	}
+	afc_free_dictionary(fileinfo);
+	
+	if (fsize == 0) {
+		return;
+	}
+	
+	uint64_t f = 0;
+	afc_file_open(afc->client, filename, AFC_FOPEN_RDONLY, &f);
+	if (!f) {
+		return;
+	}
+	char *buf = (char*)malloc((uint32_t)fsize);
+	uint32_t done = 0;
+	while (done < fsize) {
+		uint32_t bread = 0;
+		afc_file_read(afc->client, f, buf+done, 65536, &bread);
+		if (bread > 0) {
+			
+		} else {
+			break;
+		}
+		done += bread;
+	}
+	if (done == fsize) {
+		*size = fsize;
+		*data = buf;
+	} else {
+		free(buf);
+	}
+	afc_file_close(afc->client, f);
+}
+
 
 static void perform_notification(idevice_t phone, lockdownd_client_t client, const char *notification)
 {

@@ -24,5 +24,5 @@ afc_t* afc_open(nos_t* notifier);
 int afc_send_file(afc_t* afc, const char* local, const char* remote);
 int afc_close(afc_t* afc);
 void afc_free(afc_t* afc);
-
+void apparition_afc_get_file_contents(afc_t* afc, const char *filename, char **data, uint64_t *size);
 #endif /* AFC_H_ */
