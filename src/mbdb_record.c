@@ -34,6 +34,7 @@ mbdb_record_t* mbdb_record_parse(unsigned char* data) {
 
 	//memcpy(record, data, sizeof(mbdb_record_t));
 
+	// Parse Domain
 	unsigned char strsize = *((unsigned char*)&data[offset]);
 	fprintf(stderr, "%d\n", strsize);
 	record->domain = (char*) malloc(strsize);
@@ -41,8 +42,44 @@ mbdb_record_t* mbdb_record_parse(unsigned char* data) {
 		fprintf(stderr, "Allocation Error!\n");
 		return NULL;
 	}
-	offset++;;
+	offset++;
 	memcpy(record->domain, &data[offset], strsize);
+	offset += strlen(record->domain) + 1;
+
+	// Parse Path
+	strsize = *((unsigned char*)&data[offset]);
+	fprintf(stderr, "%d\n", strsize);
+	record->path = (char*) malloc(strsize);
+	if(record->path == NULL) {
+		fprintf(stderr, "Allocation Error!\n");
+		return NULL;
+	}
+	offset++;;
+	memcpy(record->path, &data[offset], strsize);
+	offset += strlen(record->path);
+	offset += 6;
+
+
+	record->mode = flip16(*((unsigned short*)&data[offset]));
+	offset += 2;
+
+	record->length = flip64(*((unsigned long long*)&data[offset]));
+	offset += 8;
+
+	/*
+	strsize = *((unsigned char*)&data[offset]);
+	fprintf(stderr, "%d\n", strsize);
+	record->target = (char*) malloc(strsize);
+	if(record->target == NULL) {
+		fprintf(stderr, "Allocation Error!\n");
+		return NULL;
+	}
+	offset++;
+	memcpy(record->target, &data[offset], strsize);
+	offset += strlen(record->target) + 1;
+	offset += 6;
+	*/
+
 	return record;
 }
 
@@ -81,9 +118,9 @@ void mbdb_record_debug(mbdb_record_t* record) {
 	fprintf(stderr, "\tgid = %x\n", record->gid);
 	fprintf(stderr, "\tlength = %llu\n", record->length);
 	fprintf(stderr, "\tmode = %x\n", record->mode);
-	fprintf(stderr, "\tpath = %x\n", record->path);
+	fprintf(stderr, "\tpath = %s\n", record->path);
 	fprintf(stderr, "\tproperties = %x\n", record->properties);
-	fprintf(stderr, "\ttarget = %x\t\n", record->target);
+	fprintf(stderr, "\ttarget = %s\t\n", record->target);
 	fprintf(stderr, "\ttime1 = %x\n", record->time1);
 	fprintf(stderr, "\ttime2 = %x\n", record->time2);
 	fprintf(stderr, "\ttime3 = %x\n", record->time3);

@@ -8,7 +8,10 @@
 #ifndef BYTEORDER_H_
 #define BYTEORDER_H_
 
-inline unsigned int flip32(unsigned int value);
-inline unsigned short flip16(unsigned short value);
+#include <stdint.h>
+
+inline uint16_t flip16(uint16_t value);
+inline uint32_t flip32(uint32_t value);
+inline uint64_t flip64(uint64_t value);
 
 #endif /* BYTEORDER_H_ */
