@@ -78,6 +78,11 @@ backup_t* backup_open(const char* directory, const char* uuid) {
 	return backup;
 }
 
+
+int backup_close(backup_t* backup) {
+	return -1;
+}
+
 int backup_add_file(backup_t* backup, backup_file_t* file){
 	// Hash the file and write it out
 
