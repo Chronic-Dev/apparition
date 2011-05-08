@@ -37,26 +37,59 @@ mbdb_record_t* mbdb_record_parse(unsigned char* data) {
 	// Parse Domain
 	unsigned char strsize = *((unsigned char*)&data[offset]);
 	fprintf(stderr, "%d\n", strsize);
-	record->domain = (char*) malloc(strsize);
-	if(record->domain == NULL) {
-		fprintf(stderr, "Allocation Error!\n");
-		return NULL;
+	if(strsize > 0) {
+		record->domain = (char*) malloc(strsize);
+		if(record->domain == NULL) {
+			fprintf(stderr, "Allocation Error!\n");
+			return NULL;
+		}
+		offset++;
+		memcpy(record->domain, &data[offset], strsize);
+		offset += strlen(record->domain);
+
+	} else {
+		record->domain = NULL;
+		offset++;
 	}
-	offset++;
-	memcpy(record->domain, &data[offset], strsize);
-	offset += strlen(record->domain) + 1;
 
 	// Parse Path
 	strsize = *((unsigned char*)&data[offset]);
 	fprintf(stderr, "%d\n", strsize);
-	record->path = (char*) malloc(strsize);
-	if(record->path == NULL) {
-		fprintf(stderr, "Allocation Error!\n");
-		return NULL;
+	if(strsize > 0) {
+		record->path = (char*) malloc(strsize);
+		if(record->path == NULL) {
+			fprintf(stderr, "Allocation Error!\n");
+			return NULL;
+		}
+		offset++;;
+		memcpy(record->path, &data[offset], strsize);
+		offset += strlen(record->path);
+
+	} else {
+		record->path = NULL;
+		offset++;
 	}
-	offset++;;
-	memcpy(record->path, &data[offset], strsize);
-	offset += strlen(record->path);
+
+	// Parse Target
+	strsize = *((unsigned char*)&data[offset]);
+	fprintf(stderr, "%d\n", strsize);
+	if(strsize > 0) {
+		record->target = (char*) malloc(strsize);
+		if(record->target == NULL) {
+			fprintf(stderr, "Allocation Error!\n");
+			return NULL;
+		}
+		offset++;;
+		memcpy(record->target, &data[offset], strsize);
+		offset += strlen(record->target);
+
+	} else {
+		record->target = NULL;
+		offset++;
+	}
+
+	record->datahash = (char*) malloc(6);
+	memcpy(record->datahash, &data[offset], 6);
 	offset += 6;
 
 	record->mode = flip16(*((unsigned short*)&data[offset]));
@@ -139,7 +172,7 @@ void mbdb_record_free(mbdb_record_t* record) {
 
 void mbdb_record_debug(mbdb_record_t* record) {
 	fprintf(stderr, "mbdb record\n");
-	//fprintf(stderr, "\tdatahash = %x\n", record->datahash);
+	fprintf(stderr, "\tdatahash = 0x%x\n", *record->datahash);
 	fprintf(stderr, "\tdomain = %s\n", record->domain);
 	fprintf(stderr, "\tflag = %x\n", record->flag);
 	fprintf(stderr, "\tgid = %d\n", record->gid);
@@ -147,12 +180,12 @@ void mbdb_record_debug(mbdb_record_t* record) {
 	fprintf(stderr, "\tmode = %x\n", record->mode);
 	fprintf(stderr, "\tpath = %s\n", record->path);
 	fprintf(stderr, "\tproperties = %x\n", record->properties);
-	fprintf(stderr, "\ttarget = %x\n", record->target);
+	fprintf(stderr, "\ttarget = %s\n", record->target);
 	fprintf(stderr, "\ttime1 = %d\n", record->time1);
 	fprintf(stderr, "\ttime2 = %d\n", record->time2);
 	fprintf(stderr, "\ttime3 = %d\n", record->time3);
 	fprintf(stderr, "\tuid = %d\n", record->uid);
-	fprintf(stderr, "\tunknown1 = %x\n", record->unknown1);
+	//fprintf(stderr, "\tunknown1 = %x\n", record->unknown1);
 	fprintf(stderr, "\tunknown2 = 0x%x\n", record->unknown2);
 	fprintf(stderr, "\tunknown3 = 0x%x\n", record->unknown3);
 }

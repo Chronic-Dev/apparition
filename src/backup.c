@@ -14,6 +14,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include <dirent.h>
 
 #include "mbdb.h"
 #include "mbdx.h"
@@ -90,6 +91,7 @@ backup_t* backup_open(const char* directory, const char* uuid) {
 				mbdx_record_debug(file->mbdx_record);
 				file->mbdb_record = mbdb_get_record(backup->mbdb, file->mbdx_record->offset);
 				mbdb_record_debug(file->mbdb_record);
+				backup->count++;
 			}
 		}
 	}
@@ -97,6 +99,56 @@ backup_t* backup_open(const char* directory, const char* uuid) {
 	return backup;
 }
 
+int backup_save(backup_t* backup, const char* directory, const char* uuid) {
+	int i = 0;
+	unsigned char backup_dir[512];
+	unsigned char mbdx_manifest[512];
+	unsigned char mbdb_manifest[512];
+	if(backup == NULL) {
+		return -1;
+	}
+
+	memset(backup_dir, '\0', sizeof(backup_dir));
+	snprintf(backup_dir, sizeof(backup_dir)-1, "%s/%s", directory, uuid);
+	DIR* d = opendir(backup_dir);
+	if(d == NULL) {
+		fprintf(stderr, "Unable to open backup directory\n");
+		return -1;
+	}
+
+	memset(mbdx_manifest, '\0', sizeof(mbdx_manifest));
+	snprintf(mbdx_manifest, sizeof(mbdx_manifest)-1, "%s/%s/Manifest.mbdx", directory, uuid);
+	FILE* mbdx_fd = fopen(mbdx_manifest, "w");
+	if(mbdx_fd == NULL) {
+		fprintf(stderr, "Unable to open mbdx manifest\n");
+		return -1;
+	}
+
+	memset(mbdb_manifest, '\0', sizeof(mbdb_manifest));
+	snprintf(mbdb_manifest, sizeof(mbdb_manifest)-1, "%s/%s/Manifest.mbdb", directory, uuid);
+	FILE* mbdb_fd = fopen(mbdb_manifest, "w");
+	if(mbdb_fd == NULL) {
+		fprintf(stderr, "Unable to open mbdb manifest\n");
+		return -1;
+	}
+
+	// Write mbdx header
+
+	if(backup->count > 0) {
+		for(i = 0; i < backup->count; i++) {
+			backup_file_t* file = backup->files[i];
+			// Make sure file exists
+			// Write mbdb record and get offset
+			// Write mbdx record and mbdb offset
+		}
+	}
+
+	fclose(mbdx_fd);
+	fclose(mbdb_fd);
+	closedir(d);
+
+	return 0;
+}
 
 int backup_close(backup_t* backup) {
 	return -1;

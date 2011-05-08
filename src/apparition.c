@@ -52,6 +52,7 @@ int main(int argc, char* argv[]) {
 		return -1;
 	}
 
+	/*
 	backup_file_t* file = backup_file_create();
 	if(file == NULL) {
 		printf("Unable to create backup file\n");
@@ -64,7 +65,7 @@ int main(int argc, char* argv[]) {
 
 	mbdb_record = file->mbdb_record;
 	mbdb_record->target = "";
-	mbdb_record->domain = "";
+	mbdb_record->domain = "MediaDomain";
 	mbdb_record->path = "";
 	mbdb_record->length = 0;
 	mbdb_record->mode = 0;
@@ -77,6 +78,13 @@ int main(int argc, char* argv[]) {
 		printf("Unable to add file to backup\n");
 			//backup_free(backup);
 	}
+	*/
+
+	err = backup_save(backup, "Backup3", "2e284f1a9bdc8be302d43f935784a1a5cc66fa78");
+	if(err < 0) {
+		printf("Unable to save backup\n");
+		return -1;
+	}
 
 	// Now we need to
 	// Pass a UUID here if you want to target a single device,
@@ -87,6 +95,7 @@ int main(int argc, char* argv[]) {
 		backup_free(backup);
 		return -1;
 	}
+
 	// Open connection with the lockdownd service daemon
 	lockdown_t* lockdown = lockdown_open(device);
 	if(lockdown == NULL) {

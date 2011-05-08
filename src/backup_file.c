@@ -23,3 +23,9 @@ backup_file_t* backup_file_create() {
 
 	return file;
 }
+
+void backup_file_free(backup_file_t* file) {
+	if(file) {
+		free(file);
+	}
+}

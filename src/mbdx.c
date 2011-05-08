@@ -72,7 +72,7 @@ mbdx_t* mbdx_parse(unsigned char* data, unsigned int size) {
 				return NULL;
 			}
 			mbdx->mbdx_records[i] = record;
-			mbdx_record_debug(mbdx->mbdx_records[i]);
+			//mbdx_record_debug(mbdx->mbdx_records[i]);
 			offset += sizeof(mbdx_record_t);
 		}
 	}
