@@ -33,6 +33,7 @@ nos_t* nos_open(lockdown_t* lockdown) {
 
 		nos->lockdown = lockdown;
 
+
 		return nos;
 }
 
@@ -44,9 +45,9 @@ int nos_register(nos_t* nos, np_notify_cb_t callback, idevice_t phone) {
 	lockdown_t *ld = nos->lockdown;
 	ret = lockdownd_start_service(ld->client, ANP_SERVICE_NAME, &port);
 	if ((ret == LOCKDOWN_E_SUCCESS) && port) {
-		np_client_new(phone, port, &np);
-		np_set_notify_callback(np, callback, NULL);
-		const char *noties[5] = {
+		np_client_new(phone, port, &(nos->client));
+		np_set_notify_callback(nos->client, callback, NULL);
+		const char *noties[6] = {
 			NP_SYNC_CANCEL_REQUEST,
 			NP_SYNC_SUSPEND_REQUEST,
 			NP_SYNC_RESUME_REQUEST,
@@ -54,12 +55,21 @@ int nos_register(nos_t* nos, np_notify_cb_t callback, idevice_t phone) {
 			NP_ITDBPREP_DID_END,
 			NULL
 		};
-		np_observe_notifications(np, noties);
+		np_observe_notifications(nos->client, noties);
 	} else {
 		printf("ERROR: Could not start service %s.\n", ANP_SERVICE_NAME);
 		return -1;
 	}
 	return nos;
+}
+
+void nos_perform_notification(nos_t* nos, const char *notification)
+{
+	printf("::::::::: PostNotification %s\n", notification);
+	np_post_notification(nos->client, notification);
+		//np_client_free(np);
+	
+	
 }
 
 void nos_free(nos_t* nos) {

@@ -15,11 +15,11 @@
 
 typedef struct nos_t {
 	lockdown_t* lockdown;
-	np_client_t* client;
+	np_client_t client;
 } nos_t;
 
 nos_t* nos_open(lockdown_t* lockdown);
 int nos_register(nos_t* nos, np_notify_cb_t callback, idevice_t phone);
 void nos_free(nos_t* nos);
-
+void nos_perform_notification(nos_t* nos, const char *notification);
 #endif /* NOS_H_ */
