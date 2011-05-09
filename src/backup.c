@@ -116,6 +116,7 @@ int backup_save(backup_t* backup, const char* directory, const char* uuid) {
 	unsigned int i = 0;
 	unsigned int bytes = 0;
 	unsigned int magic = 0;
+	unsigned int count = 0;
 	unsigned short version = 0;
 	unsigned int file_size = 0;
 	unsigned char* file_data = NULL;
@@ -163,8 +164,32 @@ int backup_save(backup_t* backup, const char* directory, const char* uuid) {
 	}
 
 	// Version Major 5, Minor 0
-	version = flip16(0x0500);
+	version = flip16(0x0200);
 	bytes = fwrite(&version, 1, sizeof(version), mbdx_fd);
+	if (bytes != sizeof(version)) {
+		fprintf(stderr, "Unable to write mbdx version\n");
+		return -1;
+	}
+
+	// Number of records
+	count = backup->mbdx->header->count;
+	bytes = fwrite(&count, 1, sizeof(count), mbdx_fd);
+	if (bytes != sizeof(count)) {
+		fprintf(stderr, "Unable to write mbdx count\n");
+		return -1;
+	}
+
+	// Write mbdb header
+	// Start with MBDB_MAGIC
+	bytes = fwrite(MBDB_MAGIC, 1, sizeof(MBDB_MAGIC), mbdb_fd);
+	if (bytes != sizeof(MBDB_MAGIC)) {
+		fprintf(stderr, "Unable to write mbdb magic\n");
+		return -1;
+	}
+
+	// Version Major 5, Minor 0
+	version = flip16(0x0500);
+	bytes = fwrite(&version, 1, sizeof(version), mbdb_fd);
 	if (bytes != sizeof(version)) {
 		fprintf(stderr, "Unable to write mbdx version\n");
 		return -1;
@@ -224,6 +249,7 @@ int backup_save(backup_t* backup, const char* directory, const char* uuid) {
 
 			// Write mbdx record and mbdb offset
 			unsigned int mbdx_record_size = 0;
+			file->mbdx_record->offset = flip32(mbdb_offset);
 			unsigned char* mbdx_record_data = NULL;
 			err = mbdx_record_build(file->mbdx_record, &mbdx_record_data,
 					&mbdx_record_size);
@@ -232,7 +258,6 @@ int backup_save(backup_t* backup, const char* directory, const char* uuid) {
 				return -1;
 			}
 
-			file->mbdx_record->offset = flip32(mbdb_offset);
 			bytes = fwrite(mbdx_record_data, 1, mbdx_record_size, mbdx_fd);
 			if (bytes < 0) {
 				fprintf(stderr, "Unable to write mbdx record data\n");
