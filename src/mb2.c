@@ -30,10 +30,6 @@
  
   */
 
-
-#define LOCK_ATTEMPTS 50
-#define LOCK_WAIT 200000
-
 #define CODE_SUCCESS 0x00
 #define CODE_ERROR_LOCAL 0x06
 #define CODE_ERROR_REMOTE 0x0b
@@ -47,7 +43,8 @@ enum plist_format_t {
 
 	// the stuff above is all taken verbatim out of idevicebackup2.c from the top, not sure how much of it we will definitely need yet
 
-	//in here for debug for now
+#pragma mark DEBUG Functions
+
 static void print_progress_real(double progress, int flush)
 {
 	int i = 0;
@@ -92,6 +89,9 @@ static void print_progress(uint64_t current, uint64_t total)
 		printf("\n");
 }
 
+#pragma mark potentially un-needed
+
+/* gathers information for a backup to be created, this may or may not be needed for our purposes */
 
 static plist_t mobilebackup_factory_info_plist_new(mb2_t* mb2s)
 {
@@ -210,6 +210,9 @@ static plist_t mobilebackup_factory_info_plist_new(mb2_t* mb2s)
 	return ret;
 }
 
+#pragma mark PLIST_Functions
+/* used in plist_read_from_filename, im assuming it reads the file into a char buffer or something */
+
 static void buffer_read_from_filename(const char *filename, char **buffer, uint64_t *length)
 {
 	FILE *f;
@@ -237,19 +240,6 @@ static void buffer_read_from_filename(const char *filename, char **buffer, uint6
 	*length = size;
 }
 
-static void buffer_write_to_filename(const char *filename, const char *buffer, uint64_t length)
-{
-	FILE *f;
-	
-	f = fopen(filename, "ab");
-	if (!f)
-		f = fopen(filename, "wb");
-	if (f) {
-		fwrite(buffer, sizeof(char), length, f);
-		fclose(f);
-	}
-}
-
 static int plist_read_from_filename(plist_t *plist, const char *filename)
 {
 	char *buffer = NULL;
@@ -275,6 +265,22 @@ static int plist_read_from_filename(plist_t *plist, const char *filename)
 	return 1;
 }
 
+
+/* used in plist_write_to_filename assuming it writes a buffer into a file */
+
+static void buffer_write_to_filename(const char *filename, const char *buffer, uint64_t length)
+{
+	FILE *f;
+	
+	f = fopen(filename, "ab");
+	if (!f)
+		f = fopen(filename, "wb");
+	if (f) {
+		fwrite(buffer, sizeof(char), length, f);
+		fclose(f);
+	}
+}
+
 static int plist_write_to_filename(plist_t plist, const char *filename, enum plist_format_t format)
 {
 	char *buffer = NULL;
@@ -297,7 +303,10 @@ static int plist_write_to_filename(plist_t plist, const char *filename, enum pli
 	return 1;
 }
 
-//we may never need to use this
+
+
+
+/*  appears to check if a backup is complete before restoring from it, not sure if we will need to use it */
 
 static int mb2_status_check_snapshot_state(const char *path, const char *uuid, const char *matches) 
 {
@@ -324,6 +333,8 @@ static int mb2_status_check_snapshot_state(const char *path, const char *uuid, c
 	plist_free(status_plist);
 	return ret;
 }
+
+/* this function verifies if our current device matches our backup */
 
 static int mobilebackup_info_is_current_device(mb2_t* mb2s, plist_t info)
 {
@@ -388,6 +399,8 @@ static int mobilebackup_info_is_current_device(mb2_t* mb2s, plist_t info)
 	return ret;
 }
 
+/* function appears to only be used when performing a backup, not restoring from one. potentially frivolous */
+
 static void apparition_do_post_notification(mb2_t* mb2s, const char *notification)
 {
 	uint16_t nport = 0;
@@ -414,8 +427,7 @@ static void apparition_do_post_notification(mb2_t* mb2s, const char *notificatio
 	}
 }
 
-/* not sure if we even need this */
-
+/* not sure if we even need this returns if there is a error adding a file maybe?*/
 
 static void mb2_multi_status_add_file_error(plist_t status_dict, const char *path, int error_code, const char *error_message)
 {
@@ -425,6 +437,8 @@ static void mb2_multi_status_add_file_error(plist_t status_dict, const char *pat
 	plist_dict_insert_item(filedict, "DLFileErrorCode", plist_new_uint(error_code));
 	plist_dict_insert_item(status_dict, path, filedict);
 }
+
+/* not sure what this does yet, convert an error to a readable format? */
 
 static int errno_to_device_error(int errno_value)
 {
@@ -437,6 +451,8 @@ static int errno_to_device_error(int errno_value)
 			return -errno_value;
 	}
 }
+
+#pragma mark MB2 File Management code
 
 static int mb2_handle_send_file(mb2_t* mb2s, const char *backup_dir, const char *path, plist_t *errplist)
 {
@@ -618,6 +634,8 @@ static void mb2_handle_send_files(mb2_t* mb2s, plist_t message, const char *back
 		plist_free(errplist);
 	}
 }
+
+/* i dont think we ever have to receive files unless we are creating a backup, but leaving this here just in case */
 
 static int mb2_handle_receive_files(mb2_t* mb2s, plist_t message, const char *backup_dir)
 {
@@ -978,6 +996,8 @@ mb2_t* mb2_open(lockdown_t* lockdown, afc_t* afcs)
 	return mb2;
 }
 
+/* just here for debug purposes right now, probably never need it */
+
 static void notify_cb(const char *notification, void *userdata) //more placeholders
 {
 	if (!strcmp(notification, NP_SYNC_CANCEL_REQUEST)) {
@@ -996,8 +1016,8 @@ int mb2_restore(mb2_t* mb2, backup_t* backup) {
 	
 		//FIXME!!!
 	
-	char *backup_directory = NULL; //just here as a placeholder to keep compile from failing
-	char uuid[41]; //save as above
+	char *backup_directory = backup->directory; //should be the proper directory now? :)
+	char uuid[41]; //same as above
 	
 	plist_t node_tmp = NULL;
 	mobilebackup2_error_t err;
