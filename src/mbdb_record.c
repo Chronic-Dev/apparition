@@ -190,12 +190,11 @@ void mbdb_record_debug(mbdb_record_t* record) {
 	fprintf(stderr, "\tunknown3 = 0x%x\n", record->unknown3);
 }
 
-int mbdb_record_build(mbdb_record_t* record, unsigned char** data,
-		unsigned int* size) {
+int mbdb_record_build(mbdb_record_t* record, unsigned char** data, unsigned int* size) {
 	unsigned int offset = 0;
 	unsigned char* buf = NULL;
 	unsigned char strsize = '\0';
-	unsigned char data_buf[0x400];
+	unsigned char data_buf[0x2000];
 
 	// Parse Domain
 	if (record->domain != NULL) {
@@ -205,6 +204,9 @@ int mbdb_record_build(mbdb_record_t* record, unsigned char** data,
 
 		memcpy(&data_buf[offset], record->domain, strsize);
 		offset += strsize;
+
+	} else {
+		offset++;
 	}
 
 	// Parse Path
@@ -215,6 +217,9 @@ int mbdb_record_build(mbdb_record_t* record, unsigned char** data,
 
 		memcpy(&data_buf[offset], record->path, strsize);
 		offset += strsize;
+
+	} else {
+		offset++;
 	}
 
 	// Parse Target
@@ -225,46 +230,60 @@ int mbdb_record_build(mbdb_record_t* record, unsigned char** data,
 
 		memcpy(&data_buf[offset], record->target, strsize);
 		offset += strsize;
+
+	} else {
+		offset++;
 	}
 
-	/*
-	 record->datahash = (char*) malloc(6);
-	 memcpy(record->datahash, &data[offset], 6);
-	 offset += 6;
+	if (record->datahash != NULL) {
+		memcpy(&data_buf[offset], record->datahash, 6);
+		offset += 6;
+	}
 
-	 record->mode = flip16(*((unsigned short*)&data[offset]));
-	 offset += 2;
+	int mode = flip16(record->mode);
+	memcpy(&data_buf[offset], &mode, 2);
+	offset += 2;
 
-	 record->unknown2 = flip32(*((unsigned int*)&data[offset]));
-	 offset += 4;
+	int unknown2 = flip32(record->unknown2);
+	memcpy(&data_buf[offset], &unknown2, 4);
+	offset += 4;
 
-	 record->unknown3 = flip32(*((unsigned int*)&data[offset]));
-	 offset += 4;
+	int unknown3 = flip32(record->unknown3);
+	memcpy(&data_buf[offset], &unknown3, 4);
+	offset += 4;
 
-	 record->uid = flip32(*((unsigned int*)&data[offset]));
-	 offset += 4;
+	int uid = flip32(record->uid);
+	memcpy(&data_buf[offset], &uid, 4);
+	offset += 4;
 
-	 record->gid = flip32(*((unsigned int*)&data[offset]));
-	 offset += 4;
+	int gid = flip32(record->gid);
+	memcpy(&data_buf[offset], &gid, 4);
+	offset += 4;
 
-	 record->time1 = flip32(*((unsigned int*)&data[offset]));
-	 offset += 4;
+	int time1 = flip32(record->time1);
+	memcpy(&data_buf[offset], &time1, 4);
+	offset += 4;
 
-	 record->time2 = flip32(*((unsigned int*)&data[offset]));
-	 offset += 4;
+	int time2 = flip32(record->time2);
+	memcpy(&data_buf[offset], &time2, 4);
+	offset += 4;
 
-	 record->time3 = flip32(*((unsigned int*)&data[offset]));
-	 offset += 4;
+	int time3 = flip32(record->time3);
+	memcpy(&data_buf[offset], &time3, 4);
+	offset += 4;
 
-	 record->length = flip64(*((unsigned long long*)&data[offset]));
-	 offset += 8;
+	unsigned long long length = flip64(record->length);
+	memcpy(&data_buf[offset], &length, 8);
+	offset += 8;
 
-	 record->flag = *((unsigned char*)&data[offset]);
-	 offset += 1;
+	int flag = record->flag;
+	memcpy(&data_buf[offset], &flag, 1);
+	offset++;
 
-	 record->properties = *((unsigned char*)&data[offset]);
-	 offset += 1;
-	 */
+	int prop = record->properties;
+	memcpy(&data_buf[offset], &prop, 1);
+	offset++;
+
 	*data = data_buf;
 	*size = offset;
 	return 0;
