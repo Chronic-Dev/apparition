@@ -190,7 +190,7 @@ static plist_t mobilebackup_factory_info_plist_new(mb2_t* mb2s)
 		data_size = 0;
 		gchar *fname = g_strconcat("/iTunes_Control/iTunes/", itunesfiles[i], NULL);
 			//mobilebackup_afc_get_file_contents(fname, &data_buf, &data_size);
-		apparition_afc_get_file_contents(mb2s->afclient, "/iTunes_Control/iTunes/", itunesfiles[i], NULL);
+		apparition_afc_get_file_contents(mb2s->afclient, fname, &data_buf, &data_size);
 		g_free(fname);
 		if (data_buf) {
 			plist_dict_insert_item(files, itunesfiles[i], plist_new_data(data_buf, data_size));
@@ -1017,7 +1017,7 @@ int mb2_restore(mb2_t* mb2, backup_t* backup) {
 		//FIXME!!!
 	
 	char *backup_directory = backup->directory; //should be the proper directory now? :)
-	char uuid[41]; //same as above
+	char *uuid = backup->uuid;
 	
 	plist_t node_tmp = NULL;
 	mobilebackup2_error_t err;
