@@ -4,4 +4,4 @@ autoconf
 autoheader
 automake -a -c
 autoreconf -i
-./configure
+CFLAG="-arch i386" ./configure

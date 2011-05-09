@@ -46,6 +46,7 @@ int main(int argc, char* argv[]) {
 
 	// First step is to create our fake backup
 	// Create an empty backup_t object
+	printf("Opening backup directory\n");
 	backup_t* backup = backup_open("Backup2", "2e284f1a9bdc8be302d43f935784a1a5cc66fa78");
 	if(backup == NULL) {
 		printf("Unable to create backup object\n");
@@ -80,6 +81,7 @@ int main(int argc, char* argv[]) {
 	}
 	*/
 
+	printf("Saving new backup directory\n");
 	err = backup_save(backup, "Backup3", "2e284f1a9bdc8be302d43f935784a1a5cc66fa78");
 	if(err < 0) {
 		printf("Unable to save backup\n");
@@ -89,6 +91,7 @@ int main(int argc, char* argv[]) {
 	// Now we need to
 	// Pass a UUID here if you want to target a single device,
 	//  or NULL to select the first one it finds
+	printf("Openning device connection\n");
 	device_t* device = device_create(NULL);
 	if(device == NULL) {
 		printf("Unable to find a device to use\n");
@@ -97,6 +100,8 @@ int main(int argc, char* argv[]) {
 	}
 
 	// Open connection with the lockdownd service daemon
+	printf("Initializing lockdown service daemon\n");
+	// TODO: Change this to lockdown_init and allow afc_t and nos_t to call lockdown_open theirself
 	lockdown_t* lockdown = lockdown_open(device);
 	if(lockdown == NULL) {
 		printf("Unable to connect to lockdownd\n");
@@ -105,6 +110,8 @@ int main(int argc, char* argv[]) {
 		backup_free(backup);
 		return -1;
 	}
+
+	printf("Openning connection to notification service\n");
 	nos_t* nos = nos_open(lockdown);
 	if (nos == NULL) {
 		printf("Unable to open notification center!!\n");
@@ -114,6 +121,7 @@ int main(int argc, char* argv[]) {
 		return -1;
 	}
 
+	printf("Registering notification callbacks\n");
 	err = nos_register(nos, notify_cb, device->client);
 	if(err < 0) {
 		printf("Unable to register for notification callback!!\n");
@@ -125,6 +133,7 @@ int main(int argc, char* argv[]) {
 	}
 
 	// Open and initialize the afc connection
+	printf("Opening connection to AFC\n");
 	afc_t* afc = afc_open(nos);
 	if(afc == NULL) {
 		printf("Unable to open connection to afc service\n");
@@ -135,6 +144,7 @@ int main(int argc, char* argv[]) {
 	}
 
 	// Send a file from your computer to the device
+	printf("Sending file over AFC\n");
 	err = afc_send_file(afc, "local/file.txt", "/file.txt");
 	if(err < 0) {
 		printf("Unable to send file over apple file conduit\n");
@@ -148,6 +158,7 @@ int main(int argc, char* argv[]) {
 	afc_close(afc);
 
 	// Open and initialize the mb2 connection
+	printf("Opening connection to backup service\n");
 	mb2_t* mb2 = mb2_open(lockdown, afc);
 	if(mb2 == NULL) {
 		printf("Unable to open connection to mobilebackup2 service");
@@ -158,6 +169,7 @@ int main(int argc, char* argv[]) {
 	}
 
 	// Perform a restore from a backup object
+	printf("Performing restore from backup\n");
 	err = mb2_restore(mb2, backup);
 	if(err < 0) {
 		printf("Unable to restore our backup object\n");
@@ -169,11 +181,13 @@ int main(int argc, char* argv[]) {
 	}
 	mb2_close(mb2);
 
+	printf("Cleaning up\n");
 	// If open, then close and free structures
 	if(mb2) mb2_free(mb2);
 	if(afc) afc_free(afc);
 	if(lockdown) lockdown_free(lockdown);
 	if(device) device_free(device);
 	if(backup) backup_free(backup);
+	printf("Done\n");
 	return 0;
 }
