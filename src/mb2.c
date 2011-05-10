@@ -1433,7 +1433,7 @@ int mb2_process_messages(mb2_t* mb2, backup_t* backup)
 	
 	
 	
-	return 0; //if we got this far, success?
+	return errcode; //if we got this far, success?
 }
 
 int mb2_close(mb2_t* mb2) {
