@@ -1024,6 +1024,7 @@ static void notify_cb(const char *notification, void *userdata) //more placehold
 int mb2_restore(mb2_t* mb2, backup_t* backup) 
 
 {	
+	int processStatus = 0;
 	lockdown_t *lockdown = mb2->lockdown;
 	device_t *device = lockdown->device;
 	
@@ -1095,7 +1096,7 @@ int mb2_restore(mb2_t* mb2, backup_t* backup)
 		err = mobilebackup2_version_exchange(mb2->client, local_versions, 2, &remote_version);
 		if (err != MOBILEBACKUP2_E_SUCCESS) {
 			printf("Could not perform backup protocol version exchange, error code %d\n", err);
-			goto checkpoint; //not sure why they would go to the checkpoint upon failure, we can probably cut this.
+			goto checkpoint; //FIXME: not sure why they would go to the checkpoint upon failure, we can probably cut this.
 		}
 		
 		printf( "Negotiated Protocol Version %.1f\n", remote_version);
@@ -1150,10 +1151,10 @@ int mb2_restore(mb2_t* mb2, backup_t* backup)
 					}
 				}
 			
-		mb2_process_messages(mb2, backup);
+		processStatus = mb2_process_messages(mb2, backup);
 		
 	} 
-	return -1;
+	return processStatus;
 }
 
 /* convert the message string into an integer for switch processing in mb2_process_messages */
@@ -1213,9 +1214,9 @@ int mb2_process_messages(mb2_t* mb2, backup_t* backup)
 			return -1;
 		}
 
-		int intStatus = dlmsg_status_from_string(dlmsg);
+		int dlStatus = dlmsg_status_from_string(dlmsg);
 		
-		switch (intStatus) { //int value of DLMessage
+		switch (dlStatus) { //int value of DLMessage
 				
 				uint32_t cnt = 0;
 				
