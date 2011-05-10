@@ -21,5 +21,6 @@ typedef struct device_t {
 
 device_t* device_open(const char* uuid);
 void device_free(device_t* device);
+void device_enable_debug();
 
 #endif /* DEVICE_H_ */

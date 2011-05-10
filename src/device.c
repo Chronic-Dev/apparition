@@ -25,7 +25,6 @@ device_t* device_create(const char* uuid) {
 	int ret = 0;
 	device_t* device = NULL;
 	device = (device_t*) malloc(sizeof(device_t));
-		//device->client = (idevice_t) malloc(sizeof(idevice_t));
 	if (device == NULL) {
 		return NULL;
 	}
@@ -41,6 +40,12 @@ device_t* device_create(const char* uuid) {
 		fprintf(stderr, "No device found with uuid %s, is it plugged in?\n", uuid);
 		return NULL;
 	}
+
+	if(uuid == NULL) {
+		idevice_get_uuid(device->client, &device->uuid);
+	} else {
+		device->uuid = strdup(uuid);
+	}
 	return device;
 }
 
@@ -48,4 +53,9 @@ void device_free(device_t* device) {
 	if (device) {
 		free(device);
 	}
+}
+
+
+void device_enable_debug() {
+	idevice_set_debug_level(3);
 }

@@ -44,10 +44,20 @@ int main(int argc, char* argv[]) {
 	mbdx_record_t* mbdx_record = NULL;
 	mbdb_record_t* mbdb_record = NULL;
 
-	// First step is to create our fake backup
+	// Pass a UUID here if you want to target a single device,
+	//  or NULL to select the first one it finds
+	printf("Openning device connection\n");
+	device_t* device = device_create(NULL);
+	if(device == NULL) {
+		printf("Unable to find a device to use\n");
+		return -1;
+	}
+	device_enable_debug();
+
+	// Create our fake backup
 	// Create an empty backup_t object
 	printf("Opening backup directory\n");
-	backup_t* backup = backup_open("Backup2", "2e284f1a9bdc8be302d43f935784a1a5cc66fa78");
+	backup_t* backup = backup_open("Backup", device->uuid);
 	if(backup == NULL) {
 		printf("Unable to create backup object\n");
 		return -1;
@@ -82,20 +92,11 @@ int main(int argc, char* argv[]) {
 	*/
 
 	printf("Saving new backup directory\n");
-	err = backup_save(backup, "Backup3", "2e284f1a9bdc8be302d43f935784a1a5cc66fa78");
+	mkdir("Clone", 0644);
+	mkdir("Clone/2e284f1a9bdc8be302d43f935784a1a5cc66fa78", 0644);
+	err = backup_save(backup, "Clone", "2e284f1a9bdc8be302d43f935784a1a5cc66fa78");
 	if(err < 0) {
 		printf("Unable to save backup\n");
-		return -1;
-	}
-
-	// Now we need to
-	// Pass a UUID here if you want to target a single device,
-	//  or NULL to select the first one it finds
-	printf("Openning device connection\n");
-	device_t* device = device_create(NULL);
-	if(device == NULL) {
-		printf("Unable to find a device to use\n");
-		backup_free(backup);
 		return -1;
 	}
 
