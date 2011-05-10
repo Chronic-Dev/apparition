@@ -24,6 +24,8 @@ typedef struct mb2_t {
 
 mb2_t* mb2_open(lockdown_t* lockdown, afc_t* afcs);
 int mb2_restore(mb2_t* mb2, backup_t* backup);
+int mb2_process_messages(mb2_t* mb2, backup_t* backup);
+int dlmsg_status_from_string(char *dlmsg);
 int mb2_backup(mb2_t* mb2, backup_t** backup);
 int mb2_close(mb2_t* mb2);
 void mb2_free(mb2_t* mb2);
