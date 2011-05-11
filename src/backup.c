@@ -17,10 +17,47 @@
 #include <dirent.h>
 #include <unistd.h>
 
+#include <glib.h>
+#include <gcrypt.h> //for sha1 data hash
+
 #include "mbdb.h"
 #include "mbdx.h"
 #include "backup.h"
 #include "byteorder.h"
+
+static void compute_datahash(const char *path, unsigned char *hash_out)
+{
+	gcry_md_hd_t hd = NULL;
+	gcry_md_open(&hd, GCRY_MD_SHA1, 0);
+	if (!hd) {
+		printf("ERROR: Could not initialize libgcrypt/SHA1\n");
+		return;
+	}
+	
+	gcry_md_reset(hd);
+	
+	FILE *f = fopen(path, "rb");
+	if (f) {
+		unsigned char buf[16384];
+		size_t len;
+		while ((len = fread(buf, 1, 16384, f)) > 0) {
+			gcry_md_write(hd, buf, len);
+		}
+		fclose(f);
+		unsigned char *newhash = gcry_md_read(hd, GCRY_MD_SHA1);
+		memcpy(hash_out, newhash, 20);
+	}
+	gcry_md_close(hd);
+}
+
+static void print_hash(const unsigned char *hash, int len)
+{
+	int i;
+	for (i = 0; i < len; i++) {
+		printf("%02x", hash[i]);
+	}
+	printf("\n");
+}
 
 backup_t* backup_create() {
 	int err = 0;
@@ -278,6 +315,13 @@ int backup_close(backup_t* backup) {
 }
 
 int backup_add_file(backup_t* backup, backup_file_t* file) {
+	
+	char *thefile = file->filepath;
+	char data_hash[20];
+	
+	printf("\n%s SHA1: ",thefile );
+	compute_datahash(thefile, data_hash);
+	print_hash(data_hash, 20);
 	// Hash the file and write it out
 
 	// Allocate new mbdx_record

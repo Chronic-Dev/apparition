@@ -30,6 +30,8 @@
 #include "mbdx_record.h"
 #include "mbdb_record.h"
 
+
+
 static void notify_cb(const char *notification, void *userdata)
 {
 	if (!strcmp(notification, NP_SYNC_CANCEL_REQUEST)) {
@@ -38,6 +40,7 @@ static void notify_cb(const char *notification, void *userdata)
 		printf("Unhandled notification '%s' (TODO: implement)\n", notification);
 	}
 }
+
 
 int main(int argc, char* argv[]) {
 	int err = 0;
@@ -63,6 +66,18 @@ int main(int argc, char* argv[]) {
 		return -1;
 	}
 
+	/*
+
+	 //example test for making SHA1 is generated properly
+	 
+	backup_file_t* file = backup_file_create("Backup/3b43f185dd42d9f1f7bd42a7404a48c7965e3715/Info.plist");
+	backup_add_file(backup, file);
+	
+	return -1;
+	
+	*/
+	
+	
 	/*
 	backup_file_t* file = backup_file_create();
 	if(file == NULL) {

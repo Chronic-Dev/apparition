@@ -9,18 +9,20 @@
 #include <stdlib.h>
 #include <string.h>
 
+
 #include "backup_file.h"
 #include "mbdx_record.h"
 #include "mbdb_record.h"
 
-backup_file_t* backup_file_create() {
+
+backup_file_t* backup_file_create(char *backupfile) {
 	backup_file_t* file = (backup_file_t*) malloc(sizeof(backup_file_t));
 	if(file == NULL) {
 		fprintf(stderr, "Allocation Error\n");
 		return NULL;
 	}
 	memset(file, '\0', sizeof(backup_file_t));
-
+	file->filepath = backupfile;
 	return file;
 }
 

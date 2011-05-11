@@ -14,8 +14,9 @@
 typedef struct backup_file_t {
 	mbdx_record_t* mbdx_record;
 	mbdb_record_t* mbdb_record;
+	char *filepath;
 } backup_file_t;
 
-backup_file_t* backup_file_create();
+backup_file_t* backup_file_create(char *backupfile);
 
 #endif /* BACKUP_FILE_H_ */
