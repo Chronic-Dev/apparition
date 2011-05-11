@@ -94,7 +94,7 @@ int main(int argc, char* argv[]) {
 	printf("Saving new backup directory\n");
 	mkdir("Clone", 0644);
 	mkdir("Clone/2e284f1a9bdc8be302d43f935784a1a5cc66fa78", 0644);
-	err = backup_save(backup, "Clone", "2e284f1a9bdc8be302d43f935784a1a5cc66fa78");
+	err = backup_save(backup, "Clone", device->uuid);
 	if(err < 0) {
 		printf("Unable to save backup\n");
 		return -1;
@@ -103,7 +103,19 @@ int main(int argc, char* argv[]) {
 	// Open connection with the lockdownd service daemon
 	printf("Initializing lockdown service daemon\n");
 	// TODO: Change this to lockdown_init and allow afc_t and nos_t to call lockdown_open theirself
-	lockdown_t* lockdown = lockdown_open(device);
+	lockdown_t* lockdown = lockdown_init(device);
+	if(lockdown == NULL) {
+		printf("Unable to connect to lockdownd\n");
+		lockdown_free(lockdown);
+		device_free(device);
+		backup_free(backup);
+		return -1;
+	}
+
+	// Open connection with the lockdownd service daemon
+	printf("Openning lockdown service connection\n");
+	// TODO: Change this to lockdown_init and allow afc_t and nos_t to call lockdown_open theirself
+	err = lockdown_open(lockdown);
 	if(lockdown == NULL) {
 		printf("Unable to connect to lockdownd\n");
 		lockdown_free(lockdown);
@@ -122,17 +134,6 @@ int main(int argc, char* argv[]) {
 		return -1;
 	}
 
-	printf("Registering notification callbacks\n");
-	err = nos_register(nos, notify_cb, device->client);
-	if(err < 0) {
-		printf("Unable to register for notification callback!!\n");
-		nos_free(nos);
-		lockdown_free(lockdown);
-		device_free(device);
-		backup_free(backup);
-		return -1;
-	}
-
 	// Open and initialize the afc connection
 	printf("Opening connection to AFC\n");
 	afc_t* afc = afc_open(nos);
@@ -143,6 +144,29 @@ int main(int argc, char* argv[]) {
 		backup_free(backup);
 		return -1;
 	}
+
+	// Open and initialize the mb2 connection
+	printf("Opening connection to backup service\n");
+	mb2_t* mb2 = mb2_open(lockdown, afc);
+	if(mb2 == NULL) {
+		printf("Unable to open connection to mobilebackup2 service");
+		afc_free(afc);
+		lockdown_free(lockdown);
+		device_free(device);
+		backup_free(backup);
+	}
+
+	printf("Registering notification callbacks\n");
+	err = nos_register(nos, notify_cb, device->client);
+	if(err < 0) {
+		printf("Unable to register for notification callback!!\n");
+		nos_free(nos);
+		lockdown_free(lockdown);
+		device_free(device);
+		backup_free(backup);
+		return -1;
+	}
+	lockdown_close(lockdown);
 
 	// Send a file from your computer to the device
 	printf("Sending file over AFC\n");
@@ -157,17 +181,6 @@ int main(int argc, char* argv[]) {
 	}
 	// Close our connection, but don't free our object
 	afc_close(afc);
-
-	// Open and initialize the mb2 connection
-	printf("Opening connection to backup service\n");
-	mb2_t* mb2 = mb2_open(lockdown, afc);
-	if(mb2 == NULL) {
-		printf("Unable to open connection to mobilebackup2 service");
-		afc_free(afc);
-		lockdown_free(lockdown);
-		device_free(device);
-		backup_free(backup);
-	}
 
 	// Perform a restore from a backup object
 	printf("Performing restore from backup\n");

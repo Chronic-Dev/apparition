@@ -16,7 +16,8 @@ typedef struct lockdown_t {
 	lockdownd_client_t client;
 } lockdown_t;
 
-lockdown_t* lockdown_open(struct device_t* device);
+lockdown_t* lockdown_init(struct device_t* device);
+int lockdown_open(lockdown_t* lockdown);
 int lockdown_start_service(lockdown_t* lockdown, const char* service, int* port);
 int lockdown_stop_service(lockdown_t* lockdown, const char* service);
 int lockdown_close(lockdown_t* lockdown);
