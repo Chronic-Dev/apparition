@@ -1,0 +1,2454 @@
+Backup directory is "."
+22:22:13 lockdown.c:313 lockdownd_query_type(): called
+22:22:13 property_list_service.c:142 internal_plist_send(): sending 286 bytes
+22:22:13 property_list_service.c:147 internal_plist_send(): sent 286 bytes
+22:22:13 property_list_service.c:148 internal_plist_send(): printing 286 bytes plist:
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>Label</key>
+	<string>idevicebackup</string>
+	<key>Request</key>
+	<string>QueryType</string>
+</dict>
+</plist>
+22:22:13 property_list_service.c:224 internal_plist_receive_timeout(): initial read=4
+22:22:13 property_list_service.c:233 internal_plist_receive_timeout(): 342 bytes following
+22:22:13 property_list_service.c:242 internal_plist_receive_timeout(): received 342 bytes
+22:22:13 property_list_service.c:256 internal_plist_receive_timeout(): printing 342 bytes plist:
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>Request</key>
+	<string>QueryType</string>
+	<key>Result</key>
+	<string>Success</string>
+	<key>Type</key>
+	<string>com.apple.mobile.lockdown</string>
+</dict>
+</plist>
+22:22:13 lockdown.c:331 lockdownd_query_type(): success with type com.apple.mobile.lockdown
+22:22:13 lockdown.c:688 lockdownd_client_new_with_handshake(): device uuid: 57b56bb86dc67c00374447ed8c5048a193632f86
+22:22:13 userpref.c:162 userpref_get_host_id(): Using CD2EBA32-19A6-6ACC-C455-63630AA7E880 as HostID
+22:22:13 property_list_service.c:142 internal_plist_send(): sending 335 bytes
+22:22:13 property_list_service.c:147 internal_plist_send(): sent 335 bytes
+22:22:13 property_list_service.c:148 internal_plist_send(): printing 335 bytes plist:
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>Label</key>
+	<string>idevicebackup</string>
+	<key>Key</key>
+	<string>DevicePublicKey</string>
+	<key>Request</key>
+	<string>GetValue</string>
+</dict>
+</plist>
+22:22:13 property_list_service.c:224 internal_plist_receive_timeout(): initial read=4
+22:22:13 property_list_service.c:233 internal_plist_receive_timeout(): 711 bytes following
+22:22:13 property_list_service.c:242 internal_plist_receive_timeout(): received 711 bytes
+22:22:13 property_list_service.c:256 internal_plist_receive_timeout(): printing 711 bytes plist:
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>Key</key>
+	<string>DevicePublicKey</string>
+	<key>Request</key>
+	<string>GetValue</string>
+	<key>Result</key>
+	<string>Success</string>
+	<key>Value</key>
+	<data>
+	LS0tLS1CRUdJTiBSU0EgUFVCTElDIEtFWS0tLS0tCk1JR0pBb0dCQU5IeTF5MnBpWE90
+	Q2pqcXZyL1hoem5QWjcwczNNN0pIdm1UdlltbjBZckFWbzhwSHBra2QrY1IKUCtFZzRZ
+	N3MrSXdFbHgyRUJhdkdHNHk0VDNKRmlGU3lCUjh4K3o4clFCa3hpSE94YmYzYUo1ekU2
+	U01NVXdWRQpMNGh0eDZmN2N2MnVQb0ZJVU5BUktFKzRORHhoQTJpaDE2Rmo4STljd0pO
+	NDAraHBrR1MxQWdNQkFBRT0KLS0tLS1FTkQgUlNBIFBVQkxJQyBLRVktLS0tLQo=
+	</data>
+</dict>
+</plist>
+22:22:13 lockdown.c:384 lockdownd_get_value(): success
+22:22:13 lockdown.c:395 lockdownd_get_value(): has a value
+22:22:13 lockdown.c:853 lockdownd_do_pair(): device public key follows:
+-----BEGIN RSA PUBLIC KEY-----
+MIGJAoGBANHy1y2piXOtCjjqvr/XhznPZ70s3M7JHvmTvYmn0YrAVo8pHpkkd+cR
+P+Eg4Y7s+IwElx2EBavGG4y4T3JFiFSyBR8x+z8rQBkxiHOxbf3aJ5zE6SMMUwVE
+L4htx6f7cv2uPoFIUNARKE+4NDxhA2ih16Fj8I9cwJN40+hpkGS1AgMBAAE=
+-----END RSA PUBLIC KEY-----
+
+22:22:13 userpref.c:162 userpref_get_host_id(): Using CD2EBA32-19A6-6ACC-C455-63630AA7E880 as HostID
+22:22:13 property_list_service.c:142 internal_plist_send(): sending 4246 bytes
+22:22:13 property_list_service.c:147 internal_plist_send(): sent 4246 bytes
+22:22:13 property_list_service.c:148 internal_plist_send(): printing 4246 bytes plist:
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>Label</key>
+	<string>idevicebackup</string>
+	<key>PairRecord</key>
+	<dict>
+		<key>DeviceCertificate</key>
+		<data>
+		LS0tLS1CRUdJTiBDRVJUSUZJQ0FURS0tLS0tCk1JSUNBRENCNjZBREFnRUNBZ0VBTUFz
+		R0NTcUdTSWIzRFFFQkJUQUFNQjRYRFRFeE1EVXdOVEl3TWpJeE0xb1gKRFRJeE1EVXdN
+		akl3TWpJeE0xb3dBRENCblRBTEJna3Foa2lHOXcwQkFRRURnWTBBTUlHSkFvR0JBTkh5
+		MXkycAppWE90Q2pqcXZyL1hoem5QWjcwczNNN0pIdm1UdlltbjBZckFWbzhwSHBra2Qr
+		Y1JQK0VnNFk3cytJd0VseDJFCkJhdkdHNHk0VDNKRmlGU3lCUjh4K3o4clFCa3hpSE94
+		YmYzYUo1ekU2U01NVXdWRUw0aHR4NmY3Y3YydVBvRkkKVU5BUktFKzRORHhoQTJpaDE2
+		Rmo4STljd0pONDAraHBrR1MxQWdNQkFBR2pFREFPTUF3R0ExVWRFd0VCL3dRQwpNQUF3
+		Q3dZSktvWklodmNOQVFFRkE0SUJBUUNmbWh2TmZqcW9ObFJPZDkwV2lpWFExR0IyL1FH
+		RWVQeGtRZHF6CjE0Q3lvc1JkeWd0V09icVdnYUhmMllmUzZ5UjlxZmprL1YxTDhPaUts
+		OWpMWmc1dFVXV050akV1bmViSzVjNEsKNm03cnBnaHJNS0s1bUlvVWhmMWpHUW51anU1
+		YkJtcVFJYThZSndOU0Q1cDBOVm4wYWVvd2lOS1hzMnc2UkZCbgpwVzBNa2V6dUlVYTQx
+		UWpDell6VklIN1BOQ1lsR0ZNNkhleTVTT2ZDeDJMa0RjdEtjVmRGS2IxZWh6aDVqcEZr
+		CllhblphTnhDdTJ0RjlwWHVvcnRab1RxVTByTWpScE1qMXRwREQwOVBRbU5GUlFQQjhz
+		b2FpRVVRQ2xlWjMyNUoKZWxOVHhkVkRvUUZQcGdTeEZyUW9VN2xNQm9TbmJySHJkUVpQ
+		UkJ2bzlxTnlwL3hzCi0tLS0tRU5EIENFUlRJRklDQVRFLS0tLS0K
+		</data>
+		<key>HostCertificate</key>
+		<data>
+		LS0tLS1CRUdJTiBDRVJUSUZJQ0FURS0tLS0tCk1JSUNsakNDQVlDZ0F3SUJBZ0lCQURB
+		TEJna3Foa2lHOXcwQkFRVXdBREFlRncweE1UQTFNRFV5TURJd01EVmEKRncweU1UQTFN
+		REl5TURJd01EVmFNQUF3Z2dFZ01Bc0dDU3FHU0liM0RRRUJBUU9DQVE4QU1JSUJDZ0tD
+		QVFFQQptanRiUXRESWxmMFYvZGFRdklkMk9PeUZac2JxY3BLR1F5TDV3ZjhrSitMWHJr
+		bVFLaElJT0FJU2ZNZHRnV1poCkVzcS9KT3dLVWF1RUljWW5xRVJPQzdITjZzQ3ZrMEZp
+		cUR2NTl3SjdyOVBLdWhibHhMZkd4YklpMzh4NkRWR3oKS2dKWGxlZXhDd1FLak9sMFhr
+		eldXT2R2c1JUQVR2d05RaFJsQ1c3SEFiL0ZXNXhyN2QxeUFjc2hHenBPZ3cwVApqRmdz
+		YWIwaXRXU1FPMjh4YzJEUGJIRS9NTlNnU2hvMHlOYkZubTZWS2lhMkZTSHcwMUxHWGY5
+		MFI4N1ZiZ2VRCm9NMUdUMVl6VGYxZVpKMmF3c1hZVDd5dHIwZlhxL25nYmhyL3pHSHRv
+		b1prVUx0L0VkeGovdTVnM25TalorSXEKNFg3b1RYLy9NUnpsQ01ra01MZ0cxd0lEQVFB
+		Qm95RXdIekFNQmdOVkhSTUJBZjhFQWpBQU1BOEdBMVVkRHdFQgovd1FGQXdNSG9BQXdD
+		d1lKS29aSWh2Y05BUUVGQTRJQkFRQkE2eDJaOTN0MkovWTBpVUtWeXllREF4eFVvUGxG
+		Cm00cy93K2FhQ3RFMkg4Q2Z6MEVZNEovaUpkOFF0WElMTlZ2RENEMGMwL2xhalFET0J6
+		RFdmenI1cjh1NXhEYTAKb0FaS094RmN3cHdneFE5ZmowM3BDQlVzWGlHY0NPT0tzVkVl
+		L0VqZ2lwbXhWM0ZGSTZyRUpYaFFxTTQ0YkVTVAppZnh6TTJuaUFsL1hJM3NxSVpQSzlF
+		ZUduRWY5NThNT3VWckZrQVFoeHJpb284N0dCNlVrcncxTUwyWnlMVVpjCnFVNUdmYTFW
+		dHJJQkN1T3RLWHhMRktyMDVTeHJHN0U2OVYySXhlbmpjOTdrRFNwaHlja05hSnZHQllW
+		U0l4d0MKUW5EeE8wTllDdDhIbUQxUW5MNGR3MURYUzVpcEVRZDBZSHFOWkQ4WC9NOUdX
+		d0lPbUo1RCs4WWMKLS0tLS1FTkQgQ0VSVElGSUNBVEUtLS0tLQo=
+		</data>
+		<key>HostID</key>
+		<string>CD2EBA32-19A6-6ACC-C455-63630AA7E880</string>
+		<key>RootCertificate</key>
+		<data>
+		LS0tLS1CRUdJTiBDRVJUSUZJQ0FURS0tLS0tCk1JSUNpRENDQVhLZ0F3SUJBZ0lCQURB
+		TEJna3Foa2lHOXcwQkFRVXdBREFlRncweE1UQTFNRFV5TURJd01EVmEKRncweU1UQTFN
+		REl5TURJd01EVmFNQUF3Z2dFZ01Bc0dDU3FHU0liM0RRRUJBUU9DQVE4QU1JSUJDZ0tD
+		QVFFQQpzN1cxb3NEN3JMTWFGR2cyWm1BRlVYQ0hKV3p0eWlvZ3p2NGxYeDRxVUVXcURN
+		ODhkaEpnOHpHUzdGeVJQT3BpCmwyZjFwaVh1eEF2djc5RzVvNjZwL3lQc2p1eDRzYzNh
+		dTRlNFhkSUpFQW55TzhZY0dWT3g0L3JNVXFzS2xwRngKK2tjaWtrWjZZYk1aSFFsTHlU
+		NmI3NTc2aE9xaWdMOUtjNSt5TzRTc3lLeUVidGN0R2RtNlQzalM4M3ZaUlZqaQpBemhU
+		ZFV2NGFMZWNucnBtZU03MHd3ZEJIVnI0S2hjSFQ0dDVlTURkSTU2VmxVVHVmZmFJR0hs
+		Qk9zSFUrcE5iCmxFa08zQzhrTjlCUGNDN2JMQ1Z0YVhTbWlGdS9Gb0lrekhENzQ3bWFv
+		THhmN24wQU9oNmFJOHhrV2gzNEtIRkoKT0tQZEdMMm5Da3JHTDdFdVNaWUlKd0lEQVFB
+		Qm94TXdFVEFQQmdOVkhSTUJBZjhFQlRBREFRSC9NQXNHQ1NxRwpTSWIzRFFFQkJRT0NB
+		UUVBb3dSTnBIUzc3ckxuQVNxU0FHUUVCSUhIWkRHbjNCdHovMUxqb1lpYlFkTENFWGhh
+		CjR6Zll4QUhLRWMyTUphVlNqWHRraHhzVmRFc0VtOW5uTUJmbGQydXkvYmxMbTV5RUd0
+		TC95ay9ZVnFWMmd0MFcKUHE1L2U5MlMrUEJsY0pUc3E2bW9hM3NvTUFvNUR1NitZTDZz
+		Vk9lQWFnZHBocHhqcUM3ZUdPa1J5ZTlnTGNodgpONXNtdlFZanBkcTdWQUNXdUxCV2dC
+		S0dkdzRzTUYvVlFmOHM1UVpTcHYxZ2ZzTFlvOEs0UVByajZJRDVMa2g5CjNjK2JHWDdD
+		TWk0d3d0MWVUMENyRzBEZU1maXNFRnJ0QzlQWkJvNWN6MWttaXRtMVNSY1dKZmZNOFYv
+		U21JV1gKb3BZSXkrRlZ4UlBaMjRHUnpTMWpmOG8yMVNjdXRDOTBRTkwxUUE9PQotLS0t
+		LUVORCBDRVJUSUZJQ0FURS0tLS0tCg==
+		</data>
+	</dict>
+	<key>Request</key>
+	<string>ValidatePair</string>
+</dict>
+</plist>
+22:22:13 property_list_service.c:224 internal_plist_receive_timeout(): initial read=4
+22:22:13 property_list_service.c:233 internal_plist_receive_timeout(): 284 bytes following
+22:22:13 property_list_service.c:242 internal_plist_receive_timeout(): received 284 bytes
+22:22:13 property_list_service.c:256 internal_plist_receive_timeout(): printing 284 bytes plist:
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>Request</key>
+	<string>ValidatePair</string>
+	<key>Result</key>
+	<string>Success</string>
+</dict>
+</plist>
+22:22:13 lockdown.c:897 lockdownd_do_pair(): ValidatePair success
+22:22:13 property_list_service.c:142 internal_plist_send(): sending 363 bytes
+22:22:13 property_list_service.c:147 internal_plist_send(): sent 363 bytes
+22:22:13 property_list_service.c:148 internal_plist_send(): printing 363 bytes plist:
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>Label</key>
+	<string>idevicebackup</string>
+	<key>HostID</key>
+	<string>CD2EBA32-19A6-6ACC-C455-63630AA7E880</string>
+	<key>Request</key>
+	<string>StartSession</string>
+</dict>
+</plist>
+22:22:13 property_list_service.c:224 internal_plist_receive_timeout(): initial read=4
+22:22:13 property_list_service.c:233 internal_plist_receive_timeout(): 399 bytes following
+22:22:13 property_list_service.c:242 internal_plist_receive_timeout(): received 399 bytes
+22:22:13 property_list_service.c:256 internal_plist_receive_timeout(): printing 399 bytes plist:
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>EnableSessionSSL</key>
+	<true/>
+	<key>Request</key>
+	<string>StartSession</string>
+	<key>Result</key>
+	<string>Success</string>
+	<key>SessionID</key>
+	<string>870AC371-D328-4786-9843-9019F967791C</string>
+</dict>
+</plist>
+22:22:13 lockdown.c:1292 lockdownd_start_session(): Session startup OK
+22:22:13 lockdown.c:1303 lockdownd_start_session(): SessionID: 870AC371-D328-4786-9843-9019F967791C
+22:22:13 lockdown.c:1309 lockdownd_start_session(): Enable SSL Session: true
+22:22:13 idevice.c:583 idevice_connection_enable_ssl(): enabling SSL mode
+22:22:13 idevice.c:603 idevice_connection_enable_ssl(): GnuTLS step 1...
+22:22:13 idevice.c:605 idevice_connection_enable_ssl(): GnuTLS step 2...
+22:22:13 idevice.c:607 idevice_connection_enable_ssl(): GnuTLS step 3...
+22:22:13 idevice.c:609 idevice_connection_enable_ssl(): GnuTLS step 4 -- now handshaking...
+22:22:13 idevice.c:507 internal_ssl_write(): pre-send length = 52
+22:22:13 idevice.c:509 internal_ssl_write(): post-send sent 52 bytes
+22:22:13 idevice.c:467 internal_ssl_read(): pre-read client wants 5 bytes
+22:22:13 idevice.c:477 internal_ssl_read(): post-read we got 5 bytes
+22:22:13 idevice.c:467 internal_ssl_read(): pre-read client wants 74 bytes
+22:22:13 idevice.c:477 internal_ssl_read(): post-read we got 74 bytes
+22:22:13 idevice.c:467 internal_ssl_read(): pre-read client wants 5 bytes
+22:22:13 idevice.c:477 internal_ssl_read(): post-read we got 5 bytes
+22:22:13 idevice.c:467 internal_ssl_read(): pre-read client wants 526 bytes
+22:22:13 idevice.c:477 internal_ssl_read(): post-read we got 526 bytes
+22:22:13 idevice.c:467 internal_ssl_read(): pre-read client wants 5 bytes
+22:22:13 idevice.c:477 internal_ssl_read(): post-read we got 5 bytes
+22:22:13 idevice.c:467 internal_ssl_read(): pre-read client wants 9 bytes
+22:22:13 idevice.c:477 internal_ssl_read(): post-read we got 9 bytes
+22:22:13 idevice.c:551 internal_cert_callback(): Passing certificate
+22:22:13 idevice.c:467 internal_ssl_read(): pre-read client wants 5 bytes
+22:22:13 idevice.c:477 internal_ssl_read(): post-read we got 5 bytes
+22:22:13 idevice.c:467 internal_ssl_read(): pre-read client wants 4 bytes
+22:22:13 idevice.c:477 internal_ssl_read(): post-read we got 4 bytes
+22:22:13 idevice.c:507 internal_ssl_write(): pre-send length = 681
+22:22:13 idevice.c:509 internal_ssl_write(): post-send sent 681 bytes
+22:22:13 idevice.c:507 internal_ssl_write(): pre-send length = 137
+22:22:13 idevice.c:509 internal_ssl_write(): post-send sent 137 bytes
+22:22:13 idevice.c:507 internal_ssl_write(): pre-send length = 267
+22:22:13 idevice.c:509 internal_ssl_write(): post-send sent 267 bytes
+22:22:13 idevice.c:507 internal_ssl_write(): pre-send length = 6
+22:22:13 idevice.c:509 internal_ssl_write(): post-send sent 6 bytes
+22:22:13 idevice.c:507 internal_ssl_write(): pre-send length = 69
+22:22:13 idevice.c:509 internal_ssl_write(): post-send sent 69 bytes
+22:22:13 idevice.c:467 internal_ssl_read(): pre-read client wants 5 bytes
+22:22:13 idevice.c:477 internal_ssl_read(): post-read we got 5 bytes
+22:22:13 idevice.c:467 internal_ssl_read(): pre-read client wants 1 bytes
+22:22:13 idevice.c:477 internal_ssl_read(): post-read we got 1 bytes
+22:22:13 idevice.c:467 internal_ssl_read(): pre-read client wants 5 bytes
+22:22:13 idevice.c:477 internal_ssl_read(): post-read we got 5 bytes
+22:22:13 idevice.c:467 internal_ssl_read(): pre-read client wants 64 bytes
+22:22:13 idevice.c:477 internal_ssl_read(): post-read we got 64 bytes
+22:22:13 idevice.c:613 idevice_connection_enable_ssl(): GnuTLS handshake done...
+22:22:13 idevice.c:624 idevice_connection_enable_ssl(): SSL mode enabled
+22:22:13 userpref.c:162 userpref_get_host_id(): Using CD2EBA32-19A6-6ACC-C455-63630AA7E880 as HostID
+22:22:13 property_list_service.c:142 internal_plist_send(): sending 363 bytes
+22:22:13 idevice.c:507 internal_ssl_write(): pre-send length = 37
+22:22:13 idevice.c:509 internal_ssl_write(): post-send sent 37 bytes
+22:22:13 idevice.c:507 internal_ssl_write(): pre-send length = 389
+22:22:13 idevice.c:509 internal_ssl_write(): post-send sent 389 bytes
+22:22:13 property_list_service.c:147 internal_plist_send(): sent 363 bytes
+22:22:13 property_list_service.c:148 internal_plist_send(): printing 363 bytes plist:
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>Label</key>
+	<string>idevicebackup</string>
+	<key>Request</key>
+	<string>StartService</string>
+	<key>Service</key>
+	<string>com.apple.mobile.notification_proxy</string>
+</dict>
+</plist>
+22:22:13 idevice.c:467 internal_ssl_read(): pre-read client wants 5 bytes
+22:22:13 idevice.c:477 internal_ssl_read(): post-read we got 5 bytes
+22:22:13 idevice.c:467 internal_ssl_read(): pre-read client wants 32 bytes
+22:22:13 idevice.c:477 internal_ssl_read(): post-read we got 32 bytes
+22:22:13 property_list_service.c:224 internal_plist_receive_timeout(): initial read=4
+22:22:13 property_list_service.c:233 internal_plist_receive_timeout(): 401 bytes following
+22:22:13 idevice.c:467 internal_ssl_read(): pre-read client wants 5 bytes
+22:22:13 idevice.c:477 internal_ssl_read(): post-read we got 5 bytes
+22:22:13 idevice.c:467 internal_ssl_read(): pre-read client wants 432 bytes
+22:22:13 idevice.c:477 internal_ssl_read(): post-read we got 432 bytes
+22:22:13 property_list_service.c:242 internal_plist_receive_timeout(): received 401 bytes
+22:22:13 property_list_service.c:256 internal_plist_receive_timeout(): printing 401 bytes plist:
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>Port</key>
+	<integer>49236</integer>
+	<key>Request</key>
+	<string>StartService</string>
+	<key>Result</key>
+	<string>Success</string>
+	<key>Service</key>
+	<string>com.apple.mobile.notification_proxy</string>
+</dict>
+</plist>
+22:22:13 notification_proxy.c:44 np_lock(): NP: Locked
+22:22:13 notification_proxy.c:55 np_unlock(): NP: Unlocked
+22:22:13 notification_proxy.c:352 np_notifier(): starting callback.
+22:22:13 notification_proxy.c:44 np_lock(): NP: Locked
+22:22:13 notification_proxy.c:44 np_lock(): NP: Locked
+22:22:14 property_list_service.c:224 internal_plist_receive_timeout(): initial read=0
+22:22:14 property_list_service.c:226 internal_plist_receive_timeout(): initial read failed!
+22:22:14 notification_proxy.c:297 np_get_notification(): NotificationProxy: no notification received!
+22:22:14 notification_proxy.c:55 np_unlock(): NP: Unlocked
+22:22:14 property_list_service.c:142 internal_plist_send(): sending 323 bytes
+22:22:14 property_list_service.c:147 internal_plist_send(): sent 323 bytes
+22:22:14 property_list_service.c:148 internal_plist_send(): printing 323 bytes plist:
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>Command</key>
+	<string>ObserveNotification</string>
+	<key>Name</key>
+	<string>com.apple.itunes-client.syncCancelRequest</string>
+</dict>
+</plist>
+22:22:14 notification_proxy.c:55 np_unlock(): NP: Unlocked
+22:22:14 notification_proxy.c:44 np_lock(): NP: Locked
+22:22:14 property_list_service.c:142 internal_plist_send(): sending 324 bytes
+22:22:14 property_list_service.c:147 internal_plist_send(): sent 324 bytes
+22:22:14 property_list_service.c:148 internal_plist_send(): printing 324 bytes plist:
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>Command</key>
+	<string>ObserveNotification</string>
+	<key>Name</key>
+	<string>com.apple.itunes-client.syncSuspendRequest</string>
+</dict>
+</plist>
+22:22:14 notification_proxy.c:55 np_unlock(): NP: Unlocked
+22:22:14 notification_proxy.c:44 np_lock(): NP: Locked
+22:22:14 property_list_service.c:142 internal_plist_send(): sending 323 bytes
+22:22:14 property_list_service.c:147 internal_plist_send(): sent 323 bytes
+22:22:14 property_list_service.c:148 internal_plist_send(): printing 323 bytes plist:
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>Command</key>
+	<string>ObserveNotification</string>
+	<key>Name</key>
+	<string>com.apple.itunes-client.syncResumeRequest</string>
+</dict>
+</plist>
+22:22:14 notification_proxy.c:55 np_unlock(): NP: Unlocked
+22:22:14 notification_proxy.c:44 np_lock(): NP: Locked
+22:22:14 property_list_service.c:142 internal_plist_send(): sending 320 bytes
+22:22:14 property_list_service.c:147 internal_plist_send(): sent 320 bytes
+22:22:14 property_list_service.c:148 internal_plist_send(): printing 320 bytes plist:
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>Command</key>
+	<string>ObserveNotification</string>
+	<key>Name</key>
+	<string>com.apple.mobile.backup.domain_changed</string>
+</dict>
+</plist>
+22:22:14 notification_proxy.c:55 np_unlock(): NP: Unlocked
+22:22:14 userpref.c:162 userpref_get_host_id(): Using CD2EBA32-19A6-6ACC-C455-63630AA7E880 as HostID
+22:22:14 property_list_service.c:142 internal_plist_send(): sending 341 bytes
+22:22:14 idevice.c:507 internal_ssl_write(): pre-send length = 37
+22:22:14 idevice.c:509 internal_ssl_write(): post-send sent 37 bytes
+22:22:14 idevice.c:507 internal_ssl_write(): pre-send length = 373
+22:22:14 idevice.c:509 internal_ssl_write(): post-send sent 373 bytes
+22:22:14 property_list_service.c:147 internal_plist_send(): sent 341 bytes
+22:22:14 property_list_service.c:148 internal_plist_send(): printing 341 bytes plist:
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>Label</key>
+	<string>idevicebackup</string>
+	<key>Request</key>
+	<string>StartService</string>
+	<key>Service</key>
+	<string>com.apple.afc</string>
+</dict>
+</plist>
+22:22:14 idevice.c:467 internal_ssl_read(): pre-read client wants 5 bytes
+22:22:14 idevice.c:477 internal_ssl_read(): post-read we got 5 bytes
+22:22:14 idevice.c:467 internal_ssl_read(): pre-read client wants 32 bytes
+22:22:14 idevice.c:477 internal_ssl_read(): post-read we got 32 bytes
+22:22:14 property_list_service.c:224 internal_plist_receive_timeout(): initial read=4
+22:22:14 property_list_service.c:233 internal_plist_receive_timeout(): 379 bytes following
+22:22:14 idevice.c:467 internal_ssl_read(): pre-read client wants 5 bytes
+22:22:14 idevice.c:477 internal_ssl_read(): post-read we got 5 bytes
+22:22:14 idevice.c:467 internal_ssl_read(): pre-read client wants 400 bytes
+22:22:14 idevice.c:477 internal_ssl_read(): post-read we got 400 bytes
+22:22:14 property_list_service.c:242 internal_plist_receive_timeout(): received 379 bytes
+22:22:14 property_list_service.c:256 internal_plist_receive_timeout(): printing 379 bytes plist:
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>Port</key>
+	<integer>49238</integer>
+	<key>Request</key>
+	<string>StartService</string>
+	<key>Result</key>
+	<string>Success</string>
+	<key>Service</key>
+	<string>com.apple.afc</string>
+</dict>
+</plist>
+22:22:14 userpref.c:162 userpref_get_host_id(): Using CD2EBA32-19A6-6ACC-C455-63630AA7E880 as HostID
+22:22:14 property_list_service.c:142 internal_plist_send(): sending 351 bytes
+22:22:14 idevice.c:507 internal_ssl_write(): pre-send length = 37
+22:22:14 idevice.c:509 internal_ssl_write(): post-send sent 37 bytes
+22:22:14 idevice.c:507 internal_ssl_write(): pre-send length = 389
+22:22:14 idevice.c:509 internal_ssl_write(): post-send sent 389 bytes
+22:22:14 property_list_service.c:147 internal_plist_send(): sent 351 bytes
+22:22:14 property_list_service.c:148 internal_plist_send(): printing 351 bytes plist:
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>Label</key>
+	<string>idevicebackup</string>
+	<key>Request</key>
+	<string>StartService</string>
+	<key>Service</key>
+	<string>com.apple.mobilebackup2</string>
+</dict>
+</plist>
+22:22:14 idevice.c:467 internal_ssl_read(): pre-read client wants 5 bytes
+22:22:14 idevice.c:477 internal_ssl_read(): post-read we got 5 bytes
+22:22:14 idevice.c:467 internal_ssl_read(): pre-read client wants 32 bytes
+22:22:14 idevice.c:477 internal_ssl_read(): post-read we got 32 bytes
+22:22:14 property_list_service.c:224 internal_plist_receive_timeout(): initial read=4
+22:22:14 property_list_service.c:233 internal_plist_receive_timeout(): 389 bytes following
+22:22:14 idevice.c:467 internal_ssl_read(): pre-read client wants 5 bytes
+22:22:14 idevice.c:477 internal_ssl_read(): post-read we got 5 bytes
+22:22:14 idevice.c:467 internal_ssl_read(): pre-read client wants 416 bytes
+22:22:14 idevice.c:477 internal_ssl_read(): post-read we got 416 bytes
+22:22:14 property_list_service.c:242 internal_plist_receive_timeout(): received 389 bytes
+22:22:14 property_list_service.c:256 internal_plist_receive_timeout(): printing 389 bytes plist:
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>Port</key>
+	<integer>49240</integer>
+	<key>Request</key>
+	<string>StartService</string>
+	<key>Result</key>
+	<string>Success</string>
+	<key>Service</key>
+	<string>com.apple.mobilebackup2</string>
+</dict>
+</plist>
+Started "com.apple.mobilebackup2" service on port 49240.
+22:22:14 property_list_service.c:224 internal_plist_receive_timeout(): initial read=4
+22:22:14 property_list_service.c:233 internal_plist_receive_timeout(): 79 bytes following
+22:22:14 property_list_service.c:242 internal_plist_receive_timeout(): received 79 bytes
+22:22:14 property_list_service.c:256 internal_plist_receive_timeout(): printing 279 bytes plist:
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<array>
+	<string>DLMessageVersionExchange</string>
+	<integer>100</integer>
+	<integer>0</integer>
+</array>
+</plist>
+22:22:14 property_list_service.c:142 internal_plist_send(): sending 90 bytes
+22:22:14 property_list_service.c:147 internal_plist_send(): sent 90 bytes
+22:22:14 property_list_service.c:148 internal_plist_send(): printing 288 bytes plist:
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<array>
+	<string>DLMessageVersionExchange</string>
+	<string>DLVersionsOk</string>
+	<integer>100</integer>
+</array>
+</plist>
+22:22:14 property_list_service.c:224 internal_plist_receive_timeout(): initial read=4
+22:22:14 property_list_service.c:233 internal_plist_receive_timeout(): 67 bytes following
+22:22:14 property_list_service.c:242 internal_plist_receive_timeout(): received 67 bytes
+22:22:14 property_list_service.c:256 internal_plist_receive_timeout(): printing 229 bytes plist:
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<array>
+	<string>DLMessageDeviceReady</string>
+</array>
+</plist>
+22:22:14 property_list_service.c:142 internal_plist_send(): sending 146 bytes
+22:22:14 property_list_service.c:147 internal_plist_send(): sent 146 bytes
+22:22:14 property_list_service.c:148 internal_plist_send(): printing 409 bytes plist:
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<array>
+	<string>DLMessageProcessMessage</string>
+	<dict>
+		<key>SupportedProtocolVersions</key>
+		<array>
+			<real>2.000000</real>
+			<real>2.100000</real>
+		</array>
+		<key>MessageName</key>
+		<string>Hello</string>
+	</dict>
+</array>
+</plist>
+22:22:14 property_list_service.c:224 internal_plist_receive_timeout(): initial read=4
+22:22:14 property_list_service.c:233 internal_plist_receive_timeout(): 145 bytes following
+22:22:14 property_list_service.c:242 internal_plist_receive_timeout(): received 145 bytes
+22:22:14 property_list_service.c:256 internal_plist_receive_timeout(): printing 401 bytes plist:
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<array>
+	<string>DLMessageProcessMessage</string>
+	<dict>
+		<key>ErrorCode</key>
+		<integer>0</integer>
+		<key>ProtocolVersion</key>
+		<real>2.100000</real>
+		<key>MessageName</key>
+		<string>Response</string>
+	</dict>
+</array>
+</plist>
+Negotiated Protocol Version 2.1
+22:22:14 userpref.c:162 userpref_get_host_id(): Using CD2EBA32-19A6-6ACC-C455-63630AA7E880 as HostID
+22:22:14 property_list_service.c:142 internal_plist_send(): sending 363 bytes
+22:22:14 idevice.c:507 internal_ssl_write(): pre-send length = 37
+22:22:14 idevice.c:509 internal_ssl_write(): post-send sent 37 bytes
+22:22:14 idevice.c:507 internal_ssl_write(): pre-send length = 389
+22:22:14 idevice.c:509 internal_ssl_write(): post-send sent 389 bytes
+22:22:14 property_list_service.c:147 internal_plist_send(): sent 363 bytes
+22:22:14 property_list_service.c:148 internal_plist_send(): printing 363 bytes plist:
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>Label</key>
+	<string>idevicebackup</string>
+	<key>Request</key>
+	<string>StartService</string>
+	<key>Service</key>
+	<string>com.apple.mobile.notification_proxy</string>
+</dict>
+</plist>
+22:22:14 idevice.c:467 internal_ssl_read(): pre-read client wants 5 bytes
+22:22:14 idevice.c:477 internal_ssl_read(): post-read we got 5 bytes
+22:22:14 idevice.c:467 internal_ssl_read(): pre-read client wants 32 bytes
+22:22:14 idevice.c:477 internal_ssl_read(): post-read we got 32 bytes
+22:22:14 property_list_service.c:224 internal_plist_receive_timeout(): initial read=4
+22:22:14 property_list_service.c:233 internal_plist_receive_timeout(): 401 bytes following
+22:22:14 idevice.c:467 internal_ssl_read(): pre-read client wants 5 bytes
+22:22:14 idevice.c:477 internal_ssl_read(): post-read we got 5 bytes
+22:22:14 idevice.c:467 internal_ssl_read(): pre-read client wants 432 bytes
+22:22:14 idevice.c:477 internal_ssl_read(): post-read we got 432 bytes
+22:22:14 property_list_service.c:242 internal_plist_receive_timeout(): received 401 bytes
+22:22:14 property_list_service.c:256 internal_plist_receive_timeout(): printing 401 bytes plist:
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>Port</key>
+	<integer>49242</integer>
+	<key>Request</key>
+	<string>StartService</string>
+	<key>Result</key>
+	<string>Success</string>
+	<key>Service</key>
+	<string>com.apple.mobile.notification_proxy</string>
+</dict>
+</plist>
+22:22:14 notification_proxy.c:44 np_lock(): NP: Locked
+22:22:14 property_list_service.c:142 internal_plist_send(): sending 316 bytes
+22:22:14 property_list_service.c:147 internal_plist_send(): sent 316 bytes
+22:22:14 property_list_service.c:148 internal_plist_send(): printing 316 bytes plist:
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>Command</key>
+	<string>PostNotification</string>
+	<key>Name</key>
+	<string>com.apple.itunes-mobdev.syncWillStart</string>
+</dict>
+</plist>
+22:22:14 property_list_service.c:142 internal_plist_send(): sending 235 bytes
+22:22:14 property_list_service.c:147 internal_plist_send(): sent 235 bytes
+22:22:14 property_list_service.c:148 internal_plist_send(): printing 235 bytes plist:
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>Command</key>
+	<string>Shutdown</string>
+</dict>
+</plist>
+22:22:14 property_list_service.c:224 internal_plist_receive_timeout(): initial read=4
+22:22:14 property_list_service.c:233 internal_plist_receive_timeout(): 237 bytes following
+22:22:14 property_list_service.c:242 internal_plist_receive_timeout(): received 237 bytes
+22:22:14 property_list_service.c:256 internal_plist_receive_timeout(): printing 237 bytes plist:
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>Command</key>
+	<string>ProxyDeath</string>
+</dict>
+</plist>
+22:22:14 notification_proxy.c:55 np_unlock(): NP: Unlocked
+22:22:14 afc.c:41 afc_lock(): Locked
+22:22:14 afc.c:245 afc_dispatch_packet(): doin things the old way
+22:22:14 afc.c:246 afc_dispatch_packet(): packet length = 76
+22:22:14 afc.c:261 afc_dispatch_packet(): packet data follows
+22:22:14 afc.c:334 afc_receive_data(): received AFC packet, full len=48, this len=48, operation=0xe
+22:22:14 afc.c:380 afc_receive_data(): packet data size = 8
+22:22:14 afc.c:381 afc_receive_data(): packet data follows
+22:22:14 afc.c:401 afc_receive_data(): got a file handle response, handle=1
+22:22:14 afc.c:52 afc_unlock(): Unlocked
+22:22:14 userpref.c:162 userpref_get_host_id(): Using CD2EBA32-19A6-6ACC-C455-63630AA7E880 as HostID
+22:22:14 property_list_service.c:142 internal_plist_send(): sending 363 bytes
+22:22:14 idevice.c:507 internal_ssl_write(): pre-send length = 37
+22:22:14 idevice.c:509 internal_ssl_write(): post-send sent 37 bytes
+22:22:14 idevice.c:507 internal_ssl_write(): pre-send length = 389
+22:22:14 idevice.c:509 internal_ssl_write(): post-send sent 389 bytes
+22:22:14 property_list_service.c:147 internal_plist_send(): sent 363 bytes
+22:22:14 property_list_service.c:148 internal_plist_send(): printing 363 bytes plist:
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>Label</key>
+	<string>idevicebackup</string>
+	<key>Request</key>
+	<string>StartService</string>
+	<key>Service</key>
+	<string>com.apple.mobile.notification_proxy</string>
+</dict>
+</plist>
+22:22:14 idevice.c:467 internal_ssl_read(): pre-read client wants 5 bytes
+22:22:14 idevice.c:477 internal_ssl_read(): post-read we got 5 bytes
+22:22:14 idevice.c:467 internal_ssl_read(): pre-read client wants 32 bytes
+22:22:14 idevice.c:477 internal_ssl_read(): post-read we got 32 bytes
+22:22:14 property_list_service.c:224 internal_plist_receive_timeout(): initial read=4
+22:22:14 property_list_service.c:233 internal_plist_receive_timeout(): 401 bytes following
+22:22:14 idevice.c:467 internal_ssl_read(): pre-read client wants 5 bytes
+22:22:14 idevice.c:477 internal_ssl_read(): post-read we got 5 bytes
+22:22:14 idevice.c:467 internal_ssl_read(): pre-read client wants 432 bytes
+22:22:14 idevice.c:477 internal_ssl_read(): post-read we got 432 bytes
+22:22:14 property_list_service.c:242 internal_plist_receive_timeout(): received 401 bytes
+22:22:14 property_list_service.c:256 internal_plist_receive_timeout(): printing 401 bytes plist:
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>Port</key>
+	<integer>49244</integer>
+	<key>Request</key>
+	<string>StartService</string>
+	<key>Result</key>
+	<string>Success</string>
+	<key>Service</key>
+	<string>com.apple.mobile.notification_proxy</string>
+</dict>
+</plist>
+22:22:14 notification_proxy.c:44 np_lock(): NP: Locked
+22:22:14 property_list_service.c:142 internal_plist_send(): sending 318 bytes
+22:22:14 property_list_service.c:147 internal_plist_send(): sent 318 bytes
+22:22:14 property_list_service.c:148 internal_plist_send(): printing 318 bytes plist:
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>Command</key>
+	<string>PostNotification</string>
+	<key>Name</key>
+	<string>com.apple.itunes-mobdev.syncLockRequest</string>
+</dict>
+</plist>
+22:22:14 property_list_service.c:142 internal_plist_send(): sending 235 bytes
+22:22:14 property_list_service.c:147 internal_plist_send(): sent 235 bytes
+22:22:14 property_list_service.c:148 internal_plist_send(): printing 235 bytes plist:
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>Command</key>
+	<string>Shutdown</string>
+</dict>
+</plist>
+22:22:14 property_list_service.c:224 internal_plist_receive_timeout(): initial read=4
+22:22:14 property_list_service.c:233 internal_plist_receive_timeout(): 237 bytes following
+22:22:14 property_list_service.c:242 internal_plist_receive_timeout(): received 237 bytes
+22:22:14 property_list_service.c:256 internal_plist_receive_timeout(): printing 237 bytes plist:
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>Command</key>
+	<string>ProxyDeath</string>
+</dict>
+</plist>
+22:22:14 notification_proxy.c:55 np_unlock(): NP: Unlocked
+22:22:14 afc.c:41 afc_lock(): Locked
+22:22:14 afc.c:1056 afc_file_lock(): file handle 1
+22:22:14 afc.c:245 afc_dispatch_packet(): doin things the old way
+22:22:14 afc.c:246 afc_dispatch_packet(): packet length = 56
+22:22:14 afc.c:261 afc_dispatch_packet(): packet data follows
+22:22:14 afc.c:334 afc_receive_data(): received AFC packet, full len=48, this len=48, operation=0x1
+22:22:14 afc.c:380 afc_receive_data(): packet data size = 8
+22:22:14 afc.c:381 afc_receive_data(): packet data follows
+22:22:14 afc.c:387 afc_receive_data(): got a status response, code=0
+22:22:14 afc.c:52 afc_unlock(): Unlocked
+22:22:14 userpref.c:162 userpref_get_host_id(): Using CD2EBA32-19A6-6ACC-C455-63630AA7E880 as HostID
+22:22:14 property_list_service.c:142 internal_plist_send(): sending 363 bytes
+22:22:14 idevice.c:507 internal_ssl_write(): pre-send length = 37
+22:22:14 idevice.c:509 internal_ssl_write(): post-send sent 37 bytes
+22:22:14 idevice.c:507 internal_ssl_write(): pre-send length = 389
+22:22:14 idevice.c:509 internal_ssl_write(): post-send sent 389 bytes
+22:22:14 property_list_service.c:147 internal_plist_send(): sent 363 bytes
+22:22:14 property_list_service.c:148 internal_plist_send(): printing 363 bytes plist:
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>Label</key>
+	<string>idevicebackup</string>
+	<key>Request</key>
+	<string>StartService</string>
+	<key>Service</key>
+	<string>com.apple.mobile.notification_proxy</string>
+</dict>
+</plist>
+22:22:14 idevice.c:467 internal_ssl_read(): pre-read client wants 5 bytes
+22:22:14 idevice.c:477 internal_ssl_read(): post-read we got 5 bytes
+22:22:14 idevice.c:467 internal_ssl_read(): pre-read client wants 32 bytes
+22:22:14 idevice.c:477 internal_ssl_read(): post-read we got 32 bytes
+22:22:14 property_list_service.c:224 internal_plist_receive_timeout(): initial read=4
+22:22:14 property_list_service.c:233 internal_plist_receive_timeout(): 401 bytes following
+22:22:14 idevice.c:467 internal_ssl_read(): pre-read client wants 5 bytes
+22:22:14 idevice.c:477 internal_ssl_read(): post-read we got 5 bytes
+22:22:14 idevice.c:467 internal_ssl_read(): pre-read client wants 432 bytes
+22:22:14 idevice.c:477 internal_ssl_read(): post-read we got 432 bytes
+22:22:14 property_list_service.c:242 internal_plist_receive_timeout(): received 401 bytes
+22:22:14 property_list_service.c:256 internal_plist_receive_timeout(): printing 401 bytes plist:
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>Port</key>
+	<integer>49246</integer>
+	<key>Request</key>
+	<string>StartService</string>
+	<key>Result</key>
+	<string>Success</string>
+	<key>Service</key>
+	<string>com.apple.mobile.notification_proxy</string>
+</dict>
+</plist>
+22:22:14 notification_proxy.c:44 np_lock(): NP: Locked
+22:22:14 property_list_service.c:142 internal_plist_send(): sending 315 bytes
+22:22:14 property_list_service.c:147 internal_plist_send(): sent 315 bytes
+22:22:14 property_list_service.c:148 internal_plist_send(): printing 315 bytes plist:
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>Command</key>
+	<string>PostNotification</string>
+	<key>Name</key>
+	<string>com.apple.itunes-mobdev.syncDidStart</string>
+</dict>
+</plist>
+22:22:14 property_list_service.c:142 internal_plist_send(): sending 235 bytes
+22:22:14 property_list_service.c:147 internal_plist_send(): sent 235 bytes
+22:22:14 property_list_service.c:148 internal_plist_send(): printing 235 bytes plist:
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>Command</key>
+	<string>Shutdown</string>
+</dict>
+</plist>
+22:22:14 property_list_service.c:224 internal_plist_receive_timeout(): initial read=4
+22:22:14 property_list_service.c:233 internal_plist_receive_timeout(): 237 bytes following
+22:22:14 property_list_service.c:242 internal_plist_receive_timeout(): received 237 bytes
+22:22:14 property_list_service.c:256 internal_plist_receive_timeout(): printing 237 bytes plist:
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>Command</key>
+	<string>ProxyDeath</string>
+</dict>
+</plist>
+22:22:14 notification_proxy.c:55 np_unlock(): NP: Unlocked
+Starting backup...
+22:22:14 property_list_service.c:142 internal_plist_send(): sending 285 bytes
+22:22:14 idevice.c:507 internal_ssl_write(): pre-send length = 37
+22:22:14 idevice.c:509 internal_ssl_write(): post-send sent 37 bytes
+22:22:14 idevice.c:507 internal_ssl_write(): pre-send length = 325
+22:22:14 idevice.c:509 internal_ssl_write(): post-send sent 325 bytes
+22:22:14 property_list_service.c:147 internal_plist_send(): sent 285 bytes
+22:22:14 property_list_service.c:148 internal_plist_send(): printing 285 bytes plist:
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>Label</key>
+	<string>idevicebackup</string>
+	<key>Request</key>
+	<string>GetValue</string>
+</dict>
+</plist>
+22:22:14 idevice.c:467 internal_ssl_read(): pre-read client wants 5 bytes
+22:22:14 idevice.c:477 internal_ssl_read(): post-read we got 5 bytes
+22:22:14 idevice.c:467 internal_ssl_read(): pre-read client wants 32 bytes
+22:22:14 idevice.c:477 internal_ssl_read(): post-read we got 32 bytes
+22:22:14 property_list_service.c:224 internal_plist_receive_timeout(): initial read=4
+22:22:14 property_list_service.c:233 internal_plist_receive_timeout(): 4136 bytes following
+22:22:14 idevice.c:467 internal_ssl_read(): pre-read client wants 5 bytes
+22:22:14 idevice.c:477 internal_ssl_read(): post-read we got 5 bytes
+22:22:14 idevice.c:467 internal_ssl_read(): pre-read client wants 4160 bytes
+22:22:14 idevice.c:477 internal_ssl_read(): post-read we got 4160 bytes
+22:22:14 property_list_service.c:242 internal_plist_receive_timeout(): received 4136 bytes
+22:22:14 property_list_service.c:256 internal_plist_receive_timeout(): printing 4137 bytes plist:
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>Request</key>
+	<string>GetValue</string>
+	<key>Result</key>
+	<string>Success</string>
+	<key>Value</key>
+	<dict>
+		<key>ActivationPublicKey</key>
+		<data>
+		LS0tLS1CRUdJTiBSU0EgUFVCTElDIEtFWS0tLS0tCk1JR0pBb0dCQUl2OXpyL3JFVDNs
+		R3FKa3JJOU1TVW9jb0U4cnhqcTk4c3YxZElwZ25uSm9BK2RFbTdoUUJMKzIKOXFoeGhm
+		elBlTDQrOEJZRkFzWTB5UmJ5QXR6QTBuelBYZFppTEJkNFF5K2QrTnhzdmhuYjdWcU91
+		R29KcWVVaApFTDJ6WFlHYWhKS3FOYXhFTlYrVjU1Y243QjMrT05tSlJEcnYzcm5vcnVo
+		MTFsYXRyNVVMQWdNQkFBRT0KLS0tLS1FTkQgUlNBIFBVQkxJQyBLRVktLS0tLQo=
+		</data>
+		<key>ActivationState</key>
+		<string>FactoryActivated</string>
+		<key>BasebandBootloaderVersion</key>
+		<string>ICE_2_13</string>
+		<key>BasebandChipId</key>
+		<integer>80</integer>
+		<key>BasebandGoldCertId</key>
+		<integer>257</integer>
+		<key>BasebandSerialNumber</key>
+		<data>
+		aeoFJ3IMxUFIog2M
+		</data>
+		<key>BasebandVersion</key>
+		<string>04.10.01</string>
+		<key>BluetoothAddress</key>
+		<string>7c:c5:37:b7:03:54</string>
+		<key>BuildVersion</key>
+		<string>8H7</string>
+		<key>CPUArchitecture</key>
+		<string>armv7</string>
+		<key>CallsInProgress</key>
+		<false/>
+		<key>DeviceClass</key>
+		<string>iPhone</string>
+		<key>DeviceColor</key>
+		<string>black</string>
+		<key>DeviceName</key>
+		<string>iPhone</string>
+		<key>DevicePublicKey</key>
+		<data>
+		LS0tLS1CRUdJTiBSU0EgUFVCTElDIEtFWS0tLS0tCk1JR0pBb0dCQU5IeTF5MnBpWE90
+		Q2pqcXZyL1hoem5QWjcwczNNN0pIdm1UdlltbjBZckFWbzhwSHBra2QrY1IKUCtFZzRZ
+		N3MrSXdFbHgyRUJhdkdHNHk0VDNKRmlGU3lCUjh4K3o4clFCa3hpSE94YmYzYUo1ekU2
+		U01NVXdWRQpMNGh0eDZmN2N2MnVQb0ZJVU5BUktFKzRORHhoQTJpaDE2Rmo4STljd0pO
+		NDAraHBrR1MxQWdNQkFBRT0KLS0tLS1FTkQgUlNBIFBVQkxJQyBLRVktLS0tLQo=
+		</data>
+		<key>DieID</key>
+		<integer>3386778896833853360</integer>
+		<key>FirmwareVersion</key>
+		<string>iBoot-1072.61</string>
+		<key>HardwareModel</key>
+		<string>N90AP</string>
+		<key>HardwarePlatform</key>
+		<string>s5l8930x                        </string>
+		<key>HostAttached</key>
+		<true/>
+		<key>IMLockdownEverRegisteredKey</key>
+		<false/>
+		<key>InternationalMobileEquipmentIdentity</key>
+		<string>012430008481595</string>
+		<key>MLBSerialNumber</key>
+		<string>J50324UU6DPMB</string>
+		<key>MobileSubscriberCountryCode</key>
+		<string></string>
+		<key>MobileSubscriberNetworkCode</key>
+		<string></string>
+		<key>ModelNumber</key>
+		<string>MC603</string>
+		<key>PartitionType</key>
+		<string>GUID_partition_scheme</string>
+		<key>PasswordProtected</key>
+		<false/>
+		<key>ProductType</key>
+		<string>iPhone3,1</string>
+		<key>ProductVersion</key>
+		<string>4.3.2</string>
+		<key>ProductionSOC</key>
+		<true/>
+		<key>ProtocolVersion</key>
+		<string>2</string>
+		<key>ProximitySensorCalibration</key>
+		<data>
+		AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
+		AAAAAAAAAAAAAAAAAAAAAAAAAAAA
+		</data>
+		<key>RegionInfo</key>
+		<string>FD/A</string>
+		<key>SBLockdownEverRegisteredKey</key>
+		<false/>
+		<key>SDIOManufacturerTuple</key>
+		<dict>
+			<key>IOSDIOManufacturerID</key>
+			<integer>720</integer>
+			<key>IOSDIOProductID</key>
+			<integer>17193</integer>
+		</dict>
+		<key>SDIOProductInfo</key>
+		<string>P=N90 m=3.1 V=u</string>
+		<key>SIMStatus</key>
+		<string>kCTSIMSupportSIMStatusNotInserted</string>
+		<key>SerialNumber</key>
+		<string>7U032NLWA4S</string>
+		<key>SoftwareBehavior</key>
+		<data>
+		BwAAAAAAAAAAAAAAAAAAAA==
+		</data>
+		<key>SoftwareBundleVersion</key>
+		<string></string>
+		<key>SupportedDeviceFamilies</key>
+		<array>
+			<integer>1</integer>
+		</array>
+		<key>TimeIntervalSince1970</key>
+		<integer>1304626922</integer>
+		<key>TimeZone</key>
+		<string>Europe/Vienna</string>
+		<key>TimeZoneOffsetFromUTC</key>
+		<real>7200.000000</real>
+		<key>TrustedHostAttached</key>
+		<true/>
+		<key>UniqueChipID</key>
+		<integer>2503799496054</integer>
+		<key>UniqueDeviceID</key>
+		<string>57b56bb86dc67c00374447ed8c5048a193632f86</string>
+		<key>Uses24HourClock</key>
+		<false/>
+		<key>WiFiAddress</key>
+		<string>7c:c5:37:b7:03:55</string>
+	</dict>
+</dict>
+</plist>
+22:22:14 lockdown.c:384 lockdownd_get_value(): success
+22:22:14 lockdown.c:395 lockdownd_get_value(): has a value
+22:22:14 afc.c:41 afc_lock(): Locked
+22:22:14 afc.c:245 afc_dispatch_packet(): doin things the old way
+22:22:14 afc.c:246 afc_dispatch_packet(): packet length = 65
+22:22:14 afc.c:261 afc_dispatch_packet(): packet data follows
+22:22:14 afc.c:334 afc_receive_data(): received AFC packet, full len=48, this len=48, operation=0x1
+22:22:14 afc.c:380 afc_receive_data(): packet data size = 8
+22:22:14 afc.c:381 afc_receive_data(): packet data follows
+22:22:14 afc.c:387 afc_receive_data(): got a status response, code=8
+22:22:14 afc.c:52 afc_unlock(): Unlocked
+22:22:14 afc.c:41 afc_lock(): Locked
+22:22:14 afc.c:245 afc_dispatch_packet(): doin things the old way
+22:22:14 afc.c:246 afc_dispatch_packet(): packet length = 82
+22:22:14 afc.c:261 afc_dispatch_packet(): packet data follows
+22:22:14 afc.c:334 afc_receive_data(): received AFC packet, full len=48, this len=48, operation=0x1
+22:22:14 afc.c:380 afc_receive_data(): packet data size = 8
+22:22:14 afc.c:381 afc_receive_data(): packet data follows
+22:22:14 afc.c:387 afc_receive_data(): got a status response, code=8
+22:22:14 afc.c:52 afc_unlock(): Unlocked
+22:22:14 afc.c:41 afc_lock(): Locked
+22:22:14 afc.c:245 afc_dispatch_packet(): doin things the old way
+22:22:14 afc.c:246 afc_dispatch_packet(): packet length = 76
+22:22:14 afc.c:261 afc_dispatch_packet(): packet data follows
+22:22:14 afc.c:334 afc_receive_data(): received AFC packet, full len=48, this len=48, operation=0x1
+22:22:14 afc.c:380 afc_receive_data(): packet data size = 8
+22:22:14 afc.c:381 afc_receive_data(): packet data follows
+22:22:14 afc.c:387 afc_receive_data(): got a status response, code=8
+22:22:14 afc.c:52 afc_unlock(): Unlocked
+22:22:14 afc.c:41 afc_lock(): Locked
+22:22:14 afc.c:245 afc_dispatch_packet(): doin things the old way
+22:22:14 afc.c:246 afc_dispatch_packet(): packet length = 76
+22:22:14 afc.c:261 afc_dispatch_packet(): packet data follows
+22:22:14 afc.c:334 afc_receive_data(): received AFC packet, full len=48, this len=48, operation=0x1
+22:22:14 afc.c:380 afc_receive_data(): packet data size = 8
+22:22:14 afc.c:381 afc_receive_data(): packet data follows
+22:22:14 afc.c:387 afc_receive_data(): got a status response, code=8
+22:22:14 afc.c:52 afc_unlock(): Unlocked
+22:22:14 afc.c:41 afc_lock(): Locked
+22:22:14 afc.c:245 afc_dispatch_packet(): doin things the old way
+22:22:14 afc.c:246 afc_dispatch_packet(): packet length = 82
+22:22:14 afc.c:261 afc_dispatch_packet(): packet data follows
+22:22:14 afc.c:334 afc_receive_data(): received AFC packet, full len=48, this len=48, operation=0x1
+22:22:14 afc.c:380 afc_receive_data(): packet data size = 8
+22:22:14 afc.c:381 afc_receive_data(): packet data follows
+22:22:14 afc.c:387 afc_receive_data(): got a status response, code=8
+22:22:14 afc.c:52 afc_unlock(): Unlocked
+22:22:14 afc.c:41 afc_lock(): Locked
+22:22:14 afc.c:245 afc_dispatch_packet(): doin things the old way
+22:22:14 afc.c:246 afc_dispatch_packet(): packet length = 80
+22:22:14 afc.c:261 afc_dispatch_packet(): packet data follows
+22:22:14 afc.c:334 afc_receive_data(): received AFC packet, full len=48, this len=48, operation=0x1
+22:22:14 afc.c:380 afc_receive_data(): packet data size = 8
+22:22:14 afc.c:381 afc_receive_data(): packet data follows
+22:22:14 afc.c:387 afc_receive_data(): got a status response, code=8
+22:22:14 afc.c:52 afc_unlock(): Unlocked
+22:22:14 afc.c:41 afc_lock(): Locked
+22:22:14 afc.c:245 afc_dispatch_packet(): doin things the old way
+22:22:14 afc.c:246 afc_dispatch_packet(): packet length = 81
+22:22:14 afc.c:261 afc_dispatch_packet(): packet data follows
+22:22:14 afc.c:334 afc_receive_data(): received AFC packet, full len=48, this len=48, operation=0x1
+22:22:14 afc.c:380 afc_receive_data(): packet data size = 8
+22:22:14 afc.c:381 afc_receive_data(): packet data follows
+22:22:14 afc.c:387 afc_receive_data(): got a status response, code=8
+22:22:14 afc.c:52 afc_unlock(): Unlocked
+22:22:14 afc.c:41 afc_lock(): Locked
+22:22:14 afc.c:245 afc_dispatch_packet(): doin things the old way
+22:22:14 afc.c:246 afc_dispatch_packet(): packet length = 80
+22:22:14 afc.c:261 afc_dispatch_packet(): packet data follows
+22:22:15 afc.c:334 afc_receive_data(): received AFC packet, full len=48, this len=48, operation=0x1
+22:22:15 afc.c:380 afc_receive_data(): packet data size = 8
+22:22:15 afc.c:381 afc_receive_data(): packet data follows
+22:22:15 afc.c:387 afc_receive_data(): got a status response, code=8
+22:22:15 afc.c:52 afc_unlock(): Unlocked
+22:22:15 afc.c:41 afc_lock(): Locked
+22:22:15 afc.c:245 afc_dispatch_packet(): doin things the old way
+22:22:15 afc.c:246 afc_dispatch_packet(): packet length = 84
+22:22:15 afc.c:261 afc_dispatch_packet(): packet data follows
+22:22:15 afc.c:334 afc_receive_data(): received AFC packet, full len=48, this len=48, operation=0x1
+22:22:15 afc.c:380 afc_receive_data(): packet data size = 8
+22:22:15 afc.c:381 afc_receive_data(): packet data follows
+22:22:15 afc.c:387 afc_receive_data(): got a status response, code=8
+22:22:15 afc.c:52 afc_unlock(): Unlocked
+22:22:15 afc.c:41 afc_lock(): Locked
+22:22:15 afc.c:245 afc_dispatch_packet(): doin things the old way
+22:22:15 afc.c:246 afc_dispatch_packet(): packet length = 75
+22:22:15 afc.c:261 afc_dispatch_packet(): packet data follows
+22:22:15 afc.c:334 afc_receive_data(): received AFC packet, full len=154, this len=40, operation=0x2
+22:22:15 afc.c:380 afc_receive_data(): packet data size = 114
+22:22:15 afc.c:381 afc_receive_data(): packet data follows
+22:22:15 afc.c:398 afc_receive_data(): got a data response
+22:22:15 afc.c:52 afc_unlock(): Unlocked
+22:22:15 afc.c:41 afc_lock(): Locked
+22:22:15 afc.c:245 afc_dispatch_packet(): doin things the old way
+22:22:15 afc.c:246 afc_dispatch_packet(): packet length = 83
+22:22:15 afc.c:261 afc_dispatch_packet(): packet data follows
+22:22:15 afc.c:334 afc_receive_data(): received AFC packet, full len=48, this len=48, operation=0xe
+22:22:15 afc.c:380 afc_receive_data(): packet data size = 8
+22:22:15 afc.c:381 afc_receive_data(): packet data follows
+22:22:15 afc.c:401 afc_receive_data(): got a file handle response, handle=2
+22:22:15 afc.c:52 afc_unlock(): Unlocked
+22:22:15 afc.c:843 afc_file_read(): called for length 65536
+22:22:15 afc.c:41 afc_lock(): Locked
+22:22:15 afc.c:850 afc_file_read(): current count is 0 but length is 65536
+22:22:15 afc.c:245 afc_dispatch_packet(): doin things the old way
+22:22:15 afc.c:246 afc_dispatch_packet(): packet length = 56
+22:22:15 afc.c:261 afc_dispatch_packet(): packet data follows
+22:22:15 afc.c:334 afc_receive_data(): received AFC packet, full len=1272, this len=40, operation=0x2
+22:22:15 afc.c:380 afc_receive_data(): packet data size = 1232
+22:22:15 afc.c:381 afc_receive_data(): packet data follows
+22:22:15 afc.c:398 afc_receive_data(): got a data response
+22:22:15 afc.c:867 afc_file_read(): afc_receive_data returned error: 0
+22:22:15 afc.c:868 afc_file_read(): bytes returned: 1232
+22:22:15 afc.c:881 afc_file_read(): 1232
+22:22:15 afc.c:850 afc_file_read(): current count is 1232 but length is 65536
+22:22:15 afc.c:245 afc_dispatch_packet(): doin things the old way
+22:22:15 afc.c:246 afc_dispatch_packet(): packet length = 56
+22:22:15 afc.c:261 afc_dispatch_packet(): packet data follows
+22:22:15 afc.c:324 afc_receive_data(): Empty AFCPacket received!
+22:22:15 afc.c:867 afc_file_read(): afc_receive_data returned error: 0
+22:22:15 afc.c:868 afc_file_read(): bytes returned: 0
+22:22:15 afc.c:52 afc_unlock(): Unlocked
+22:22:15 afc.c:41 afc_lock(): Locked
+22:22:15 afc.c:1007 afc_file_close(): File handle 2
+22:22:15 afc.c:245 afc_dispatch_packet(): doin things the old way
+22:22:15 afc.c:246 afc_dispatch_packet(): packet length = 48
+22:22:15 afc.c:261 afc_dispatch_packet(): packet data follows
+22:22:15 afc.c:334 afc_receive_data(): received AFC packet, full len=48, this len=48, operation=0x1
+22:22:15 afc.c:380 afc_receive_data(): packet data size = 8
+22:22:15 afc.c:381 afc_receive_data(): packet data follows
+22:22:15 afc.c:387 afc_receive_data(): got a status response, code=0
+22:22:15 afc.c:52 afc_unlock(): Unlocked
+22:22:15 afc.c:41 afc_lock(): Locked
+22:22:15 afc.c:245 afc_dispatch_packet(): doin things the old way
+22:22:15 afc.c:246 afc_dispatch_packet(): packet length = 81
+22:22:15 afc.c:261 afc_dispatch_packet(): packet data follows
+22:22:15 afc.c:334 afc_receive_data(): received AFC packet, full len=154, this len=40, operation=0x2
+22:22:15 afc.c:380 afc_receive_data(): packet data size = 114
+22:22:15 afc.c:381 afc_receive_data(): packet data follows
+22:22:15 afc.c:398 afc_receive_data(): got a data response
+22:22:15 afc.c:52 afc_unlock(): Unlocked
+22:22:15 afc.c:41 afc_lock(): Locked
+22:22:15 afc.c:245 afc_dispatch_packet(): doin things the old way
+22:22:15 afc.c:246 afc_dispatch_packet(): packet length = 89
+22:22:15 afc.c:261 afc_dispatch_packet(): packet data follows
+22:22:15 afc.c:334 afc_receive_data(): received AFC packet, full len=48, this len=48, operation=0xe
+22:22:15 afc.c:380 afc_receive_data(): packet data size = 8
+22:22:15 afc.c:381 afc_receive_data(): packet data follows
+22:22:15 afc.c:401 afc_receive_data(): got a file handle response, handle=2
+22:22:15 afc.c:52 afc_unlock(): Unlocked
+22:22:15 afc.c:843 afc_file_read(): called for length 65536
+22:22:15 afc.c:41 afc_lock(): Locked
+22:22:15 afc.c:850 afc_file_read(): current count is 0 but length is 65536
+22:22:15 afc.c:245 afc_dispatch_packet(): doin things the old way
+22:22:15 afc.c:246 afc_dispatch_packet(): packet length = 56
+22:22:15 afc.c:261 afc_dispatch_packet(): packet data follows
+22:22:15 afc.c:334 afc_receive_data(): received AFC packet, full len=2894, this len=40, operation=0x2
+22:22:15 afc.c:380 afc_receive_data(): packet data size = 2854
+22:22:15 afc.c:381 afc_receive_data(): packet data follows
+22:22:15 afc.c:398 afc_receive_data(): got a data response
+22:22:15 afc.c:867 afc_file_read(): afc_receive_data returned error: 0
+22:22:15 afc.c:868 afc_file_read(): bytes returned: 2854
+22:22:15 afc.c:881 afc_file_read(): 2854
+22:22:15 afc.c:850 afc_file_read(): current count is 2854 but length is 65536
+22:22:15 afc.c:245 afc_dispatch_packet(): doin things the old way
+22:22:15 afc.c:246 afc_dispatch_packet(): packet length = 56
+22:22:15 afc.c:261 afc_dispatch_packet(): packet data follows
+22:22:15 afc.c:324 afc_receive_data(): Empty AFCPacket received!
+22:22:15 afc.c:867 afc_file_read(): afc_receive_data returned error: 0
+22:22:15 afc.c:868 afc_file_read(): bytes returned: 0
+22:22:15 afc.c:52 afc_unlock(): Unlocked
+22:22:15 afc.c:41 afc_lock(): Locked
+22:22:15 afc.c:1007 afc_file_close(): File handle 2
+22:22:15 afc.c:245 afc_dispatch_packet(): doin things the old way
+22:22:15 afc.c:246 afc_dispatch_packet(): packet length = 48
+22:22:15 afc.c:261 afc_dispatch_packet(): packet data follows
+22:22:15 afc.c:334 afc_receive_data(): received AFC packet, full len=48, this len=48, operation=0x1
+22:22:15 afc.c:380 afc_receive_data(): packet data size = 8
+22:22:15 afc.c:381 afc_receive_data(): packet data follows
+22:22:15 afc.c:387 afc_receive_data(): got a status response, code=0
+22:22:15 afc.c:52 afc_unlock(): Unlocked
+22:22:15 property_list_service.c:142 internal_plist_send(): sending 339 bytes
+22:22:15 idevice.c:507 internal_ssl_write(): pre-send length = 37
+22:22:15 idevice.c:509 internal_ssl_write(): post-send sent 37 bytes
+22:22:15 idevice.c:507 internal_ssl_write(): pre-send length = 373
+22:22:15 idevice.c:509 internal_ssl_write(): post-send sent 373 bytes
+22:22:15 property_list_service.c:147 internal_plist_send(): sent 339 bytes
+22:22:15 property_list_service.c:148 internal_plist_send(): printing 339 bytes plist:
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>Label</key>
+	<string>idevicebackup</string>
+	<key>Domain</key>
+	<string>com.apple.iTunes</string>
+	<key>Request</key>
+	<string>GetValue</string>
+</dict>
+</plist>
+22:22:15 idevice.c:467 internal_ssl_read(): pre-read client wants 5 bytes
+22:22:15 idevice.c:477 internal_ssl_read(): post-read we got 5 bytes
+22:22:15 idevice.c:467 internal_ssl_read(): pre-read client wants 32 bytes
+22:22:15 idevice.c:477 internal_ssl_read(): post-read we got 32 bytes
+22:22:15 property_list_service.c:224 internal_plist_receive_timeout(): initial read=4
+22:22:15 property_list_service.c:233 internal_plist_receive_timeout(): 361 bytes following
+22:22:15 idevice.c:467 internal_ssl_read(): pre-read client wants 5 bytes
+22:22:15 idevice.c:477 internal_ssl_read(): post-read we got 5 bytes
+22:22:15 idevice.c:467 internal_ssl_read(): pre-read client wants 384 bytes
+22:22:15 idevice.c:477 internal_ssl_read(): post-read we got 384 bytes
+22:22:15 property_list_service.c:242 internal_plist_receive_timeout(): received 361 bytes
+22:22:15 property_list_service.c:256 internal_plist_receive_timeout(): printing 369 bytes plist:
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>Domain</key>
+	<string>com.apple.iTunes</string>
+	<key>Request</key>
+	<string>GetValue</string>
+	<key>Result</key>
+	<string>Success</string>
+	<key>Value</key>
+	<dict>
+	</dict>
+</dict>
+</plist>
+22:22:15 lockdown.c:384 lockdownd_get_value(): success
+22:22:15 lockdown.c:395 lockdownd_get_value(): has a value
+Requesting backup from device...
+22:22:15 property_list_service.c:142 internal_plist_send(): sending 162 bytes
+22:22:15 property_list_service.c:147 internal_plist_send(): sent 162 bytes
+22:22:15 property_list_service.c:148 internal_plist_send(): printing 390 bytes plist:
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<array>
+	<string>DLMessageProcessMessage</string>
+	<dict>
+		<key>TargetIdentifier</key>
+		<string>57b56bb86dc67c00374447ed8c5048a193632f86</string>
+		<key>MessageName</key>
+		<string>Backup</string>
+	</dict>
+</array>
+</plist>
+Full backup mode.
+22:22:15 lockdown.c:157 lockdownd_stop_session(): stopping session 870AC371-D328-4786-9843-9019F967791C
+22:22:15 property_list_service.c:142 internal_plist_send(): sending 365 bytes
+22:22:15 idevice.c:507 internal_ssl_write(): pre-send length = 37
+22:22:15 idevice.c:509 internal_ssl_write(): post-send sent 37 bytes
+22:22:15 idevice.c:507 internal_ssl_write(): pre-send length = 405
+22:22:15 idevice.c:509 internal_ssl_write(): post-send sent 405 bytes
+22:22:15 property_list_service.c:147 internal_plist_send(): sent 365 bytes
+22:22:15 property_list_service.c:148 internal_plist_send(): printing 365 bytes plist:
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>Label</key>
+	<string>idevicebackup</string>
+	<key>Request</key>
+	<string>StopSession</string>
+	<key>SessionID</key>
+	<string>870AC371-D328-4786-9843-9019F967791C</string>
+</dict>
+</plist>
+22:22:15 idevice.c:467 internal_ssl_read(): pre-read client wants 5 bytes
+22:22:15 idevice.c:477 internal_ssl_read(): post-read we got 5 bytes
+22:22:15 idevice.c:467 internal_ssl_read(): pre-read client wants 32 bytes
+22:22:15 idevice.c:477 internal_ssl_read(): post-read we got 32 bytes
+22:22:15 property_list_service.c:224 internal_plist_receive_timeout(): initial read=4
+22:22:15 property_list_service.c:233 internal_plist_receive_timeout(): 283 bytes following
+22:22:15 idevice.c:467 internal_ssl_read(): pre-read client wants 5 bytes
+22:22:15 idevice.c:477 internal_ssl_read(): post-read we got 5 bytes
+22:22:15 idevice.c:467 internal_ssl_read(): pre-read client wants 304 bytes
+22:22:15 idevice.c:477 internal_ssl_read(): post-read we got 304 bytes
+22:22:15 property_list_service.c:242 internal_plist_receive_timeout(): received 283 bytes
+22:22:15 property_list_service.c:256 internal_plist_receive_timeout(): printing 283 bytes plist:
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>Request</key>
+	<string>StopSession</string>
+	<key>Result</key>
+	<string>Success</string>
+</dict>
+</plist>
+22:22:15 lockdown.c:173 lockdownd_stop_session(): success
+22:22:15 idevice.c:507 internal_ssl_write(): pre-send length = 37
+22:22:15 idevice.c:509 internal_ssl_write(): post-send sent 37 bytes
+22:22:15 idevice.c:467 internal_ssl_read(): pre-read client wants 5 bytes
+22:22:15 idevice.c:477 internal_ssl_read(): post-read we got 5 bytes
+22:22:15 idevice.c:467 internal_ssl_read(): pre-read client wants 32 bytes
+22:22:15 idevice.c:477 internal_ssl_read(): post-read we got 32 bytes
+22:22:15 idevice.c:654 idevice_connection_disable_ssl(): SSL mode disabled
+22:22:15 lockdown.c:1050 lockdownd_goodbye(): called
+22:22:15 property_list_service.c:142 internal_plist_send(): sending 284 bytes
+22:22:15 property_list_service.c:147 internal_plist_send(): sent 284 bytes
+22:22:15 property_list_service.c:148 internal_plist_send(): printing 284 bytes plist:
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>Label</key>
+	<string>idevicebackup</string>
+	<key>Request</key>
+	<string>Goodbye</string>
+</dict>
+</plist>
+22:22:15 property_list_service.c:224 internal_plist_receive_timeout(): initial read=4
+22:22:15 property_list_service.c:233 internal_plist_receive_timeout(): 279 bytes following
+22:22:15 property_list_service.c:242 internal_plist_receive_timeout(): received 279 bytes
+22:22:15 property_list_service.c:256 internal_plist_receive_timeout(): printing 279 bytes plist:
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>Request</key>
+	<string>Goodbye</string>
+	<key>Result</key>
+	<string>Success</string>
+</dict>
+</plist>
+22:22:15 lockdown.c:1063 lockdownd_goodbye(): success
+22:22:15 notification_proxy.c:44 np_lock(): NP: Locked
+22:22:15 property_list_service.c:224 internal_plist_receive_timeout(): initial read=4
+22:22:15 property_list_service.c:233 internal_plist_receive_timeout(): 148 bytes following
+22:22:15 property_list_service.c:242 internal_plist_receive_timeout(): received 148 bytes
+22:22:15 property_list_service.c:256 internal_plist_receive_timeout(): printing 385 bytes plist:
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<array>
+	<string>DLMessageDownloadFiles</string>
+	<array>
+		<string>57b56bb86dc67c00374447ed8c5048a193632f86/Status.plist</string>
+	</array>
+	<dict>
+	</dict>
+	<real>0.000000</real>
+	<integer>0</integer>
+</array>
+</plist>
+22:22:15 property_list_service.c:142 internal_plist_send(): sending 243 bytes
+22:22:15 property_list_service.c:147 internal_plist_send(): sent 243 bytes
+22:22:15 property_list_service.c:148 internal_plist_send(): printing 558 bytes plist:
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<array>
+	<string>DLMessageStatusResponse</string>
+	<integer>18446744073709551603</integer>
+	<string>Multi status</string>
+	<dict>
+		<key>57b56bb86dc67c00374447ed8c5048a193632f86/Status.plist</key>
+		<dict>
+			<key>DLFileErrorString</key>
+			<string>No such file or directory</string>
+			<key>DLFileErrorCode</key>
+			<integer>18446744073709551610</integer>
+		</dict>
+	</dict>
+</array>
+</plist>
+22:22:15 property_list_service.c:224 internal_plist_receive_timeout(): initial read=0
+22:22:15 property_list_service.c:226 internal_plist_receive_timeout(): initial read failed!
+22:22:15 notification_proxy.c:297 np_get_notification(): NotificationProxy: no notification received!
+22:22:15 notification_proxy.c:55 np_unlock(): NP: Unlocked
+22:22:16 notification_proxy.c:44 np_lock(): NP: Locked
+22:22:17 property_list_service.c:224 internal_plist_receive_timeout(): initial read=4
+22:22:17 property_list_service.c:233 internal_plist_receive_timeout(): 127 bytes following
+22:22:17 property_list_service.c:242 internal_plist_receive_timeout(): received 127 bytes
+22:22:17 property_list_service.c:256 internal_plist_receive_timeout(): printing 329 bytes plist:
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<array>
+	<string>DLContentsOfDirectory</string>
+	<string>57b56bb86dc67c00374447ed8c5048a193632f86</string>
+	<dict>
+	</dict>
+	<real>0.000000</real>
+</array>
+</plist>
+22:22:17 property_list_service.c:142 internal_plist_send(): sending 215 bytes
+22:22:17 property_list_service.c:147 internal_plist_send(): sent 215 bytes
+22:22:17 property_list_service.c:148 internal_plist_send(): printing 548 bytes plist:
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<array>
+	<string>DLMessageStatusResponse</string>
+	<integer>0</integer>
+	<string>___EmptyParameterString___</string>
+	<dict>
+		<key>Info.plist</key>
+		<dict>
+			<key>DLFileType</key>
+			<string>DLFileTypeRegular</string>
+			<key>DLFileSize</key>
+			<integer>6808</integer>
+			<key>DLFileModificationDate</key>
+			<date>2011-05-05T20:22:15Z</date>
+		</dict>
+	</dict>
+</array>
+</plist>
+22:22:17 property_list_service.c:224 internal_plist_receive_timeout(): initial read=4
+22:22:17 property_list_service.c:233 internal_plist_receive_timeout(): 130 bytes following
+22:22:17 property_list_service.c:242 internal_plist_receive_timeout(): received 130 bytes
+22:22:17 property_list_service.c:256 internal_plist_receive_timeout(): printing 332 bytes plist:
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<array>
+	<string>DLMessageCreateDirectory</string>
+	<string>57b56bb86dc67c00374447ed8c5048a193632f86</string>
+	<dict>
+	</dict>
+	<real>1.121120</real>
+</array>
+</plist>
+22:22:17 property_list_service.c:142 internal_plist_send(): sending 106 bytes
+22:22:17 property_list_service.c:147 internal_plist_send(): sent 106 bytes
+22:22:17 property_list_service.c:148 internal_plist_send(): printing 344 bytes plist:
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<array>
+	<string>DLMessageStatusResponse</string>
+	<integer>0</integer>
+	<string>___EmptyParameterString___</string>
+	<string>___EmptyParameterString___</string>
+</array>
+</plist>
+[=                                                 ]   1% Finished
+22:22:17 property_list_service.c:224 internal_plist_receive_timeout(): initial read=4
+22:22:17 property_list_service.c:233 internal_plist_receive_timeout(): 139 bytes following
+22:22:17 property_list_service.c:242 internal_plist_receive_timeout(): received 139 bytes
+22:22:17 property_list_service.c:256 internal_plist_receive_timeout(): printing 341 bytes plist:
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<array>
+	<string>DLMessageCreateDirectory</string>
+	<string>57b56bb86dc67c00374447ed8c5048a193632f86/Snapshot</string>
+	<dict>
+	</dict>
+	<real>2.242240</real>
+</array>
+</plist>
+22:22:17 property_list_service.c:142 internal_plist_send(): sending 106 bytes
+22:22:17 property_list_service.c:147 internal_plist_send(): sent 106 bytes
+22:22:17 property_list_service.c:148 internal_plist_send(): printing 344 bytes plist:
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<array>
+	<string>DLMessageStatusResponse</string>
+	<integer>0</integer>
+	<string>___EmptyParameterString___</string>
+	<string>___EmptyParameterString___</string>
+</array>
+</plist>
+[==                                                ]   2% Finished
+22:22:17 property_list_service.c:224 internal_plist_receive_timeout(): initial read=4
+22:22:17 property_list_service.c:233 internal_plist_receive_timeout(): 85 bytes following
+22:22:17 property_list_service.c:242 internal_plist_receive_timeout(): received 85 bytes
+22:22:17 property_list_service.c:256 internal_plist_receive_timeout(): printing 291 bytes plist:
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<array>
+	<string>DLMessageUploadFiles</string>
+	<dict>
+	</dict>
+	<real>3.811808</real>
+	<integer>0</integer>
+</array>
+</plist>
+22:22:17 property_list_service.c:142 internal_plist_send(): sending 108 bytes
+22:22:17 property_list_service.c:147 internal_plist_send(): sent 108 bytes
+22:22:17 property_list_service.c:148 internal_plist_send(): printing 316 bytes plist:
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<array>
+	<string>DLMessageStatusResponse</string>
+	<integer>0</integer>
+	<string>___EmptyParameterString___</string>
+	<dict>
+	</dict>
+</array>
+</plist>
+22:22:17 property_list_service.c:224 internal_plist_receive_timeout(): initial read=4
+22:22:17 property_list_service.c:233 internal_plist_receive_timeout(): 119 bytes following
+22:22:17 property_list_service.c:242 internal_plist_receive_timeout(): received 119 bytes
+22:22:17 property_list_service.c:256 internal_plist_receive_timeout(): printing 362 bytes plist:
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<array>
+	<string>DLMessageUploadFiles</string>
+	<dict>
+		<key>DLDeviceIOCallbacks</key>
+		<integer>475646880</integer>
+	</dict>
+	<real>72.868896</real>
+	<integer>3753537</integer>
+</array>
+</plist>
+Receiving files
+[=                                                 ]   0% (240 bytes/3.6 MB)     [=                                                 ]   2% (56.2 KB/3.6 MB)     [=                                                 ]   2% (56.4 KB/3.6 MB)     [=                                                 ]   2% (56.8 KB/3.6 MB)     [=                                                 ]   2% (56.9 KB/3.6 MB)     [=                                                 ]   2% (57.0 KB/3.6 MB)     [=                                                 ]   2% (57.3 KB/3.6 MB)     [=                                                 ]   2% (57.3 KB/3.6 MB)     [=                                                 ]   2% (57.4 KB/3.6 MB)     [====                                              ]   7% (265.4 KB/3.6 MB)     [====                                              ]   7% (265.6 KB/3.6 MB)     [====                                              ]   7% (268.0 KB/3.6 MB)     [====                                              ]   8% (288.0 KB/3.6 MB)     [=====                                             ]   8% (294.0 KB/3.6 MB)     [=====                                             ]   8% (294.0 KB/3.6 MB)     [=====                                             ]  10% (366.0 KB/3.6 MB)     [=======                                           ]  13% (476.9 KB/3.6 MB)     [=======                                           ]  13% (492.9 KB/3.6 MB)     [=======                                           ]  13% (493.0 KB/3.6 MB)     [=======                                           ]  13% (493.2 KB/3.6 MB)     [=======                                           ]  14% (495.5 KB/3.6 MB)     [=======                                           ]  14% (495.6 KB/3.6 MB)     [=======                                           ]  14% (495.7 KB/3.6 MB)     [=======                                           ]  14% (497.0 KB/3.6 MB)     [========                                          ]  14% (525.0 KB/3.6 MB)     [========                                          ]  14% (525.1 KB/3.6 MB)     [========                                          ]  14% (525.3 KB/3.6 MB)     [========                                          ]  14% (525.4 KB/3.6 MB)     [=========                                         ]  16% (593.4 KB/3.6 MB)     [=========                                         ]  17% (621.4 KB/3.6 MB)     [=========                                         ]  18% (657.4 KB/3.6 MB)     [==========                                        ]  18% (669.4 KB/3.6 MB)     [==========                                        ]  18% (669.4 KB/3.6 MB)     [===========                                       ]  22% (797.4 KB/3.6 MB)     [===========                                       ]  22% (798.2 KB/3.6 MB)     [===========                                       ]  22% (798.3 KB/3.6 MB)     [===========                                       ]  22% (798.6 KB/3.6 MB)     [===========                                       ]  22% (802.0 KB/3.6 MB)     [===========                                       ]  22% (802.0 KB/3.6 MB)     [===========                                       ]  22% (802.2 KB/3.6 MB)     [============                                      ]  22% (824.3 KB/3.6 MB)     [============                                      ]  23% (852.3 KB/3.6 MB)     [=============                                     ]  25% (900.3 KB/3.6 MB)     [=============                                     ]  25% (900.4 KB/3.6 MB)     [=============                                     ]  25% (912.4 KB/3.6 MB)     [=============                                     ]  25% (912.5 KB/3.6 MB)     [=============                                     ]  25% (912.8 KB/3.6 MB)     [=============                                     ]  25% (913.2 KB/3.6 MB)     [==============                                    ]  26% (969.2 KB/3.6 MB)     [===============                                   ]  28% (1.0 MB/3.6 MB)     22:22:17 property_list_service.c:224 internal_plist_receive_timeout(): initial read=0
+22:22:17 property_list_service.c:226 internal_plist_receive_timeout(): initial read failed!
+22:22:17 notification_proxy.c:297 np_get_notification(): NotificationProxy: no notification received!
+22:22:17 notification_proxy.c:55 np_unlock(): NP: Unlocked
+[==================                                ]  35% (1.3 MB/3.6 MB)     [======================                            ]  42% (1.5 MB/3.6 MB)     [=========================                         ]  49% (1.8 MB/3.6 MB)     [=============================                     ]  56% (2.0 MB/3.6 MB)     [================================                  ]  63% (2.3 MB/3.6 MB)     [====================================              ]  70% (2.5 MB/3.6 MB)     [=======================================           ]  77% (2.8 MB/3.6 MB)     [===========================================       ]  84% (3.0 MB/3.6 MB)     [==============================================    ]  91% (3.3 MB/3.6 MB)     [===============================================   ]  94% (3.4 MB/3.6 MB)     [===============================================   ]  94% (3.4 MB/3.6 MB)     [===============================================   ]  94% (3.4 MB/3.6 MB)     [===============================================   ]  94% (3.4 MB/3.6 MB)     [===============================================   ]  94% (3.4 MB/3.6 MB)     [===============================================   ]  94% (3.4 MB/3.6 MB)     [===============================================   ]  94% (3.4 MB/3.6 MB)     [==================================================] 100% (3.6 MB/3.6 MB)     [==================================================] 100% (3.6 MB/3.6 MB)     [==================================================] 100% (3.6 MB/3.6 MB)     
+22:22:17 property_list_service.c:142 internal_plist_send(): sending 108 bytes
+22:22:17 property_list_service.c:147 internal_plist_send(): sent 108 bytes
+22:22:17 property_list_service.c:148 internal_plist_send(): printing 316 bytes plist:
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<array>
+	<string>DLMessageStatusResponse</string>
+	<integer>0</integer>
+	<string>___EmptyParameterString___</string>
+	<dict>
+	</dict>
+</array>
+</plist>
+22:22:18 property_list_service.c:224 internal_plist_receive_timeout(): initial read=4
+22:22:18 property_list_service.c:233 internal_plist_receive_timeout(): 85 bytes following
+22:22:18 property_list_service.c:242 internal_plist_receive_timeout(): received 85 bytes
+22:22:18 property_list_service.c:256 internal_plist_receive_timeout(): printing 292 bytes plist:
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<array>
+	<string>DLMessageUploadFiles</string>
+	<dict>
+	</dict>
+	<real>74.438464</real>
+	<integer>0</integer>
+</array>
+</plist>
+22:22:18 property_list_service.c:142 internal_plist_send(): sending 108 bytes
+22:22:18 property_list_service.c:147 internal_plist_send(): sent 108 bytes
+22:22:18 property_list_service.c:148 internal_plist_send(): printing 316 bytes plist:
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<array>
+	<string>DLMessageStatusResponse</string>
+	<integer>0</integer>
+	<string>___EmptyParameterString___</string>
+	<dict>
+	</dict>
+</array>
+</plist>
+22:22:18 property_list_service.c:224 internal_plist_receive_timeout(): initial read=4
+22:22:18 property_list_service.c:233 internal_plist_receive_timeout(): 85 bytes following
+22:22:18 property_list_service.c:242 internal_plist_receive_timeout(): received 85 bytes
+22:22:18 property_list_service.c:256 internal_plist_receive_timeout(): printing 292 bytes plist:
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<array>
+	<string>DLMessageUploadFiles</string>
+	<dict>
+	</dict>
+	<real>76.008032</real>
+	<integer>0</integer>
+</array>
+</plist>
+22:22:18 property_list_service.c:142 internal_plist_send(): sending 108 bytes
+22:22:18 property_list_service.c:147 internal_plist_send(): sent 108 bytes
+22:22:18 property_list_service.c:148 internal_plist_send(): printing 316 bytes plist:
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<array>
+	<string>DLMessageStatusResponse</string>
+	<integer>0</integer>
+	<string>___EmptyParameterString___</string>
+	<dict>
+	</dict>
+</array>
+</plist>
+22:22:18 property_list_service.c:224 internal_plist_receive_timeout(): initial read=4
+22:22:18 property_list_service.c:233 internal_plist_receive_timeout(): 85 bytes following
+22:22:18 property_list_service.c:242 internal_plist_receive_timeout(): received 85 bytes
+22:22:18 property_list_service.c:256 internal_plist_receive_timeout(): printing 292 bytes plist:
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<array>
+	<string>DLMessageUploadFiles</string>
+	<dict>
+	</dict>
+	<real>77.577600</real>
+	<integer>0</integer>
+</array>
+</plist>
+22:22:18 property_list_service.c:142 internal_plist_send(): sending 108 bytes
+22:22:18 property_list_service.c:147 internal_plist_send(): sent 108 bytes
+22:22:18 property_list_service.c:148 internal_plist_send(): printing 316 bytes plist:
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<array>
+	<string>DLMessageStatusResponse</string>
+	<integer>0</integer>
+	<string>___EmptyParameterString___</string>
+	<dict>
+	</dict>
+</array>
+</plist>
+22:22:18 property_list_service.c:224 internal_plist_receive_timeout(): initial read=4
+22:22:18 property_list_service.c:233 internal_plist_receive_timeout(): 85 bytes following
+22:22:18 property_list_service.c:242 internal_plist_receive_timeout(): received 85 bytes
+22:22:18 property_list_service.c:256 internal_plist_receive_timeout(): printing 292 bytes plist:
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<array>
+	<string>DLMessageUploadFiles</string>
+	<dict>
+	</dict>
+	<real>79.147168</real>
+	<integer>0</integer>
+</array>
+</plist>
+22:22:18 property_list_service.c:142 internal_plist_send(): sending 108 bytes
+22:22:18 property_list_service.c:147 internal_plist_send(): sent 108 bytes
+22:22:18 property_list_service.c:148 internal_plist_send(): printing 316 bytes plist:
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<array>
+	<string>DLMessageStatusResponse</string>
+	<integer>0</integer>
+	<string>___EmptyParameterString___</string>
+	<dict>
+	</dict>
+</array>
+</plist>
+22:22:18 property_list_service.c:224 internal_plist_receive_timeout(): initial read=4
+22:22:18 property_list_service.c:233 internal_plist_receive_timeout(): 11435 bytes following
+22:22:18 property_list_service.c:242 internal_plist_receive_timeout(): received 11435 bytes
+22:22:18 property_list_service.c:256 internal_plist_receive_timeout(): printing 12995 bytes plist:
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<array>
+	<string>DLMessageMoveFiles</string>
+	<dict>
+		<key>57b56bb86dc67c00374447ed8c5048a193632f86/Snapshot/2be5c6ca80002c2dfed22595ad659df2b9a0a959</key>
+		<string>57b56bb86dc67c00374447ed8c5048a193632f86/2be5c6ca80002c2dfed22595ad659df2b9a0a959</string>
+		<key>57b56bb86dc67c00374447ed8c5048a193632f86/Snapshot/cd6702cea29fe89cf280a76794405adb17f9a0ee</key>
+		<string>57b56bb86dc67c00374447ed8c5048a193632f86/cd6702cea29fe89cf280a76794405adb17f9a0ee</string>
+		<key>57b56bb86dc67c00374447ed8c5048a193632f86/Snapshot/10c0b06595e6ff4e95ee09e742f9797c5367385e</key>
+		<string>57b56bb86dc67c00374447ed8c5048a193632f86/10c0b06595e6ff4e95ee09e742f9797c5367385e</string>
+		<key>57b56bb86dc67c00374447ed8c5048a193632f86/Snapshot/3d85054c9dba676fd5a9e1670edabc65db077960</key>
+		<string>57b56bb86dc67c00374447ed8c5048a193632f86/3d85054c9dba676fd5a9e1670edabc65db077960</string>
+		<key>57b56bb86dc67c00374447ed8c5048a193632f86/Snapshot/f23461ec2e507af102a699e5e1fb5080608024b5</key>
+		<string>57b56bb86dc67c00374447ed8c5048a193632f86/f23461ec2e507af102a699e5e1fb5080608024b5</string>
+		<key>57b56bb86dc67c00374447ed8c5048a193632f86/Snapshot/3953d95b549560c2f4c7d7924480cb7fbf739dfe</key>
+		<string>57b56bb86dc67c00374447ed8c5048a193632f86/3953d95b549560c2f4c7d7924480cb7fbf739dfe</string>
+		<key>57b56bb86dc67c00374447ed8c5048a193632f86/Snapshot/ca3bc056d4da0bbf88b5fb3be254f3b7147e639c</key>
+		<string>57b56bb86dc67c00374447ed8c5048a193632f86/ca3bc056d4da0bbf88b5fb3be254f3b7147e639c</string>
+		<key>57b56bb86dc67c00374447ed8c5048a193632f86/Snapshot/4096c9ec676f2847dc283405900e284a7c815836</key>
+		<string>57b56bb86dc67c00374447ed8c5048a193632f86/4096c9ec676f2847dc283405900e284a7c815836</string>
+		<key>57b56bb86dc67c00374447ed8c5048a193632f86/Snapshot/662bc19b13aecef58a7e855d0316e4cf61e2642b</key>
+		<string>57b56bb86dc67c00374447ed8c5048a193632f86/662bc19b13aecef58a7e855d0316e4cf61e2642b</string>
+		<key>57b56bb86dc67c00374447ed8c5048a193632f86/Snapshot/992df473bbb9e132f4b3b6e4d33f72171e97bc7a</key>
+		<string>57b56bb86dc67c00374447ed8c5048a193632f86/992df473bbb9e132f4b3b6e4d33f72171e97bc7a</string>
+		<key>57b56bb86dc67c00374447ed8c5048a193632f86/Snapshot/f7bbe63e61427d2ee896496f5726b81289cfda38</key>
+		<string>57b56bb86dc67c00374447ed8c5048a193632f86/f7bbe63e61427d2ee896496f5726b81289cfda38</string>
+		<key>57b56bb86dc67c00374447ed8c5048a193632f86/Snapshot/fb520955c98189505f20d2af90a46a1ced8c2e9c</key>
+		<string>57b56bb86dc67c00374447ed8c5048a193632f86/fb520955c98189505f20d2af90a46a1ced8c2e9c</string>
+		<key>57b56bb86dc67c00374447ed8c5048a193632f86/Snapshot/ade0340f576ee14793c607073bd7e8e409af07a8</key>
+		<string>57b56bb86dc67c00374447ed8c5048a193632f86/ade0340f576ee14793c607073bd7e8e409af07a8</string>
+		<key>57b56bb86dc67c00374447ed8c5048a193632f86/Snapshot/0468d26ad5dc28df372736abb757ed6457c7eed1</key>
+		<string>57b56bb86dc67c00374447ed8c5048a193632f86/0468d26ad5dc28df372736abb757ed6457c7eed1</string>
+		<key>57b56bb86dc67c00374447ed8c5048a193632f86/Snapshot/45873380d5dd41223b6716dd27bfaa7e9fbba5fa</key>
+		<string>57b56bb86dc67c00374447ed8c5048a193632f86/45873380d5dd41223b6716dd27bfaa7e9fbba5fa</string>
+		<key>57b56bb86dc67c00374447ed8c5048a193632f86/Snapshot/462db712aa8d833ff164035c1244726c477891bd</key>
+		<string>57b56bb86dc67c00374447ed8c5048a193632f86/462db712aa8d833ff164035c1244726c477891bd</string>
+		<key>57b56bb86dc67c00374447ed8c5048a193632f86/Snapshot/bedec6d42efe57123676bfa31e98ab68b713195f</key>
+		<string>57b56bb86dc67c00374447ed8c5048a193632f86/bedec6d42efe57123676bfa31e98ab68b713195f</string>
+		<key>57b56bb86dc67c00374447ed8c5048a193632f86/Snapshot/a46c5e6c2934d61189cb94d8d54ee424f1af79ba</key>
+		<string>57b56bb86dc67c00374447ed8c5048a193632f86/a46c5e6c2934d61189cb94d8d54ee424f1af79ba</string>
+		<key>57b56bb86dc67c00374447ed8c5048a193632f86/Snapshot/86736007d0166a18c646c567279b75093fc066fe</key>
+		<string>57b56bb86dc67c00374447ed8c5048a193632f86/86736007d0166a18c646c567279b75093fc066fe</string>
+		<key>57b56bb86dc67c00374447ed8c5048a193632f86/Snapshot/45b1a377feee16fa8e2fbf128469e2b9e5403e6f</key>
+		<string>57b56bb86dc67c00374447ed8c5048a193632f86/45b1a377feee16fa8e2fbf128469e2b9e5403e6f</string>
+		<key>57b56bb86dc67c00374447ed8c5048a193632f86/Snapshot/ea4f4a1a45ab93a97917e22dd28d298d78686dd4</key>
+		<string>57b56bb86dc67c00374447ed8c5048a193632f86/ea4f4a1a45ab93a97917e22dd28d298d78686dd4</string>
+		<key>57b56bb86dc67c00374447ed8c5048a193632f86/Snapshot/5fd03a33c2a31106503589573045150c740721dd</key>
+		<string>57b56bb86dc67c00374447ed8c5048a193632f86/5fd03a33c2a31106503589573045150c740721dd</string>
+		<key>57b56bb86dc67c00374447ed8c5048a193632f86/Snapshot/3d0d7e5fb2ce288813306e4d4636395e047a3d28</key>
+		<string>57b56bb86dc67c00374447ed8c5048a193632f86/3d0d7e5fb2ce288813306e4d4636395e047a3d28</string>
+		<key>57b56bb86dc67c00374447ed8c5048a193632f86/Snapshot/2b2b0084a1bc3a5ac8c27afdf14afb42c61a19ca</key>
+		<string>57b56bb86dc67c00374447ed8c5048a193632f86/2b2b0084a1bc3a5ac8c27afdf14afb42c61a19ca</string>
+		<key>57b56bb86dc67c00374447ed8c5048a193632f86/Snapshot/31bb7ba8914766d4ba40d6dfb6113c8b614be442</key>
+		<string>57b56bb86dc67c00374447ed8c5048a193632f86/31bb7ba8914766d4ba40d6dfb6113c8b614be442</string>
+		<key>57b56bb86dc67c00374447ed8c5048a193632f86/Snapshot/0dc926a1810f7aee4e8f38793ed788701f93bf9d</key>
+		<string>57b56bb86dc67c00374447ed8c5048a193632f86/0dc926a1810f7aee4e8f38793ed788701f93bf9d</string>
+		<key>57b56bb86dc67c00374447ed8c5048a193632f86/Snapshot/35bd84cceb82d804a3eefd3b9452fb49f5b05b9b</key>
+		<string>57b56bb86dc67c00374447ed8c5048a193632f86/35bd84cceb82d804a3eefd3b9452fb49f5b05b9b</string>
+		<key>57b56bb86dc67c00374447ed8c5048a193632f86/Snapshot/7ddb1ea8c09e5baae5e2d2ecac604a4e4e3087de</key>
+		<string>57b56bb86dc67c00374447ed8c5048a193632f86/7ddb1ea8c09e5baae5e2d2ecac604a4e4e3087de</string>
+		<key>57b56bb86dc67c00374447ed8c5048a193632f86/Snapshot/c7813fa37817a9fb69dfd64993ca2cf91171ae9d</key>
+		<string>57b56bb86dc67c00374447ed8c5048a193632f86/c7813fa37817a9fb69dfd64993ca2cf91171ae9d</string>
+		<key>57b56bb86dc67c00374447ed8c5048a193632f86/Snapshot/d29f4fbba1c2a95d92b05d53c1b9c967df6e02d5</key>
+		<string>57b56bb86dc67c00374447ed8c5048a193632f86/d29f4fbba1c2a95d92b05d53c1b9c967df6e02d5</string>
+		<key>57b56bb86dc67c00374447ed8c5048a193632f86/Snapshot/9143d986a77ab8cf5878e4e9ac80627477eb6674</key>
+		<string>57b56bb86dc67c00374447ed8c5048a193632f86/9143d986a77ab8cf5878e4e9ac80627477eb6674</string>
+		<key>57b56bb86dc67c00374447ed8c5048a193632f86/Snapshot/06642c767b9d974f12af8d72212b766709ba08fe</key>
+		<string>57b56bb86dc67c00374447ed8c5048a193632f86/06642c767b9d974f12af8d72212b766709ba08fe</string>
+		<key>57b56bb86dc67c00374447ed8c5048a193632f86/Snapshot/8218978e4ab0a48035bb92653145a6be872ea858</key>
+		<string>57b56bb86dc67c00374447ed8c5048a193632f86/8218978e4ab0a48035bb92653145a6be872ea858</string>
+		<key>57b56bb86dc67c00374447ed8c5048a193632f86/Snapshot/40f85bf64e662a9fad385d4ae4c56352a2355443</key>
+		<string>57b56bb86dc67c00374447ed8c5048a193632f86/40f85bf64e662a9fad385d4ae4c56352a2355443</string>
+		<key>57b56bb86dc67c00374447ed8c5048a193632f86/Snapshot/3432b051212e4311c705efa56fc4db8c58aed802</key>
+		<string>57b56bb86dc67c00374447ed8c5048a193632f86/3432b051212e4311c705efa56fc4db8c58aed802</string>
+		<key>57b56bb86dc67c00374447ed8c5048a193632f86/Snapshot/369b2f1b3f2893a06bed67ae75a13f5ab620f93a</key>
+		<string>57b56bb86dc67c00374447ed8c5048a193632f86/369b2f1b3f2893a06bed67ae75a13f5ab620f93a</string>
+		<key>57b56bb86dc67c00374447ed8c5048a193632f86/Snapshot/d351344f01cbe4900c9e981d1fb7ea5614e7c2e5</key>
+		<string>57b56bb86dc67c00374447ed8c5048a193632f86/d351344f01cbe4900c9e981d1fb7ea5614e7c2e5</string>
+		<key>57b56bb86dc67c00374447ed8c5048a193632f86/Snapshot/06af93e6265bf32205de534582c3e8b8b3b5ee9e</key>
+		<string>57b56bb86dc67c00374447ed8c5048a193632f86/06af93e6265bf32205de534582c3e8b8b3b5ee9e</string>
+		<key>57b56bb86dc67c00374447ed8c5048a193632f86/Snapshot/0fc8189497f46a2e2511c846acbbb318d3a43ec3</key>
+		<string>57b56bb86dc67c00374447ed8c5048a193632f86/0fc8189497f46a2e2511c846acbbb318d3a43ec3</string>
+		<key>57b56bb86dc67c00374447ed8c5048a193632f86/Snapshot/31f94b88d26e40134ca28c158995b88d1028971b</key>
+		<string>57b56bb86dc67c00374447ed8c5048a193632f86/31f94b88d26e40134ca28c158995b88d1028971b</string>
+		<key>57b56bb86dc67c00374447ed8c5048a193632f86/Snapshot/7ff7fe545440ab72b1570232d0ed81b84a5334dd</key>
+		<string>57b56bb86dc67c00374447ed8c5048a193632f86/7ff7fe545440ab72b1570232d0ed81b84a5334dd</string>
+		<key>57b56bb86dc67c00374447ed8c5048a193632f86/Snapshot/caf21bedb3c685e877c836bca3a07342d41d7638</key>
+		<string>57b56bb86dc67c00374447ed8c5048a193632f86/caf21bedb3c685e877c836bca3a07342d41d7638</string>
+		<key>57b56bb86dc67c00374447ed8c5048a193632f86/Snapshot/edeb88d31c5904cdb47881ebf0b1cd8310a6ea93</key>
+		<string>57b56bb86dc67c00374447ed8c5048a193632f86/edeb88d31c5904cdb47881ebf0b1cd8310a6ea93</string>
+		<key>57b56bb86dc67c00374447ed8c5048a193632f86/Snapshot/13fcec800c483aa9cc21b0f0e731757ac0f2dea9</key>
+		<string>57b56bb86dc67c00374447ed8c5048a193632f86/13fcec800c483aa9cc21b0f0e731757ac0f2dea9</string>
+		<key>57b56bb86dc67c00374447ed8c5048a193632f86/Snapshot/d1c4ed94e4c4421c3093d117201ac557f1ee5236</key>
+		<string>57b56bb86dc67c00374447ed8c5048a193632f86/d1c4ed94e4c4421c3093d117201ac557f1ee5236</string>
+		<key>57b56bb86dc67c00374447ed8c5048a193632f86/Snapshot/51a4616e576dd33cd2abadfea874eb8ff246bf0e</key>
+		<string>57b56bb86dc67c00374447ed8c5048a193632f86/51a4616e576dd33cd2abadfea874eb8ff246bf0e</string>
+		<key>57b56bb86dc67c00374447ed8c5048a193632f86/Snapshot/49879eed0765eb713eb4f3898391e36b419b46da</key>
+		<string>57b56bb86dc67c00374447ed8c5048a193632f86/49879eed0765eb713eb4f3898391e36b419b46da</string>
+		<key>57b56bb86dc67c00374447ed8c5048a193632f86/Snapshot/303e04f2a5b473c5ca2127d65365db4c3e055c05</key>
+		<string>57b56bb86dc67c00374447ed8c5048a193632f86/303e04f2a5b473c5ca2127d65365db4c3e055c05</string>
+		<key>57b56bb86dc67c00374447ed8c5048a193632f86/Snapshot/5cfa9db121949c3bf3b889caefc8d5ba766dbd09</key>
+		<string>57b56bb86dc67c00374447ed8c5048a193632f86/5cfa9db121949c3bf3b889caefc8d5ba766dbd09</string>
+		<key>57b56bb86dc67c00374447ed8c5048a193632f86/Snapshot/bfecaa9c467e3acb085a5b312bd27bdd5cd7579a</key>
+		<string>57b56bb86dc67c00374447ed8c5048a193632f86/bfecaa9c467e3acb085a5b312bd27bdd5cd7579a</string>
+		<key>57b56bb86dc67c00374447ed8c5048a193632f86/Snapshot/2fdcd655b0ad22cb9c4caf388f44fe6185f9556c</key>
+		<string>57b56bb86dc67c00374447ed8c5048a193632f86/2fdcd655b0ad22cb9c4caf388f44fe6185f9556c</string>
+		<key>57b56bb86dc67c00374447ed8c5048a193632f86/Snapshot/f80daab6f93a1b3b50a3a0fc7cfef808f9b1a4b0</key>
+		<string>57b56bb86dc67c00374447ed8c5048a193632f86/f80daab6f93a1b3b50a3a0fc7cfef808f9b1a4b0</string>
+		<key>57b56bb86dc67c00374447ed8c5048a193632f86/Snapshot/80c42a429a2e9877c4972b1e1ae246efc55f9c3c</key>
+		<string>57b56bb86dc67c00374447ed8c5048a193632f86/80c42a429a2e9877c4972b1e1ae246efc55f9c3c</string>
+		<key>57b56bb86dc67c00374447ed8c5048a193632f86/Snapshot/aeacdfd9fadbbe56548a40e02b7685d324050e54</key>
+		<string>57b56bb86dc67c00374447ed8c5048a193632f86/aeacdfd9fadbbe56548a40e02b7685d324050e54</string>
+		<key>57b56bb86dc67c00374447ed8c5048a193632f86/Snapshot/c58045292621673cabe64aa6050921a2f4807851</key>
+		<string>57b56bb86dc67c00374447ed8c5048a193632f86/c58045292621673cabe64aa6050921a2f4807851</string>
+		<key>57b56bb86dc67c00374447ed8c5048a193632f86/Snapshot/d1f062e2da26192a6625d968274bfda8d07821e4</key>
+		<string>57b56bb86dc67c00374447ed8c5048a193632f86/d1f062e2da26192a6625d968274bfda8d07821e4</string>
+		<key>57b56bb86dc67c00374447ed8c5048a193632f86/Snapshot/7d01c88595369be97f7fc73b6d071ea09bb1d9fd</key>
+		<string>57b56bb86dc67c00374447ed8c5048a193632f86/7d01c88595369be97f7fc73b6d071ea09bb1d9fd</string>
+		<key>57b56bb86dc67c00374447ed8c5048a193632f86/Snapshot/fb7786ced1add24313fa258c8e1ed041e24d52a4</key>
+		<string>57b56bb86dc67c00374447ed8c5048a193632f86/fb7786ced1add24313fa258c8e1ed041e24d52a4</string>
+		<key>57b56bb86dc67c00374447ed8c5048a193632f86/Snapshot/3c54cb1e89c54d3c09664c5b8311c0a00f9ea06e</key>
+		<string>57b56bb86dc67c00374447ed8c5048a193632f86/3c54cb1e89c54d3c09664c5b8311c0a00f9ea06e</string>
+		<key>57b56bb86dc67c00374447ed8c5048a193632f86/Snapshot/5f6165d4b21efe1b9b4b5eca6133c619225fff4b</key>
+		<string>57b56bb86dc67c00374447ed8c5048a193632f86/5f6165d4b21efe1b9b4b5eca6133c619225fff4b</string>
+		<key>57b56bb86dc67c00374447ed8c5048a193632f86/Snapshot/61c8b15a0110ab17d1b7467c3a042eb1458426c6</key>
+		<string>57b56bb86dc67c00374447ed8c5048a193632f86/61c8b15a0110ab17d1b7467c3a042eb1458426c6</string>
+		<key>57b56bb86dc67c00374447ed8c5048a193632f86/Snapshot/2041457d5fe04d39d0ab481178355df6781e6858</key>
+		<string>57b56bb86dc67c00374447ed8c5048a193632f86/2041457d5fe04d39d0ab481178355df6781e6858</string>
+	</dict>
+	<dict>
+	</dict>
+	<real>90.694704</real>
+</array>
+</plist>
+Moving 62 files
+22:22:18 property_list_service.c:142 internal_plist_send(): sending 108 bytes
+22:22:18 property_list_service.c:147 internal_plist_send(): sent 108 bytes
+22:22:18 property_list_service.c:148 internal_plist_send(): printing 316 bytes plist:
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<array>
+	<string>DLMessageStatusResponse</string>
+	<integer>0</integer>
+	<string>___EmptyParameterString___</string>
+	<dict>
+	</dict>
+</array>
+</plist>
+[==============================================    ]  91% Finished
+22:22:18 property_list_service.c:224 internal_plist_receive_timeout(): initial read=4
+22:22:18 property_list_service.c:233 internal_plist_receive_timeout(): 211 bytes following
+22:22:18 property_list_service.c:242 internal_plist_receive_timeout(): received 211 bytes
+22:22:18 property_list_service.c:256 internal_plist_receive_timeout(): printing 438 bytes plist:
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<array>
+	<string>DLMessageMoveFiles</string>
+	<dict>
+		<key>57b56bb86dc67c00374447ed8c5048a193632f86/Snapshot/Manifest.plist</key>
+		<string>57b56bb86dc67c00374447ed8c5048a193632f86/Manifest.plist</string>
+	</dict>
+	<dict>
+	</dict>
+	<real>91.983992</real>
+</array>
+</plist>
+Moving 1 file
+22:22:18 property_list_service.c:142 internal_plist_send(): sending 108 bytes
+22:22:18 property_list_service.c:147 internal_plist_send(): sent 108 bytes
+22:22:18 property_list_service.c:148 internal_plist_send(): printing 316 bytes plist:
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<array>
+	<string>DLMessageStatusResponse</string>
+	<integer>0</integer>
+	<string>___EmptyParameterString___</string>
+	<dict>
+	</dict>
+</array>
+</plist>
+[==============================================    ]  92% Finished
+22:22:18 property_list_service.c:224 internal_plist_receive_timeout(): initial read=4
+22:22:18 property_list_service.c:233 internal_plist_receive_timeout(): 209 bytes following
+22:22:18 property_list_service.c:242 internal_plist_receive_timeout(): received 209 bytes
+22:22:18 property_list_service.c:256 internal_plist_receive_timeout(): printing 436 bytes plist:
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<array>
+	<string>DLMessageMoveFiles</string>
+	<dict>
+		<key>57b56bb86dc67c00374447ed8c5048a193632f86/Snapshot/Manifest.mbdb</key>
+		<string>57b56bb86dc67c00374447ed8c5048a193632f86/Manifest.mbdb</string>
+	</dict>
+	<dict>
+	</dict>
+	<real>93.273280</real>
+</array>
+</plist>
+Moving 1 file
+22:22:18 property_list_service.c:142 internal_plist_send(): sending 108 bytes
+22:22:18 property_list_service.c:147 internal_plist_send(): sent 108 bytes
+22:22:18 property_list_service.c:148 internal_plist_send(): printing 316 bytes plist:
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<array>
+	<string>DLMessageStatusResponse</string>
+	<integer>0</integer>
+	<string>___EmptyParameterString___</string>
+	<dict>
+	</dict>
+</array>
+</plist>
+[===============================================   ]  93% Finished
+22:22:18 property_list_service.c:224 internal_plist_receive_timeout(): initial read=4
+22:22:18 property_list_service.c:233 internal_plist_receive_timeout(): 209 bytes following
+22:22:18 property_list_service.c:242 internal_plist_receive_timeout(): received 209 bytes
+22:22:18 property_list_service.c:256 internal_plist_receive_timeout(): printing 436 bytes plist:
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<array>
+	<string>DLMessageMoveFiles</string>
+	<dict>
+		<key>57b56bb86dc67c00374447ed8c5048a193632f86/Snapshot/Manifest.mbdx</key>
+		<string>57b56bb86dc67c00374447ed8c5048a193632f86/Manifest.mbdx</string>
+	</dict>
+	<dict>
+	</dict>
+	<real>94.562568</real>
+</array>
+</plist>
+Moving 1 file
+22:22:18 property_list_service.c:142 internal_plist_send(): sending 108 bytes
+22:22:18 property_list_service.c:147 internal_plist_send(): sent 108 bytes
+22:22:18 property_list_service.c:148 internal_plist_send(): printing 316 bytes plist:
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<array>
+	<string>DLMessageStatusResponse</string>
+	<integer>0</integer>
+	<string>___EmptyParameterString___</string>
+	<dict>
+	</dict>
+</array>
+</plist>
+[================================================  ]  95% Finished
+22:22:18 property_list_service.c:224 internal_plist_receive_timeout(): initial read=4
+22:22:18 property_list_service.c:233 internal_plist_receive_timeout(): 85 bytes following
+22:22:18 property_list_service.c:242 internal_plist_receive_timeout(): received 85 bytes
+22:22:18 property_list_service.c:256 internal_plist_receive_timeout(): printing 292 bytes plist:
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<array>
+	<string>DLMessageUploadFiles</string>
+	<dict>
+	</dict>
+	<real>96.132136</real>
+	<integer>0</integer>
+</array>
+</plist>
+22:22:18 property_list_service.c:142 internal_plist_send(): sending 108 bytes
+22:22:18 property_list_service.c:147 internal_plist_send(): sent 108 bytes
+22:22:18 property_list_service.c:148 internal_plist_send(): printing 316 bytes plist:
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<array>
+	<string>DLMessageStatusResponse</string>
+	<integer>0</integer>
+	<string>___EmptyParameterString___</string>
+	<dict>
+	</dict>
+</array>
+</plist>
+22:22:18 property_list_service.c:224 internal_plist_receive_timeout(): initial read=4
+22:22:18 property_list_service.c:233 internal_plist_receive_timeout(): 138 bytes following
+22:22:18 property_list_service.c:242 internal_plist_receive_timeout(): received 138 bytes
+22:22:18 property_list_service.c:256 internal_plist_receive_timeout(): printing 358 bytes plist:
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<array>
+	<string>DLMessageRemoveFiles</string>
+	<array>
+		<string>57b56bb86dc67c00374447ed8c5048a193632f86/Snapshot</string>
+	</array>
+	<dict>
+	</dict>
+	<real>98.430432</real>
+</array>
+</plist>
+Removing 1 file
+22:22:18 property_list_service.c:142 internal_plist_send(): sending 108 bytes
+22:22:18 property_list_service.c:147 internal_plist_send(): sent 108 bytes
+22:22:18 property_list_service.c:148 internal_plist_send(): printing 316 bytes plist:
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<array>
+	<string>DLMessageStatusResponse</string>
+	<integer>0</integer>
+	<string>___EmptyParameterString___</string>
+	<dict>
+	</dict>
+</array>
+</plist>
+[==================================================]  98% Finished
+22:22:18 property_list_service.c:224 internal_plist_receive_timeout(): initial read=4
+22:22:18 property_list_service.c:233 internal_plist_receive_timeout(): 85 bytes following
+22:22:18 property_list_service.c:242 internal_plist_receive_timeout(): received 85 bytes
+22:22:18 property_list_service.c:256 internal_plist_receive_timeout(): printing 293 bytes plist:
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<array>
+	<string>DLMessageUploadFiles</string>
+	<dict>
+	</dict>
+	<real>100.000000</real>
+	<integer>0</integer>
+</array>
+</plist>
+22:22:18 property_list_service.c:142 internal_plist_send(): sending 108 bytes
+22:22:18 property_list_service.c:147 internal_plist_send(): sent 108 bytes
+22:22:18 property_list_service.c:148 internal_plist_send(): printing 316 bytes plist:
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<array>
+	<string>DLMessageStatusResponse</string>
+	<integer>0</integer>
+	<string>___EmptyParameterString___</string>
+	<dict>
+	</dict>
+</array>
+</plist>
+22:22:18 property_list_service.c:224 internal_plist_receive_timeout(): initial read=4
+22:22:18 property_list_service.c:233 internal_plist_receive_timeout(): 114 bytes following
+22:22:18 property_list_service.c:242 internal_plist_receive_timeout(): received 114 bytes
+22:22:18 property_list_service.c:256 internal_plist_receive_timeout(): printing 348 bytes plist:
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<array>
+	<string>DLMessageProcessMessage</string>
+	<dict>
+		<key>ErrorCode</key>
+		<integer>0</integer>
+		<key>MessageName</key>
+		<string>Response</string>
+	</dict>
+</array>
+</plist>
+Received 69 files from device.
+Backup Successful.
+22:22:18 afc.c:41 afc_lock(): Locked
+22:22:18 afc.c:1056 afc_file_lock(): file handle 1
+22:22:18 afc.c:245 afc_dispatch_packet(): doin things the old way
+22:22:18 afc.c:246 afc_dispatch_packet(): packet length = 56
+22:22:18 afc.c:261 afc_dispatch_packet(): packet data follows
+22:22:18 afc.c:334 afc_receive_data(): received AFC packet, full len=48, this len=48, operation=0x1
+22:22:18 afc.c:380 afc_receive_data(): packet data size = 8
+22:22:18 afc.c:381 afc_receive_data(): packet data follows
+22:22:18 afc.c:387 afc_receive_data(): got a status response, code=0
+22:22:18 afc.c:52 afc_unlock(): Unlocked
+22:22:18 afc.c:41 afc_lock(): Locked
+22:22:18 afc.c:1007 afc_file_close(): File handle 1
+22:22:18 afc.c:245 afc_dispatch_packet(): doin things the old way
+22:22:18 afc.c:246 afc_dispatch_packet(): packet length = 48
+22:22:18 afc.c:261 afc_dispatch_packet(): packet data follows
+22:22:18 afc.c:334 afc_receive_data(): received AFC packet, full len=48, this len=48, operation=0x1
+22:22:18 afc.c:380 afc_receive_data(): packet data size = 8
+22:22:18 afc.c:381 afc_receive_data(): packet data follows
+22:22:18 afc.c:387 afc_receive_data(): got a status response, code=0
+22:22:18 afc.c:52 afc_unlock(): Unlocked
+22:22:18 lockdown.c:313 lockdownd_query_type(): called
+22:22:18 property_list_service.c:142 internal_plist_send(): sending 286 bytes
+22:22:18 property_list_service.c:147 internal_plist_send(): sent 286 bytes
+22:22:18 property_list_service.c:148 internal_plist_send(): printing 286 bytes plist:
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>Label</key>
+	<string>idevicebackup</string>
+	<key>Request</key>
+	<string>QueryType</string>
+</dict>
+</plist>
+22:22:18 property_list_service.c:224 internal_plist_receive_timeout(): initial read=4
+22:22:18 property_list_service.c:233 internal_plist_receive_timeout(): 342 bytes following
+22:22:18 property_list_service.c:242 internal_plist_receive_timeout(): received 342 bytes
+22:22:18 property_list_service.c:256 internal_plist_receive_timeout(): printing 342 bytes plist:
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>Request</key>
+	<string>QueryType</string>
+	<key>Result</key>
+	<string>Success</string>
+	<key>Type</key>
+	<string>com.apple.mobile.lockdown</string>
+</dict>
+</plist>
+22:22:18 lockdown.c:331 lockdownd_query_type(): success with type com.apple.mobile.lockdown
+22:22:18 lockdown.c:688 lockdownd_client_new_with_handshake(): device uuid: 57b56bb86dc67c00374447ed8c5048a193632f86
+22:22:18 userpref.c:162 userpref_get_host_id(): Using CD2EBA32-19A6-6ACC-C455-63630AA7E880 as HostID
+22:22:18 property_list_service.c:142 internal_plist_send(): sending 335 bytes
+22:22:18 property_list_service.c:147 internal_plist_send(): sent 335 bytes
+22:22:18 property_list_service.c:148 internal_plist_send(): printing 335 bytes plist:
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>Label</key>
+	<string>idevicebackup</string>
+	<key>Key</key>
+	<string>DevicePublicKey</string>
+	<key>Request</key>
+	<string>GetValue</string>
+</dict>
+</plist>
+22:22:18 property_list_service.c:224 internal_plist_receive_timeout(): initial read=4
+22:22:18 property_list_service.c:233 internal_plist_receive_timeout(): 711 bytes following
+22:22:18 property_list_service.c:242 internal_plist_receive_timeout(): received 711 bytes
+22:22:18 property_list_service.c:256 internal_plist_receive_timeout(): printing 711 bytes plist:
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>Key</key>
+	<string>DevicePublicKey</string>
+	<key>Request</key>
+	<string>GetValue</string>
+	<key>Result</key>
+	<string>Success</string>
+	<key>Value</key>
+	<data>
+	LS0tLS1CRUdJTiBSU0EgUFVCTElDIEtFWS0tLS0tCk1JR0pBb0dCQU5IeTF5MnBpWE90
+	Q2pqcXZyL1hoem5QWjcwczNNN0pIdm1UdlltbjBZckFWbzhwSHBra2QrY1IKUCtFZzRZ
+	N3MrSXdFbHgyRUJhdkdHNHk0VDNKRmlGU3lCUjh4K3o4clFCa3hpSE94YmYzYUo1ekU2
+	U01NVXdWRQpMNGh0eDZmN2N2MnVQb0ZJVU5BUktFKzRORHhoQTJpaDE2Rmo4STljd0pO
+	NDAraHBrR1MxQWdNQkFBRT0KLS0tLS1FTkQgUlNBIFBVQkxJQyBLRVktLS0tLQo=
+	</data>
+</dict>
+</plist>
+22:22:18 lockdown.c:384 lockdownd_get_value(): success
+22:22:18 lockdown.c:395 lockdownd_get_value(): has a value
+22:22:18 lockdown.c:853 lockdownd_do_pair(): device public key follows:
+-----BEGIN RSA PUBLIC KEY-----
+MIGJAoGBANHy1y2piXOtCjjqvr/XhznPZ70s3M7JHvmTvYmn0YrAVo8pHpkkd+cR
+P+Eg4Y7s+IwElx2EBavGG4y4T3JFiFSyBR8x+z8rQBkxiHOxbf3aJ5zE6SMMUwVE
+L4htx6f7cv2uPoFIUNARKE+4NDxhA2ih16Fj8I9cwJN40+hpkGS1AgMBAAE=
+-----END RSA PUBLIC KEY-----
+
+22:22:18 notification_proxy.c:44 np_lock(): NP: Locked
+22:22:18 userpref.c:162 userpref_get_host_id(): Using CD2EBA32-19A6-6ACC-C455-63630AA7E880 as HostID
+22:22:18 property_list_service.c:142 internal_plist_send(): sending 4246 bytes
+22:22:18 property_list_service.c:147 internal_plist_send(): sent 4246 bytes
+22:22:18 property_list_service.c:148 internal_plist_send(): printing 4246 bytes plist:
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>Label</key>
+	<string>idevicebackup</string>
+	<key>PairRecord</key>
+	<dict>
+		<key>DeviceCertificate</key>
+		<data>
+		LS0tLS1CRUdJTiBDRVJUSUZJQ0FURS0tLS0tCk1JSUNBRENCNjZBREFnRUNBZ0VBTUFz
+		R0NTcUdTSWIzRFFFQkJUQUFNQjRYRFRFeE1EVXdOVEl3TWpJeE9Gb1gKRFRJeE1EVXdN
+		akl3TWpJeE9Gb3dBRENCblRBTEJna3Foa2lHOXcwQkFRRURnWTBBTUlHSkFvR0JBTkh5
+		MXkycAppWE90Q2pqcXZyL1hoem5QWjcwczNNN0pIdm1UdlltbjBZckFWbzhwSHBra2Qr
+		Y1JQK0VnNFk3cytJd0VseDJFCkJhdkdHNHk0VDNKRmlGU3lCUjh4K3o4clFCa3hpSE94
+		YmYzYUo1ekU2U01NVXdWRUw0aHR4NmY3Y3YydVBvRkkKVU5BUktFKzRORHhoQTJpaDE2
+		Rmo4STljd0pONDAraHBrR1MxQWdNQkFBR2pFREFPTUF3R0ExVWRFd0VCL3dRQwpNQUF3
+		Q3dZSktvWklodmNOQVFFRkE0SUJBUUJTZFErL1oxWjBGeDVMMHU3MnI0VUxiSFZSaE9o
+		cmg1UFpBMkRaClF2WG9rNjV0YW12eFV1VmVwU2NCWkIyYTBYNHZTQWp4MEhrbExXTmcv
+		K0FQVVo5aG1ub1AzT3VrYTByQnlDaDkKNWkybVFOdTV3VVJ4RzM2b1dmNUdWSzJXYmtB
+		UHV6VVR3MnA5M25MR1AwZEtlNFRjb0J2SmlkK1h1dDhNemRkdwpwTkdKRktTTlloeWF6
+		NTRLTVpnVXJ6ZjhPNkVvbWlhaXBMQlNlekhpVnN5RWxjV3o0UldnM25ndmxTSjVmeDRK
+		CjJPZkJlb2ZiMlJUdDluTTcxdlFXUFBqcDVkbG0xcnNHWXRwK3hJWEs4aHZ3NW45eFFm
+		WGpaa2x1Ykk2VnY4Mk0KV3lGczlyL1hQNUpGbXBsTW9MU25iZXd2cUNRcStNaFdsTlUw
+		VVZyc0UyeVRhaHhDCi0tLS0tRU5EIENFUlRJRklDQVRFLS0tLS0K
+		</data>
+		<key>HostCertificate</key>
+		<data>
+		LS0tLS1CRUdJTiBDRVJUSUZJQ0FURS0tLS0tCk1JSUNsakNDQVlDZ0F3SUJBZ0lCQURB
+		TEJna3Foa2lHOXcwQkFRVXdBREFlRncweE1UQTFNRFV5TURJd01EVmEKRncweU1UQTFN
+		REl5TURJd01EVmFNQUF3Z2dFZ01Bc0dDU3FHU0liM0RRRUJBUU9DQVE4QU1JSUJDZ0tD
+		QVFFQQptanRiUXRESWxmMFYvZGFRdklkMk9PeUZac2JxY3BLR1F5TDV3ZjhrSitMWHJr
+		bVFLaElJT0FJU2ZNZHRnV1poCkVzcS9KT3dLVWF1RUljWW5xRVJPQzdITjZzQ3ZrMEZp
+		cUR2NTl3SjdyOVBLdWhibHhMZkd4YklpMzh4NkRWR3oKS2dKWGxlZXhDd1FLak9sMFhr
+		eldXT2R2c1JUQVR2d05RaFJsQ1c3SEFiL0ZXNXhyN2QxeUFjc2hHenBPZ3cwVApqRmdz
+		YWIwaXRXU1FPMjh4YzJEUGJIRS9NTlNnU2hvMHlOYkZubTZWS2lhMkZTSHcwMUxHWGY5
+		MFI4N1ZiZ2VRCm9NMUdUMVl6VGYxZVpKMmF3c1hZVDd5dHIwZlhxL25nYmhyL3pHSHRv
+		b1prVUx0L0VkeGovdTVnM25TalorSXEKNFg3b1RYLy9NUnpsQ01ra01MZ0cxd0lEQVFB
+		Qm95RXdIekFNQmdOVkhSTUJBZjhFQWpBQU1BOEdBMVVkRHdFQgovd1FGQXdNSG9BQXdD
+		d1lKS29aSWh2Y05BUUVGQTRJQkFRQkE2eDJaOTN0MkovWTBpVUtWeXllREF4eFVvUGxG
+		Cm00cy93K2FhQ3RFMkg4Q2Z6MEVZNEovaUpkOFF0WElMTlZ2RENEMGMwL2xhalFET0J6
+		RFdmenI1cjh1NXhEYTAKb0FaS094RmN3cHdneFE5ZmowM3BDQlVzWGlHY0NPT0tzVkVl
+		L0VqZ2lwbXhWM0ZGSTZyRUpYaFFxTTQ0YkVTVAppZnh6TTJuaUFsL1hJM3NxSVpQSzlF
+		ZUduRWY5NThNT3VWckZrQVFoeHJpb284N0dCNlVrcncxTUwyWnlMVVpjCnFVNUdmYTFW
+		dHJJQkN1T3RLWHhMRktyMDVTeHJHN0U2OVYySXhlbmpjOTdrRFNwaHlja05hSnZHQllW
+		U0l4d0MKUW5EeE8wTllDdDhIbUQxUW5MNGR3MURYUzVpcEVRZDBZSHFOWkQ4WC9NOUdX
+		d0lPbUo1RCs4WWMKLS0tLS1FTkQgQ0VSVElGSUNBVEUtLS0tLQo=
+		</data>
+		<key>HostID</key>
+		<string>CD2EBA32-19A6-6ACC-C455-63630AA7E880</string>
+		<key>RootCertificate</key>
+		<data>
+		LS0tLS1CRUdJTiBDRVJUSUZJQ0FURS0tLS0tCk1JSUNpRENDQVhLZ0F3SUJBZ0lCQURB
+		TEJna3Foa2lHOXcwQkFRVXdBREFlRncweE1UQTFNRFV5TURJd01EVmEKRncweU1UQTFN
+		REl5TURJd01EVmFNQUF3Z2dFZ01Bc0dDU3FHU0liM0RRRUJBUU9DQVE4QU1JSUJDZ0tD
+		QVFFQQpzN1cxb3NEN3JMTWFGR2cyWm1BRlVYQ0hKV3p0eWlvZ3p2NGxYeDRxVUVXcURN
+		ODhkaEpnOHpHUzdGeVJQT3BpCmwyZjFwaVh1eEF2djc5RzVvNjZwL3lQc2p1eDRzYzNh
+		dTRlNFhkSUpFQW55TzhZY0dWT3g0L3JNVXFzS2xwRngKK2tjaWtrWjZZYk1aSFFsTHlU
+		NmI3NTc2aE9xaWdMOUtjNSt5TzRTc3lLeUVidGN0R2RtNlQzalM4M3ZaUlZqaQpBemhU
+		ZFV2NGFMZWNucnBtZU03MHd3ZEJIVnI0S2hjSFQ0dDVlTURkSTU2VmxVVHVmZmFJR0hs
+		Qk9zSFUrcE5iCmxFa08zQzhrTjlCUGNDN2JMQ1Z0YVhTbWlGdS9Gb0lrekhENzQ3bWFv
+		THhmN24wQU9oNmFJOHhrV2gzNEtIRkoKT0tQZEdMMm5Da3JHTDdFdVNaWUlKd0lEQVFB
+		Qm94TXdFVEFQQmdOVkhSTUJBZjhFQlRBREFRSC9NQXNHQ1NxRwpTSWIzRFFFQkJRT0NB
+		UUVBb3dSTnBIUzc3ckxuQVNxU0FHUUVCSUhIWkRHbjNCdHovMUxqb1lpYlFkTENFWGhh
+		CjR6Zll4QUhLRWMyTUphVlNqWHRraHhzVmRFc0VtOW5uTUJmbGQydXkvYmxMbTV5RUd0
+		TC95ay9ZVnFWMmd0MFcKUHE1L2U5MlMrUEJsY0pUc3E2bW9hM3NvTUFvNUR1NitZTDZz
+		Vk9lQWFnZHBocHhqcUM3ZUdPa1J5ZTlnTGNodgpONXNtdlFZanBkcTdWQUNXdUxCV2dC
+		S0dkdzRzTUYvVlFmOHM1UVpTcHYxZ2ZzTFlvOEs0UVByajZJRDVMa2g5CjNjK2JHWDdD
+		TWk0d3d0MWVUMENyRzBEZU1maXNFRnJ0QzlQWkJvNWN6MWttaXRtMVNSY1dKZmZNOFYv
+		U21JV1gKb3BZSXkrRlZ4UlBaMjRHUnpTMWpmOG8yMVNjdXRDOTBRTkwxUUE9PQotLS0t
+		LUVORCBDRVJUSUZJQ0FURS0tLS0tCg==
+		</data>
+	</dict>
+	<key>Request</key>
+	<string>ValidatePair</string>
+</dict>
+</plist>
+22:22:18 property_list_service.c:224 internal_plist_receive_timeout(): initial read=4
+22:22:18 property_list_service.c:233 internal_plist_receive_timeout(): 284 bytes following
+22:22:18 property_list_service.c:242 internal_plist_receive_timeout(): received 284 bytes
+22:22:18 property_list_service.c:256 internal_plist_receive_timeout(): printing 284 bytes plist:
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>Request</key>
+	<string>ValidatePair</string>
+	<key>Result</key>
+	<string>Success</string>
+</dict>
+</plist>
+22:22:18 lockdown.c:897 lockdownd_do_pair(): ValidatePair success
+22:22:18 property_list_service.c:142 internal_plist_send(): sending 363 bytes
+22:22:18 property_list_service.c:147 internal_plist_send(): sent 363 bytes
+22:22:18 property_list_service.c:148 internal_plist_send(): printing 363 bytes plist:
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>Label</key>
+	<string>idevicebackup</string>
+	<key>HostID</key>
+	<string>CD2EBA32-19A6-6ACC-C455-63630AA7E880</string>
+	<key>Request</key>
+	<string>StartSession</string>
+</dict>
+</plist>
+22:22:18 property_list_service.c:224 internal_plist_receive_timeout(): initial read=4
+22:22:18 property_list_service.c:233 internal_plist_receive_timeout(): 399 bytes following
+22:22:18 property_list_service.c:242 internal_plist_receive_timeout(): received 399 bytes
+22:22:18 property_list_service.c:256 internal_plist_receive_timeout(): printing 399 bytes plist:
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>EnableSessionSSL</key>
+	<true/>
+	<key>Request</key>
+	<string>StartSession</string>
+	<key>Result</key>
+	<string>Success</string>
+	<key>SessionID</key>
+	<string>147677DA-46AE-4C57-9064-27D2227EE281</string>
+</dict>
+</plist>
+22:22:18 lockdown.c:1292 lockdownd_start_session(): Session startup OK
+22:22:18 lockdown.c:1303 lockdownd_start_session(): SessionID: 147677DA-46AE-4C57-9064-27D2227EE281
+22:22:18 lockdown.c:1309 lockdownd_start_session(): Enable SSL Session: true
+22:22:18 idevice.c:583 idevice_connection_enable_ssl(): enabling SSL mode
+22:22:18 idevice.c:603 idevice_connection_enable_ssl(): GnuTLS step 1...
+22:22:18 idevice.c:605 idevice_connection_enable_ssl(): GnuTLS step 2...
+22:22:18 idevice.c:607 idevice_connection_enable_ssl(): GnuTLS step 3...
+22:22:18 idevice.c:609 idevice_connection_enable_ssl(): GnuTLS step 4 -- now handshaking...
+22:22:18 idevice.c:507 internal_ssl_write(): pre-send length = 52
+22:22:18 idevice.c:509 internal_ssl_write(): post-send sent 52 bytes
+22:22:18 idevice.c:467 internal_ssl_read(): pre-read client wants 5 bytes
+22:22:18 idevice.c:477 internal_ssl_read(): post-read we got 5 bytes
+22:22:18 idevice.c:467 internal_ssl_read(): pre-read client wants 74 bytes
+22:22:18 idevice.c:477 internal_ssl_read(): post-read we got 74 bytes
+22:22:18 idevice.c:467 internal_ssl_read(): pre-read client wants 5 bytes
+22:22:18 idevice.c:477 internal_ssl_read(): post-read we got 5 bytes
+22:22:18 idevice.c:467 internal_ssl_read(): pre-read client wants 526 bytes
+22:22:18 idevice.c:477 internal_ssl_read(): post-read we got 526 bytes
+22:22:18 idevice.c:467 internal_ssl_read(): pre-read client wants 5 bytes
+22:22:18 idevice.c:477 internal_ssl_read(): post-read we got 5 bytes
+22:22:18 idevice.c:467 internal_ssl_read(): pre-read client wants 9 bytes
+22:22:18 idevice.c:477 internal_ssl_read(): post-read we got 9 bytes
+22:22:18 idevice.c:551 internal_cert_callback(): Passing certificate
+22:22:18 idevice.c:467 internal_ssl_read(): pre-read client wants 5 bytes
+22:22:18 idevice.c:477 internal_ssl_read(): post-read we got 5 bytes
+22:22:18 idevice.c:467 internal_ssl_read(): pre-read client wants 4 bytes
+22:22:18 idevice.c:477 internal_ssl_read(): post-read we got 4 bytes
+22:22:18 idevice.c:507 internal_ssl_write(): pre-send length = 681
+22:22:18 idevice.c:509 internal_ssl_write(): post-send sent 681 bytes
+22:22:18 idevice.c:507 internal_ssl_write(): pre-send length = 137
+22:22:18 idevice.c:509 internal_ssl_write(): post-send sent 137 bytes
+22:22:18 idevice.c:507 internal_ssl_write(): pre-send length = 267
+22:22:18 idevice.c:509 internal_ssl_write(): post-send sent 267 bytes
+22:22:18 idevice.c:507 internal_ssl_write(): pre-send length = 6
+22:22:18 idevice.c:509 internal_ssl_write(): post-send sent 6 bytes
+22:22:18 idevice.c:507 internal_ssl_write(): pre-send length = 69
+22:22:18 idevice.c:509 internal_ssl_write(): post-send sent 69 bytes
+22:22:18 idevice.c:467 internal_ssl_read(): pre-read client wants 5 bytes
+22:22:18 property_list_service.c:224 internal_plist_receive_timeout(): initial read=0
+22:22:18 property_list_service.c:226 internal_plist_receive_timeout(): initial read failed!
+22:22:18 notification_proxy.c:297 np_get_notification(): NotificationProxy: no notification received!
+22:22:18 notification_proxy.c:55 np_unlock(): NP: Unlocked
+22:22:18 idevice.c:477 internal_ssl_read(): post-read we got 5 bytes
+22:22:18 idevice.c:467 internal_ssl_read(): pre-read client wants 1 bytes
+22:22:18 idevice.c:477 internal_ssl_read(): post-read we got 1 bytes
+22:22:18 idevice.c:467 internal_ssl_read(): pre-read client wants 5 bytes
+22:22:18 idevice.c:477 internal_ssl_read(): post-read we got 5 bytes
+22:22:18 idevice.c:467 internal_ssl_read(): pre-read client wants 64 bytes
+22:22:18 idevice.c:477 internal_ssl_read(): post-read we got 64 bytes
+22:22:18 idevice.c:613 idevice_connection_enable_ssl(): GnuTLS handshake done...
+22:22:18 idevice.c:624 idevice_connection_enable_ssl(): SSL mode enabled
+22:22:18 userpref.c:162 userpref_get_host_id(): Using CD2EBA32-19A6-6ACC-C455-63630AA7E880 as HostID
+22:22:18 property_list_service.c:142 internal_plist_send(): sending 363 bytes
+22:22:18 idevice.c:507 internal_ssl_write(): pre-send length = 37
+22:22:18 idevice.c:509 internal_ssl_write(): post-send sent 37 bytes
+22:22:18 idevice.c:507 internal_ssl_write(): pre-send length = 389
+22:22:18 idevice.c:509 internal_ssl_write(): post-send sent 389 bytes
+22:22:18 property_list_service.c:147 internal_plist_send(): sent 363 bytes
+22:22:18 property_list_service.c:148 internal_plist_send(): printing 363 bytes plist:
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>Label</key>
+	<string>idevicebackup</string>
+	<key>Request</key>
+	<string>StartService</string>
+	<key>Service</key>
+	<string>com.apple.mobile.notification_proxy</string>
+</dict>
+</plist>
+22:22:18 idevice.c:467 internal_ssl_read(): pre-read client wants 5 bytes
+22:22:19 idevice.c:477 internal_ssl_read(): post-read we got 5 bytes
+22:22:19 idevice.c:467 internal_ssl_read(): pre-read client wants 32 bytes
+22:22:19 idevice.c:477 internal_ssl_read(): post-read we got 32 bytes
+22:22:19 property_list_service.c:224 internal_plist_receive_timeout(): initial read=4
+22:22:19 property_list_service.c:233 internal_plist_receive_timeout(): 401 bytes following
+22:22:19 idevice.c:467 internal_ssl_read(): pre-read client wants 5 bytes
+22:22:19 idevice.c:477 internal_ssl_read(): post-read we got 5 bytes
+22:22:19 idevice.c:467 internal_ssl_read(): pre-read client wants 432 bytes
+22:22:19 idevice.c:477 internal_ssl_read(): post-read we got 432 bytes
+22:22:19 property_list_service.c:242 internal_plist_receive_timeout(): received 401 bytes
+22:22:19 property_list_service.c:256 internal_plist_receive_timeout(): printing 401 bytes plist:
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>Port</key>
+	<integer>49249</integer>
+	<key>Request</key>
+	<string>StartService</string>
+	<key>Result</key>
+	<string>Success</string>
+	<key>Service</key>
+	<string>com.apple.mobile.notification_proxy</string>
+</dict>
+</plist>
+22:22:19 notification_proxy.c:44 np_lock(): NP: Locked
+22:22:19 property_list_service.c:142 internal_plist_send(): sending 316 bytes
+22:22:19 property_list_service.c:147 internal_plist_send(): sent 316 bytes
+22:22:19 property_list_service.c:148 internal_plist_send(): printing 316 bytes plist:
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>Command</key>
+	<string>PostNotification</string>
+	<key>Name</key>
+	<string>com.apple.itunes-mobdev.syncDidFinish</string>
+</dict>
+</plist>
+22:22:19 property_list_service.c:142 internal_plist_send(): sending 235 bytes
+22:22:19 property_list_service.c:147 internal_plist_send(): sent 235 bytes
+22:22:19 property_list_service.c:148 internal_plist_send(): printing 235 bytes plist:
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>Command</key>
+	<string>Shutdown</string>
+</dict>
+</plist>
+22:22:19 property_list_service.c:224 internal_plist_receive_timeout(): initial read=4
+22:22:19 property_list_service.c:233 internal_plist_receive_timeout(): 237 bytes following
+22:22:19 property_list_service.c:242 internal_plist_receive_timeout(): received 237 bytes
+22:22:19 property_list_service.c:256 internal_plist_receive_timeout(): printing 237 bytes plist:
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>Command</key>
+	<string>ProxyDeath</string>
+</dict>
+</plist>
+22:22:19 notification_proxy.c:55 np_unlock(): NP: Unlocked
+22:22:19 lockdown.c:157 lockdownd_stop_session(): stopping session 147677DA-46AE-4C57-9064-27D2227EE281
+22:22:19 property_list_service.c:142 internal_plist_send(): sending 365 bytes
+22:22:19 idevice.c:507 internal_ssl_write(): pre-send length = 37
+22:22:19 idevice.c:509 internal_ssl_write(): post-send sent 37 bytes
+22:22:19 idevice.c:507 internal_ssl_write(): pre-send length = 405
+22:22:19 idevice.c:509 internal_ssl_write(): post-send sent 405 bytes
+22:22:19 property_list_service.c:147 internal_plist_send(): sent 365 bytes
+22:22:19 property_list_service.c:148 internal_plist_send(): printing 365 bytes plist:
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>Label</key>
+	<string>idevicebackup</string>
+	<key>Request</key>
+	<string>StopSession</string>
+	<key>SessionID</key>
+	<string>147677DA-46AE-4C57-9064-27D2227EE281</string>
+</dict>
+</plist>
+22:22:19 idevice.c:467 internal_ssl_read(): pre-read client wants 5 bytes
+22:22:19 idevice.c:477 internal_ssl_read(): post-read we got 5 bytes
+22:22:19 idevice.c:467 internal_ssl_read(): pre-read client wants 32 bytes
+22:22:19 idevice.c:477 internal_ssl_read(): post-read we got 32 bytes
+22:22:19 property_list_service.c:224 internal_plist_receive_timeout(): initial read=4
+22:22:19 property_list_service.c:233 internal_plist_receive_timeout(): 283 bytes following
+22:22:19 idevice.c:467 internal_ssl_read(): pre-read client wants 5 bytes
+22:22:19 idevice.c:477 internal_ssl_read(): post-read we got 5 bytes
+22:22:19 idevice.c:467 internal_ssl_read(): pre-read client wants 304 bytes
+22:22:19 idevice.c:477 internal_ssl_read(): post-read we got 304 bytes
+22:22:19 property_list_service.c:242 internal_plist_receive_timeout(): received 283 bytes
+22:22:19 property_list_service.c:256 internal_plist_receive_timeout(): printing 283 bytes plist:
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>Request</key>
+	<string>StopSession</string>
+	<key>Result</key>
+	<string>Success</string>
+</dict>
+</plist>
+22:22:19 lockdown.c:173 lockdownd_stop_session(): success
+22:22:19 idevice.c:507 internal_ssl_write(): pre-send length = 37
+22:22:19 idevice.c:509 internal_ssl_write(): post-send sent 37 bytes
+22:22:19 idevice.c:467 internal_ssl_read(): pre-read client wants 5 bytes
+22:22:19 idevice.c:477 internal_ssl_read(): post-read we got 5 bytes
+22:22:19 idevice.c:467 internal_ssl_read(): pre-read client wants 32 bytes
+22:22:19 idevice.c:477 internal_ssl_read(): post-read we got 32 bytes
+22:22:19 idevice.c:654 idevice_connection_disable_ssl(): SSL mode disabled
+22:22:19 lockdown.c:1050 lockdownd_goodbye(): called
+22:22:19 property_list_service.c:142 internal_plist_send(): sending 284 bytes
+22:22:19 property_list_service.c:147 internal_plist_send(): sent 284 bytes
+22:22:19 property_list_service.c:148 internal_plist_send(): printing 284 bytes plist:
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>Label</key>
+	<string>idevicebackup</string>
+	<key>Request</key>
+	<string>Goodbye</string>
+</dict>
+</plist>
+22:22:19 property_list_service.c:224 internal_plist_receive_timeout(): initial read=4
+22:22:19 property_list_service.c:233 internal_plist_receive_timeout(): 279 bytes following
+22:22:19 property_list_service.c:242 internal_plist_receive_timeout(): received 279 bytes
+22:22:19 property_list_service.c:256 internal_plist_receive_timeout(): printing 279 bytes plist:
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>Request</key>
+	<string>Goodbye</string>
+	<key>Result</key>
+	<string>Success</string>
+</dict>
+</plist>
+22:22:19 lockdown.c:1063 lockdownd_goodbye(): success
+22:22:19 property_list_service.c:142 internal_plist_send(): sending 97 bytes
+22:22:19 property_list_service.c:147 internal_plist_send(): sent 97 bytes
+22:22:19 property_list_service.c:148 internal_plist_send(): printing 273 bytes plist:
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<array>
+	<string>DLMessageDisconnect</string>
+	<string>___EmptyParameterString___</string>
+</array>
+</plist>
+22:22:19 notification_proxy.c:138 np_client_free(): joining np callback
