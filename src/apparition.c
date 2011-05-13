@@ -115,22 +115,9 @@ int main(int argc, char* argv[]) {
 		return -1;
 	}
 
-	// Open connection with the lockdownd service daemon
-	printf("Initializing lockdown service daemon\n");
-	// TODO: Change this to lockdown_init and allow afc_t and nos_t to call lockdown_open theirself
-	lockdown_t* lockdown = lockdown_init(device);
-	if(lockdown == NULL) {
-		printf("Unable to connect to lockdownd\n");
-		lockdown_free(lockdown);
-		device_free(device);
-		backup_free(backup);
-		return -1;
-	}
-
-	// Open connection with the lockdownd service daemon
 	printf("Openning lockdown service connection\n");
 	// TODO: Change this to lockdown_init and allow afc_t and nos_t to call lockdown_open theirself
-	err = lockdown_open(lockdown);
+	lockdown_t* lockdown = lockdown_open(device);
 	if(lockdown == NULL) {
 		printf("Unable to connect to lockdownd\n");
 		lockdown_free(lockdown);
@@ -151,7 +138,7 @@ int main(int argc, char* argv[]) {
 
 	// Open and initialize the afc connection
 	printf("Opening connection to AFC\n");
-	afc_t* afc = afc_open(nos);
+	afc_t* afc = afc_open(lockdown);
 	if(afc == NULL) {
 		printf("Unable to open connection to afc service\n");
 		lockdown_free(lockdown);
@@ -162,7 +149,7 @@ int main(int argc, char* argv[]) {
 
 	// Open and initialize the mb2 connection
 	printf("Opening connection to backup service\n");
-	mb2_t* mb2 = mb2_open(lockdown, afc);
+	mb2_t* mb2 = mb2_open(lockdown);
 	if(mb2 == NULL) {
 		printf("Unable to open connection to mobilebackup2 service");
 		afc_free(afc);

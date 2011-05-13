@@ -16,45 +16,49 @@
 #include <string.h>
 #include <libimobiledevice/libimobiledevice.h>
 
-#include "lockdown.h"
 #include "device.h"
+#include "lockdown.h"
 
 device_t* device_create(const char* uuid) {
-	int i = 0;
 	idevice_error_t err = 0;
-	int ret = 0;
 	device_t* device = NULL;
 	device = (device_t*) malloc(sizeof(device_t));
 	if (device == NULL) {
 		return NULL;
 	}
 	memset(device, '\0', sizeof(device_t));
-	if (uuid == NULL)
-	{
-		err = idevice_new(&(device->client), NULL);
-	} else
-	{
-		err = idevice_new(&(device->client), uuid);
-	}
-	if (err != IDEVICE_E_SUCCESS) {
-		fprintf(stderr, "No device found with uuid %s, is it plugged in?\n", uuid);
-		return NULL;
-	}
 
-	if(uuid == NULL) {
+	if (uuid == NULL) {
+		err = idevice_new(&(device->client), NULL);
+		if (err != IDEVICE_E_SUCCESS) {
+			fprintf(stderr,
+					"No device found with uuid %s, is it plugged in?\n", uuid);
+			return NULL;
+		}
 		idevice_get_uuid(device->client, &device->uuid);
+
 	} else {
+		err = idevice_new(&(device->client), uuid);
+		if (err != IDEVICE_E_SUCCESS) {
+			fprintf(stderr,
+					"No device found with uuid %s, is it plugged in?\n", uuid);
+			return NULL;
+		}
 		device->uuid = strdup(uuid);
 	}
+
 	return device;
 }
 
 void device_free(device_t* device) {
 	if (device) {
+		if(device->uuid) {
+			free(device->uuid);
+			device->uuid = NULL;
+		}
 		free(device);
 	}
 }
-
 
 void device_enable_debug() {
 	idevice_set_debug_level(3);

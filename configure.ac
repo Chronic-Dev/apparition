@@ -12,6 +12,7 @@ AC_CONFIG_HEADERS(config.h)
 
 PKG_CHECK_MODULES(libimobiledevice, libimobiledevice-1.0 >= 1.1.0)
 PKG_CHECK_MODULES(libplist, libplist >= 0.15)
+PKG_CHECK_MODULES(libcrypto, libcrypto >= 1.0)
 
 AC_CONFIG_FILES(Makefile src/Makefile)
 AC_OUTPUT

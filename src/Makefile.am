@@ -1,12 +1,16 @@
 AM_CFLAGS =	                   \
 	$(GLOBAL_CFLAGS)           \
 	$(libimobiledevice_CFLAGS) \
-	$(libplist_CFLAGS)
+	$(libplist_CFLAGS)         \
+	$(libcrypto_CFLAGS)        \
+	$(libgnutls_CFLAGS)
 
 AM_LDFLAGS =                   \
 	$(GLOBAL_LIBS)             \
 	$(libimobiledevice_LIBS)   \
-	$(libplist_LIBS)
+	$(libplist_LIBS)           \
+	$(libcrypto_LIBS)          \
+	-lgcrypt
 
 bin_PROGRAMS = apparition
 

@@ -10,17 +10,16 @@
 
 #include <libimobiledevice/libimobiledevice.h>
 
-#include "lockdown.h"
-
+struct lockdown_t;
 typedef struct device_t {
 	idevice_t client;
-	lockdown_t lockdown;
 	unsigned char* uuid;
 	unsigned char* ecid;
+	struct lockdown_t* lockdown;
 } device_t;
 
 device_t* device_open(const char* uuid);
 void device_free(device_t* device);
-void device_enable_debug();
+void device_enable_debug(	);
 
 #endif /* DEVICE_H_ */

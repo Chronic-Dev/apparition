@@ -18,6 +18,7 @@ typedef struct nos_t {
 	np_client_t client;
 } nos_t;
 
+nos_t* nos_create(lockdown_t* lockdown);
 nos_t* nos_open(lockdown_t* lockdown);
 int nos_register(nos_t* nos, np_notify_cb_t callback, idevice_t phone);
 void nos_free(nos_t* nos);

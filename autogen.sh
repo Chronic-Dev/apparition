@@ -4,4 +4,4 @@ autoconf
 autoheader
 automake -a -c
 autoreconf -i
-CFLAGS="-arch i386" LDFLAGS="-lgcrypt" ./configure
+CFLAGS="-arch i386" ./configure

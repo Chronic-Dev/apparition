@@ -23,17 +23,20 @@ lockdown_t* lockdown_init(device_t* device) {
 	return lockdown;
 }
 
-int lockdown_open(lockdown_t* lockdown) {
-	if(lockdown == NULL) {
-		return -1;
+lockdown_t* lockdown_open(device_t* device) {
+	if(device->lockdown == NULL) {
+	 device->lockdown = lockdown_init(device);
+		if(device->lockdown == NULL) {
+			return NULL;
+		}
 	}
 
 	lockdownd_client_t lockdownd = NULL;
-	if (lockdownd_client_new_with_handshake(lockdown->device->client, &lockdownd, "apparition") != LOCKDOWN_E_SUCCESS) {
+	if (lockdownd_client_new_with_handshake(device->client, &lockdownd, "apparition") != LOCKDOWN_E_SUCCESS) {
 		return -1;
 	}
-	lockdown->client = lockdownd;
-	return 0;
+	device->lockdown->client = lockdownd;
+	return device->lockdown;
 }
 
 int lockdown_start_service(lockdown_t* lockdown, const char* service, int* port) { //cant figure out hwo to get this working, too many levels of pointers for the port between this and lockdownd_start_service
