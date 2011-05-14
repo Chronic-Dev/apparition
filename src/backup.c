@@ -25,6 +25,8 @@
 #include "backup.h"
 #include "byteorder.h"
 
+#define SEPERATOR '/'
+
 static void compute_datahash(const char *path, unsigned char *hash_out)
 {
 	gcry_md_hd_t hd = NULL;
@@ -75,12 +77,103 @@ backup_t* backup_create() {
 	return backup;
 }
 
+plist_t backup_load_info(backup_t* backup) {
+	int err = 0;
+	char path[512];
+	uint32_t size = 0;
+	plist_t plist = NULL;
+	unsigned char* data = NULL;
+
+	memset(path, '\0', sizeof(path));
+	snprintf(path, sizeof(path)-1, "%s/%s/Info.plist", backup->directory, backup->uuid);
+	err = file_read(path, &data, &size);
+	if (err < 0) {
+		fprintf(stderr, "Unable to open Info.plist\n");
+		return NULL;
+	}
+	plist_from_xml(data, size, &plist);
+	free(data);
+
+	return plist;
+}
+
+plist_t backup_load_manifest(backup_t* backup) {
+	int err = 0;
+	char path[512];
+	uint32_t size = 0;
+	plist_t plist = NULL;
+	unsigned char* data = NULL;
+
+	memset(path, '\0', sizeof(path));
+	snprintf(path, sizeof(path)-1, "%s/%s/Manifest.plist", backup->directory, backup->uuid);
+	err = file_read(path, &data, &size);
+	if (err < 0) {
+		fprintf(stderr, "Unable to open Manifest.plist\n");
+		return NULL;
+	}
+	plist_from_bin(data, size, &plist);
+	free(data);
+
+	return plist;
+}
+
+plist_t backup_load_status(backup_t* backup) {
+	int err = 0;
+	char path[512];
+	uint32_t size = 0;
+	plist_t plist = NULL;
+	unsigned char* data = NULL;
+
+	memset(path, '\0', sizeof(path));
+	snprintf(path, sizeof(path)-1, "%s/%s/Status.plist", backup->directory, backup->uuid);
+	err = file_read(path, &data, &size);
+	if (err < 0) {
+		fprintf(stderr, "Unable to open Status.plist\n");
+		return NULL;
+	}
+	plist_from_bin(data, size, &plist);
+	free(data);
+
+	return plist;
+}
+
+mbdb_t* backup_load_mbdb(backup_t* backup) {
+	char manifest[512];
+	memset(manifest, '\0', sizeof(manifest));
+	snprintf(manifest, sizeof(manifest)-1, "%s/%s/Manifest.mbdb", backup->directory,  backup->uuid);
+	backup->mbdb = mbdb_open(manifest);
+	if (backup->mbdb == NULL) {
+		fprintf(stderr, "Unable to open mbdb manifest\n");
+		return NULL;
+	}
+	return backup->mbdb;
+}
+
+mbdx_t* backup_load_mbdx(backup_t* backup) {
+	char manifest[512];
+	memset(manifest, '\0', sizeof(manifest));
+	snprintf(manifest, sizeof(manifest)-1, "%s/%s/Manifest.mbdx", backup->directory,  backup->uuid);
+	backup->mbdx = mbdx_open(manifest);
+	if (backup->mbdx == NULL) {
+		fprintf(stderr, "Unable to open mbdx manifest\n");
+		return NULL;
+	}
+	return backup->mbdx;
+}
+
 backup_t* backup_open(const char* directory, const char* uuid) {
 	int i = 0;
 	int err = 0;
 	unsigned int count = 0;
 	char mbdb_manifest[512];
 	char mbdx_manifest[512];
+	unsigned int plist_size = 0;
+	unsigned char* plist_data = NULL;
+
+	plist_t info_plist = NULL;
+	plist_t status_plist = NULL;
+	plist_t manifest_plist = NULL;
+
 	backup_t* backup = backup_create();
 	if (backup == NULL) {
 		fprintf(stderr, "Unable to create backup object\n");
@@ -91,19 +184,43 @@ backup_t* backup_open(const char* directory, const char* uuid) {
 	backup->uuid = strdup(uuid);
 	backup->directory = strdup(directory);
 
-	memset(mbdb_manifest, '\0', sizeof(mbdb_manifest));
-	snprintf(mbdb_manifest, sizeof(mbdb_manifest)-1, "%s/%s/Manifest.mbdb", directory, uuid);
-	backup->mbdb = mbdb_open(mbdb_manifest);
-	if (backup->mbdb == NULL) {
-		fprintf(stderr, "Unable to open mbdb manifest\n");
+	backup->path = (char*) malloc(strlen(backup->directory) + strlen(backup->uuid) + 1);
+	if(backup->path == NULL) {
+		return NULL;
+	}
+	memset(backup->path, '\0', sizeof(strlen(backup->directory) + strlen(backup->uuid) + 1));
+	snprintf(backup->path, strlen(backup->directory) + strlen(backup->uuid), "%s%c%s", backup->directory, SEPERATOR, backup->uuid);
+
+	// Load Info.plist, Manifest.plist, and Status.plist
+	backup->info = backup_load_info(backup);
+	if(backup->info == NULL) {
+		printf("Unable to open Info.plist\n");
 		return NULL;
 	}
 
-	memset(mbdx_manifest, '\0', sizeof(mbdx_manifest));
-	snprintf(mbdx_manifest, sizeof(mbdx_manifest)-1, "%s/%s/Manifest.mbdx", directory, uuid);
-	backup->mbdx = mbdx_open(mbdx_manifest);
-	if (backup->mbdx == NULL) {
-		fprintf(stderr, "Unable to open mbdx manifest\n");
+	backup->manifest = backup_load_manifest(backup);
+	if(backup->manifest == NULL) {
+		printf("Unable to open Manifest.plist\n");
+		return NULL;
+	}
+	backup->status = backup_load_status(backup);
+	//error msg
+	if(backup->manifest == NULL) {
+		printf("Unable to open Status.plist\n");
+		return NULL;
+	}
+
+	// Load Manifest.mbdb and Manifest.mbdx
+
+	backup->mbdb = backup_load_mbdb(backup);
+	if(backup->mbdb == NULL) {
+		// error msg
+		return NULL;
+	}
+
+	backup->mbdx = backup_load_mbdx(backup);
+	if(backup->mbdx == NULL) {
+		// error msg
 		return NULL;
 	}
 
