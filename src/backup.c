@@ -53,9 +53,33 @@ static void compute_datahash(const char *path, unsigned char *hash_out) {
 static void print_hash(const unsigned char *hash, int len) {
 	int i;
 	for (i = 0; i < len; i++) {
-		printf("%02x", hash[i]);
+		fprintf(stderr, "%02x", hash[i]);
 	}
 	printf("\n");
+}
+
+static int backup_file_copy(const char* inputfile, const char* outputfile) { //copy the file from one location to another
+
+	int err = 0;
+	char path[512];
+	uint32_t size = 0;
+	unsigned char* data = NULL;
+	err = file_read(inputfile, &data, &size);
+	
+	if (err < 0){
+		fprintf(stderr, "Failed to open input file at %s!\n", inputfile);
+		return -1;
+	}
+	
+	
+	err = file_write(outputfile, data, size);
+	
+	if (err < 0){
+		fprintf(stderr, "Failed to open output file at %s!\n", outputfile);
+		return -1;
+	}
+	
+	
 }
 
 backup_t* backup_create() {
@@ -585,11 +609,29 @@ int backup_close(backup_t* backup) {
 int backup_add_file(backup_t* backup, backup_file_t* file) {
 
 	char *thefile = file->filepath;
+	char outputpath[512];
+	memset(outputpath, '\0', sizeof(outputpath));
+	
 	char data_hash[20];
-
-	printf("\n%s SHA1: ", thefile);
-	compute_datahash(thefile, data_hash);
-	print_hash(data_hash, 20);
+	fprintf(stderr, "\n%s SHA1: ", thefile); //just printing out the file for debug
+	
+	compute_datahash(thefile, data_hash); //compute sha1 datahash for end file name + important for mbdx and mbdb record
+	print_hash(data_hash, 20); //debug
+	
+	char fnamehash[41]; //will be full char of filename
+	char *p = fnamehash; //pointer to said char
+	
+	int i;
+	for ( i = 0; i < 20; i++, p += 2 ) {
+		snprintf (p, 3, "%02x", (unsigned char)data_hash[i] ); //loop through the bytes to make the full hash
+	}
+	
+	snprintf(outputpath, sizeof(outputpath)-1, "%s/%s/%s", backup->directory, backup->uuid, fnamehash); //full output path of the new file
+	
+	fprintf(stderr, "outputpath: %s\n", outputpath); //debug printing of it
+	
+	backup_file_copy(thefile, outputpath); // copy the file to its new location
+	
 	// Hash the file and write it out
 
 	// Allocate new mbdx_record
