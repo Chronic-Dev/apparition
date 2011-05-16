@@ -79,7 +79,7 @@ static int backup_file_copy(const char* inputfile, const char* outputfile) { //c
 		return -1;
 	}
 	
-	
+	return 0;
 }
 
 backup_t* backup_create() {
@@ -608,6 +608,7 @@ int backup_close(backup_t* backup) {
 
 int backup_add_file(backup_t* backup, backup_file_t* file) {
 
+	int err = 0;
 	char *thefile = file->filepath;
 	char outputpath[512];
 	memset(outputpath, '\0', sizeof(outputpath));
@@ -630,7 +631,7 @@ int backup_add_file(backup_t* backup, backup_file_t* file) {
 	
 	fprintf(stderr, "outputpath: %s\n", outputpath); //debug printing of it
 	
-	backup_file_copy(thefile, outputpath); // copy the file to its new location
+	err = backup_file_copy(thefile, outputpath); // copy the file to its new location
 	
 	// Hash the file and write it out
 
@@ -639,7 +640,7 @@ int backup_add_file(backup_t* backup, backup_file_t* file) {
 
 	// Allocate new mbdb_record
 	// Add record to mbdb object
-	return 0;
+	return err;
 }
 
 void backup_free(backup_t* backup) {
