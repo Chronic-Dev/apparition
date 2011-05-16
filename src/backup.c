@@ -19,7 +19,6 @@
 
 #include <glib.h>
 #include <gcrypt.h> //for sha1 data hash
-
 #include "mbdb.h"
 #include "mbdx.h"
 #include "backup.h"
@@ -27,17 +26,16 @@
 
 #define SEPERATOR '/'
 
-static void compute_datahash(const char *path, unsigned char *hash_out)
-{
+static void compute_datahash(const char *path, unsigned char *hash_out) {
 	gcry_md_hd_t hd = NULL;
 	gcry_md_open(&hd, GCRY_MD_SHA1, 0);
 	if (!hd) {
 		printf("ERROR: Could not initialize libgcrypt/SHA1\n");
 		return;
 	}
-	
+
 	gcry_md_reset(hd);
-	
+
 	FILE *f = fopen(path, "rb");
 	if (f) {
 		unsigned char buf[16384];
@@ -52,8 +50,7 @@ static void compute_datahash(const char *path, unsigned char *hash_out)
 	gcry_md_close(hd);
 }
 
-static void print_hash(const unsigned char *hash, int len)
-{
+static void print_hash(const unsigned char *hash, int len) {
 	int i;
 	for (i = 0; i < len; i++) {
 		printf("%02x", hash[i]);
@@ -140,7 +137,7 @@ plist_t backup_load_status(backup_t* backup) {
 mbdb_t* backup_load_mbdb(backup_t* backup) {
 	char manifest[512];
 	memset(manifest, '\0', sizeof(manifest));
-	snprintf(manifest, sizeof(manifest)-1, "%s/%s/Manifest.mbdb", backup->directory,  backup->uuid);
+	snprintf(manifest, sizeof(manifest)-1, "%s/%s/Manifest.mbdb", backup->directory, backup->uuid);
 	backup->mbdb = mbdb_open(manifest);
 	if (backup->mbdb == NULL) {
 		fprintf(stderr, "Unable to open mbdb manifest\n");
@@ -152,7 +149,7 @@ mbdb_t* backup_load_mbdb(backup_t* backup) {
 mbdx_t* backup_load_mbdx(backup_t* backup) {
 	char manifest[512];
 	memset(manifest, '\0', sizeof(manifest));
-	snprintf(manifest, sizeof(manifest)-1, "%s/%s/Manifest.mbdx", backup->directory,  backup->uuid);
+	snprintf(manifest, sizeof(manifest)-1, "%s/%s/Manifest.mbdx", backup->directory, backup->uuid);
 	backup->mbdx = mbdx_open(manifest);
 	if (backup->mbdx == NULL) {
 		fprintf(stderr, "Unable to open mbdx manifest\n");
@@ -184,8 +181,9 @@ backup_t* backup_open(const char* directory, const char* uuid) {
 	backup->uuid = strdup(uuid);
 	backup->directory = strdup(directory);
 
-	backup->path = (char*) malloc(strlen(backup->directory) + strlen(backup->uuid) + 1);
-	if(backup->path == NULL) {
+	backup->path = (char*) malloc(
+			strlen(backup->directory) + strlen(backup->uuid) + 1);
+	if (backup->path == NULL) {
 		return NULL;
 	}
 	memset(backup->path, '\0', sizeof(strlen(backup->directory) + strlen(backup->uuid) + 1));
@@ -193,19 +191,20 @@ backup_t* backup_open(const char* directory, const char* uuid) {
 
 	// Load Info.plist, Manifest.plist, and Status.plist
 	backup->info = backup_load_info(backup);
-	if(backup->info == NULL) {
+	if (backup->info == NULL) {
 		printf("Unable to open Info.plist\n");
 		return NULL;
 	}
 
 	backup->manifest = backup_load_manifest(backup);
-	if(backup->manifest == NULL) {
+	if (backup->manifest == NULL) {
 		printf("Unable to open Manifest.plist\n");
 		return NULL;
 	}
+
 	backup->status = backup_load_status(backup);
 	//error msg
-	if(backup->manifest == NULL) {
+	if (backup->manifest == NULL) {
 		printf("Unable to open Status.plist\n");
 		return NULL;
 	}
@@ -213,13 +212,13 @@ backup_t* backup_open(const char* directory, const char* uuid) {
 	// Load Manifest.mbdb and Manifest.mbdx
 
 	backup->mbdb = backup_load_mbdb(backup);
-	if(backup->mbdb == NULL) {
+	if (backup->mbdb == NULL) {
 		// error msg
 		return NULL;
 	}
 
 	backup->mbdx = backup_load_mbdx(backup);
-	if(backup->mbdx == NULL) {
+	if (backup->mbdx == NULL) {
 		// error msg
 		return NULL;
 	}
@@ -261,12 +260,136 @@ backup_t* backup_open(const char* directory, const char* uuid) {
 	return backup;
 }
 
+int backup_save_info(backup_t* backup) {
+	int err = 0;
+	char path[512];
+	uint32_t size = 0;
+	char* data = NULL;
+	plist_t info = backup->info;
+
+	plist_to_xml(info, &data, &size);
+	if (data == NULL || size <= 0) {
+		fprintf(stderr, "Unable to save Info.plist\n");
+		return -1;
+	}
+
+	memset(path, '\0', sizeof(path));
+	snprintf(path, sizeof(path)-1, "%s/%s/Info.plist", backup->directory, backup->uuid);
+	err = file_write(path, &data, &size);
+	if (err < 0) {
+		fprintf(stderr, "Unable to save Info.plist\n");
+		return -1;
+	}
+
+	free(data);
+	return 0;
+}
+
+int backup_save_manifest(backup_t* backup) {
+	int err = 0;
+	char path[512];
+	uint32_t size = 0;
+	char* data = NULL;
+	plist_t manifest = backup->manifest;
+
+	plist_to_bin(manifest, &data, &size);
+	if (data == NULL || size <= 0) {
+		fprintf(stderr, "Unable to save Manifest.plist\n");
+		return -1;
+	}
+
+	memset(path, '\0', sizeof(path));
+	snprintf(path, sizeof(path)-1, "%s/%s/Manifest.plist", backup->directory, backup->uuid);
+	err = file_write(path, &data, &size);
+	if (err < 0) {
+		fprintf(stderr, "Unable to save Manifest.plist\n");
+		return -1;
+	}
+
+	free(data);
+	return 0;
+}
+
+int backup_save_status(backup_t* backup) {
+	int err = 0;
+	char path[512];
+	uint32_t size = 0;
+	char* data = NULL;
+	plist_t status = backup->status;
+
+	plist_to_bin(status, &data, &size);
+	if (data == NULL || size <= 0) {
+		fprintf(stderr, "Unable to save Status.plist\n");
+		return -1;
+	}
+
+	memset(path, '\0', sizeof(path));
+	snprintf(path, sizeof(path)-1, "%s/%s/Status.plist", backup->directory, backup->uuid);
+	err = file_write(path, &data, &size);
+	if (err < 0) {
+		fprintf(stderr, "Unable to save Status.plist\n");
+		return -1;
+	}
+
+	free(data);
+	return 0;
+}
+
+int backup_save_mbdb(backup_t* backup) {
+	int err = 0;
+	char path[512];
+	uint32_t size = 0;
+	unsigned char* data = NULL;
+	mbdb_t* mbdb = backup->mbdb;
+
+	if (data == NULL || size <= 0) {
+		fprintf(stderr, "Unable to save Manifest.mbdb\n");
+		return -1;
+	}
+
+	memset(path, '\0', sizeof(path));
+	snprintf(path, sizeof(path)-1, "%s/%s/Manifest.mbdb", backup->directory, backup->uuid);
+	err = file_write(path, &data, &size);
+	if (err < 0) {
+		fprintf(stderr, "Unable to save Manifest.mbdb\n");
+		return -1;
+	}
+
+	free(data);
+	return 0;
+}
+
+int backup_save_mbdx(backup_t* backup) {
+	int err = 0;
+	char path[512];
+	uint32_t size = 0;
+	unsigned char* data = NULL;
+	mbdx_t* mbdx = backup->mbdx;
+
+	if (data == NULL || size <= 0) {
+		fprintf(stderr, "Unable to save Manifest.mbdx\n");
+		return -1;
+	}
+
+	memset(path, '\0', sizeof(path));
+	snprintf(path, sizeof(path)-1, "%s/%s/Manifest.mbdx", backup->directory, backup->uuid);
+	err = file_write(path, &data, &size);
+	if (err < 0) {
+		fprintf(stderr, "Unable to save Manifest.mbdx\n");
+		return -1;
+	}
+
+	free(data);
+	return 0;
+}
+
 int backup_save(backup_t* backup, const char* directory, const char* uuid) {
 	DIR* d = NULL;
 	FILE* mbdx_fd = NULL;
 	FILE* mbdb_fd = NULL;
 	backup_file_t* file = NULL;
 
+	int err = 0;
 	unsigned int i = 0;
 	unsigned int bytes = 0;
 	unsigned int magic = 0;
@@ -424,6 +547,34 @@ int backup_save(backup_t* backup, const char* directory, const char* uuid) {
 	fclose(mbdb_fd);
 	closedir(d);
 
+	if(backup->uuid) {
+		free(backup->uuid);
+		backup->uuid = strdup(uuid);
+	}
+	if(backup->directory) {
+		free(backup->directory);
+		backup->directory = strdup(directory);
+	}
+
+	// Load Info.plist, Manifest.plist, and Status.plist
+	err = backup_save_info(backup);
+	if (err < 0) {
+		printf("Unable to save Info.plist\n");
+		return -1;
+	}
+
+	err = backup_save_manifest(backup);
+	if (err < 0) {
+		printf("Unable to save Manifest.plist\n");
+		return -1;
+	}
+
+	err = backup_save_status(backup);
+	if (err < 0) {
+		printf("Unable to save Status.plist\n");
+		return -1;
+	}
+
 	return 0;
 }
 
@@ -432,11 +583,11 @@ int backup_close(backup_t* backup) {
 }
 
 int backup_add_file(backup_t* backup, backup_file_t* file) {
-	
+
 	char *thefile = file->filepath;
 	char data_hash[20];
-	
-	printf("\n%s SHA1: ",thefile );
+
+	printf("\n%s SHA1: ", thefile);
 	compute_datahash(thefile, data_hash);
 	print_hash(data_hash, 20);
 	// Hash the file and write it out
@@ -453,9 +604,23 @@ void backup_free(backup_t* backup) {
 	if (backup) {
 		if (backup->mbdb) {
 			mbdb_free(backup->mbdb);
+			backup->mbdb = NULL;
 		}
 		if (backup->mbdx) {
 			mbdx_free(backup->mbdx);
+			backup->mbdx = NULL;
+		}
+		if(backup->info) {
+			plist_free(backup->info);
+			backup->info = NULL;
+		}
+		if(backup->status) {
+			plist_free(backup->status);
+			backup->status = NULL;
+		}
+		if(backup->manifest) {
+			plist_free(backup->manifest);
+			backup->manifest = NULL;
 		}
 		free(backup);
 	}
