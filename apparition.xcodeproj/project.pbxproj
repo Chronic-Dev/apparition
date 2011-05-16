@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXFileReference section */
+		32018AA713812D2300B3CC41 /* backup_file.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = backup_file.c; sourceTree = "<group>"; };
+		32018AA813812D2300B3CC41 /* backup_file.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = backup_file.h; sourceTree = "<group>"; };
 		32446FB413749D6000FB6AB0 /* afccheck-afccheck.Po */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = "afccheck-afccheck.Po"; sourceTree = "<group>"; };
 		32446FB513749D6000FB6AB0 /* filerelaytest-filerelaytest.Po */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = "filerelaytest-filerelaytest.Po"; sourceTree = "<group>"; };
 		32446FB613749D6000FB6AB0 /* housearresttest-housearresttest.Po */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = "housearresttest-housearresttest.Po"; sourceTree = "<group>"; };
@@ -536,6 +538,8 @@
 		324470A513749D9000FB6AB0 /* src */ = {
 			isa = PBXGroup;
 			children = (
+				32018AA713812D2300B3CC41 /* backup_file.c */,
+				32018AA813812D2300B3CC41 /* backup_file.h */,
 				324470A613749D9000FB6AB0 /* .deps */,
 				324470B113749D9000FB6AB0 /* .gitignore */,
 				324470B213749D9000FB6AB0 /* afc.c */,
@@ -548,9 +552,9 @@
 				324470B913749D9000FB6AB0 /* device.c */,
 				324470BA13749D9000FB6AB0 /* device.h */,
 				324470BB13749D9000FB6AB0 /* file.c */,
+				324470BE13749D9000FB6AB0 /* lockdown.h */,
 				324470BC13749D9000FB6AB0 /* file.h */,
 				324470BD13749D9000FB6AB0 /* lockdown.c */,
-				324470BE13749D9000FB6AB0 /* lockdown.h */,
 				324470BF13749D9000FB6AB0 /* Makefile */,
 				324470C013749D9000FB6AB0 /* Makefile.am */,
 				324470C113749D9000FB6AB0 /* Makefile.in */,

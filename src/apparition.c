@@ -66,16 +66,22 @@ int main(int argc, char* argv[]) {
 		return -1;
 	}
 
-	/*
 
-	 //example test for making SHA1 is generated properly
-	 
-	backup_file_t* file = backup_file_create("Backup/3b43f185dd42d9f1f7bd42a7404a48c7965e3715/Info.plist");
-	backup_add_file(backup, file);
+
+	 //add example fstab file
 	
-	return -1;
+	/*
+	
+	 // FIXME: this is example code it tried to get working for adding files to the backup
+	 
+		backup_file_t* file = backup_file_create("fstab");
+		err = backup_add_file(backup, file);
+	
+		printf("backup_add_file return status: %i\n", err);
+	
 	
 	*/
+
 	
 	
 	/*
@@ -106,9 +112,13 @@ int main(int argc, char* argv[]) {
 	}
 	*/
 
+	char backuppath[512];
+	
 	printf("Saving new backup directory\n");
-	mkdir("Clone", 0644);
-	mkdir("Clone/2e284f1a9bdc8be302d43f935784a1a5cc66fa78", 0644);
+	mkdir("Clone", 0777);
+	
+	snprintf(backuppath, sizeof(backuppath)-1, "Clone/%s", backup->uuid);
+	mkdir(backuppath, 0777);
 	err = backup_save(backup, "Clone", device->uuid);
 	if(err < 0) {
 		printf("Unable to save backup\n");
@@ -184,6 +194,10 @@ int main(int argc, char* argv[]) {
 	// Close our connection, but don't free our object
 	afc_close(afc);
 
+	/*
+	
+	 //FIXME: right now this is commented out, i don't want any malformed backups to try and restore to devices.
+	 
 	// Perform a restore from a backup object
 	printf("Performing restore from backup\n");
 	err = mb2_restore(mb2, backup);
@@ -196,7 +210,7 @@ int main(int argc, char* argv[]) {
 		backup_free(backup);
 	}
 	mb2_close(mb2);
-
+*/
 	printf("Cleaning up\n");
 	// If open, then close and free structures
 	if(mb2) mb2_free(mb2);

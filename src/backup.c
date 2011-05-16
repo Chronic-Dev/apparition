@@ -79,7 +79,7 @@ static int backup_file_copy(const char* inputfile, const char* outputfile) { //c
 		return -1;
 	}
 	
-	return 0;
+	return err;
 }
 
 backup_t* backup_create() {
@@ -284,14 +284,14 @@ backup_t* backup_open(const char* directory, const char* uuid) {
 	return backup;
 }
 
-int backup_save_info(backup_t* backup) {
+int backup_save_info(backup_t* backup) { //FIXME: this doesn't seem to work properly, always errors out, the rest of the clone appears to be fine up to this point
 	int err = 0;
 	char path[512];
 	uint32_t size = 0;
 	char* data = NULL;
 	plist_t info = backup->info;
 
-	plist_to_xml(info, &data, &size);
+	plist_to_xml(info, &data, &size); 
 	if (data == NULL || size <= 0) {
 		fprintf(stderr, "Unable to save Info.plist\n");
 		return -1;
@@ -608,6 +608,8 @@ int backup_close(backup_t* backup) {
 
 int backup_add_file(backup_t* backup, backup_file_t* file) {
 
+	// Hash the file and write it out
+	
 	int err = 0;
 	char *thefile = file->filepath;
 	char outputpath[512];
@@ -622,10 +624,34 @@ int backup_add_file(backup_t* backup, backup_file_t* file) {
 	char fnamehash[41]; //will be full char of filename
 	char *p = fnamehash; //pointer to said char
 	
+	file->mbdx_record = mbdx_record_create(backup->mbdx);
+	
 	int i;
 	for ( i = 0; i < 20; i++, p += 2 ) {
 		snprintf (p, 3, "%02x", (unsigned char)data_hash[i] ); //loop through the bytes to make the full hash
+		file->mbdx_record->key[i] = data_hash[i];
 	}
+	
+	file->mbdx_record->mode = 60737; //FIXME: not any kind of proper mode, just randomly grabbed it from an output example
+	
+	
+	/* 
+	 
+	 
+	 FIXME: i know this isn't right because it errored out when trying to write the new output files
+	 
+	 
+	 */
+	
+	int offset = backup->mbdb->size; //FIXME: not sure how else to get the current / next offset.
+	
+	printf("mbdb size: %i\n", offset);
+	
+	offset += sizeof(mbdx_header_t);
+	
+	printf("new offset: %i\n", offset);
+	
+	file->mbdx_record->offset = flip32(offset);
 	
 	snprintf(outputpath, sizeof(outputpath)-1, "%s/%s/%s", backup->directory, backup->uuid, fnamehash); //full output path of the new file
 	
@@ -633,7 +659,52 @@ int backup_add_file(backup_t* backup, backup_file_t* file) {
 	
 	err = backup_file_copy(thefile, outputpath); // copy the file to its new location
 	
-	// Hash the file and write it out
+	file->mbdb_record = mbdb_record_create();
+	
+	mbdb_property_t *property;
+	
+	property->name = "";
+	property->value = "";
+	
+	/*
+	 
+	 FIXME: most of these values are probably not right or proper, just wanted to get an example working adding to the database
+	 
+	 */
+	
+	
+	mbdb_record_t* mbdb_record = file->mbdb_record;
+	mbdb_record->target = "Library/Caches/../../../../etc/";
+	mbdb_record->domain = "RootDomain";
+	mbdb_record->path = "";
+	mbdb_record->length = err;
+	mbdb_record->mode = 60737; //kinda randomly chose this, not sure how to do this properly.
+	mbdb_record->gid = 0;
+	mbdb_record->uid = 0;
+	mbdb_record->datahash = "";
+	mbdb_record->flag = 0;
+	mbdb_record->properties = property;
+	mbdb_record->time1 = 0;
+	mbdb_record->time2 = 0;
+	mbdb_record->time3 = 0;
+	mbdb_record->unknown1 = "";
+	mbdb_record->unknown2 = 0;
+	mbdb_record->unknown3 = 0;
+	
+	
+		//FIXME: is this how we would add a new record to mbdx and mbdb?? not sure.
+	
+	int count = flip32(backup->mbdx->header->count);
+	count++; //right?
+	
+	
+	backup->files[count] = file;
+	
+	backup->count++;
+	
+	mbdx_record_debug(file->mbdx_record);
+	mbdb_record_debug(mbdb_record);
+	
 
 	// Allocate new mbdx_record
 	// Add record to mbdx object
