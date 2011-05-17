@@ -697,6 +697,10 @@ int backup_add_file(backup_t* backup, backup_file_t* file) {
 	int count = flip32(backup->mbdx->header->count);
 	count++; //right?
 	
+		//;
+	backup->files = (backup_file_t**) realloc(backup->files, sizeof(backup_file_t*) * (count+1));
+	
+	
 	
 	backup->files[count] = file;
 	
