@@ -299,7 +299,7 @@ int backup_save_info(backup_t* backup) { //FIXME: this doesn't seem to work prop
 
 	memset(path, '\0', sizeof(path));
 	snprintf(path, sizeof(path)-1, "%s/%s/Info.plist", backup->directory, backup->uuid);
-	err = file_write(path, &data, &size);
+	err = file_write(path, data, size);
 	if (err < 0) {
 		fprintf(stderr, "Unable to save Info.plist\n");
 		return -1;
@@ -324,7 +324,7 @@ int backup_save_manifest(backup_t* backup) {
 
 	memset(path, '\0', sizeof(path));
 	snprintf(path, sizeof(path)-1, "%s/%s/Manifest.plist", backup->directory, backup->uuid);
-	err = file_write(path, &data, &size);
+	err = file_write(path, data, size);
 	if (err < 0) {
 		fprintf(stderr, "Unable to save Manifest.plist\n");
 		return -1;
@@ -349,7 +349,7 @@ int backup_save_status(backup_t* backup) {
 
 	memset(path, '\0', sizeof(path));
 	snprintf(path, sizeof(path)-1, "%s/%s/Status.plist", backup->directory, backup->uuid);
-	err = file_write(path, &data, &size);
+	err = file_write(path, data, size);
 	if (err < 0) {
 		fprintf(stderr, "Unable to save Status.plist\n");
 		return -1;
@@ -373,7 +373,7 @@ int backup_save_mbdb(backup_t* backup) {
 
 	memset(path, '\0', sizeof(path));
 	snprintf(path, sizeof(path)-1, "%s/%s/Manifest.mbdb", backup->directory, backup->uuid);
-	err = file_write(path, &data, &size);
+	err = file_write(path, data, size);
 	if (err < 0) {
 		fprintf(stderr, "Unable to save Manifest.mbdb\n");
 		return -1;
@@ -397,7 +397,7 @@ int backup_save_mbdx(backup_t* backup) {
 
 	memset(path, '\0', sizeof(path));
 	snprintf(path, sizeof(path)-1, "%s/%s/Manifest.mbdx", backup->directory, backup->uuid);
-	err = file_write(path, &data, &size);
+	err = file_write(path, data, size);
 	if (err < 0) {
 		fprintf(stderr, "Unable to save Manifest.mbdx\n");
 		return -1;
