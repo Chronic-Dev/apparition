@@ -20,6 +20,7 @@ typedef struct device_t {
 
 device_t* device_open(const char* uuid);
 void device_free(device_t* device);
-void device_enable_debug(	);
+void device_enable_debug();
+int device_connect(device_t* device, unsigned short port, idevice_connection_t* connection);
 
 #endif /* DEVICE_H_ */
