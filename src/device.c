@@ -63,20 +63,3 @@ void device_free(device_t* device) {
 void device_enable_debug() {
 	idevice_set_debug_level(3);
 }
-
-
-int device_connect(device_t* device, unsigned short port, idevice_connection_t* connection) {
-	idevice_connection_t conn = NULL;
-	idevice_error_t device_error = IDEVICE_E_SUCCESS;
-
-	if(device->client == NULL) {
-		return -1;
-	}
-
-	idevice_error_t device_error = idevice_connect(device->client, port, &conn);
-	if(device_error != IDEVICE_E_SUCCESS) {
-		return -1;
-	}
-	*connection = conn;
-	return 0;
-}
