@@ -2,7 +2,7 @@
  *  crashreporter.c
  *  apparition
  *
- *  Created by Kevin Bradley on 5/25/11.
+ *  Created by posixninja on 5/25/11.
  *  Copyright 2011 Chronic-Dev, LLC All rights reserved.
  *
  */
@@ -11,8 +11,43 @@
 
 #include "crashreporter.h"
 
+plist_t crashreporter_last_crash(crashreporter_t* crashreporter) {
+	return NULL;
+}
+
 crashreporter_t* crashreporter_open(lockdown_t* lockdown) {
 	
+	int err = 0;
+	
+		// Create our crashreport object
+	crashreporter_t* crashreporter = crashreporter_create(lockdown);
+	if(crashreporter == NULL) {
+		return NULL;
+	}
+	
+		// Startup crashreportmover service to move our crashes to the proper place ???
+	crashreporter->mover = crashreportermover_open(lockdown);
+	if(crashreporter->mover == NULL) {
+		return NULL;
+	}
+	
+	
+	
+		// replace with function from crashreportcopy.c
+	err = lockdown_start_service(lockdown, "com.apple.crashreportcopymobile", &crashreporter->port);
+	if(err < 0 ) {
+		return NULL;
+	}
+	
+	err = idevice_connect(lockdown->device, crashreporter->port, crashreporter->connection);
+	if(err < 0) {
+		return NULL;
+	}
+	
+	crashreporter->copier = crashreportcopy_open(lockdown);
+	if(crashreporter->copier == NULL) {
+		return NULL;
+	}
 	
 	/*
 	 

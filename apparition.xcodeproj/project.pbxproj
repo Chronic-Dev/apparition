@@ -13,6 +13,8 @@
 		32119B08138DE26100C4DA03 /* crashreportcopy.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = crashreportcopy.h; sourceTree = "<group>"; };
 		32119BA0138DE56000C4DA03 /* crashreportmover.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = crashreportmover.c; sourceTree = "<group>"; };
 		32119BA1138DE56000C4DA03 /* crashreportmover.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = crashreportmover.h; sourceTree = "<group>"; };
+		32119C55138DE7F500C4DA03 /* debug.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = debug.c; sourceTree = "<group>"; };
+		32119C56138DE7F500C4DA03 /* debug.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = debug.h; sourceTree = "<group>"; };
 		3231AD93138D1D6100AA1FD7 /* crashreporter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = crashreporter.h; sourceTree = "<group>"; };
 		3231AD94138D1D6100AA1FD7 /* crashreporter.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = crashreporter.c; sourceTree = "<group>"; };
 		32446FB413749D6000FB6AB0 /* afccheck-afccheck.Po */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = "afccheck-afccheck.Po"; sourceTree = "<group>"; };
@@ -544,6 +546,8 @@
 		324470A513749D9000FB6AB0 /* src */ = {
 			isa = PBXGroup;
 			children = (
+				32119C55138DE7F500C4DA03 /* debug.c */,
+				32119C56138DE7F500C4DA03 /* debug.h */,
 				32119BA0138DE56000C4DA03 /* crashreportmover.c */,
 				32119BA1138DE56000C4DA03 /* crashreportmover.h */,
 				3231AD93138D1D6100AA1FD7 /* crashreporter.h */,
