@@ -15,6 +15,7 @@
 
 #include "crashreportcopy.h"
 #include "afc.h"
+#include "crashreportmover.h"
 
 
 
@@ -24,6 +25,8 @@ typedef struct crashreporter_t {
 	unsigned short port;
 	lockdown_t* lockdown;
 	crashreportcopy_t* copier;
+	crashreportmover_t* mover;
+	idevice_connection_t* connection;
 
 
 } crashreporter_t;
