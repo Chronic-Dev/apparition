@@ -86,15 +86,15 @@ plist_t crashreporter_last_crash(crashreporter_t* crashreporter) {
 	int err = 0;
 	unsigned char* datas = NULL;
 	printf("lastItem %s\n",lastItem);
-	err = file_read(lastItem, &data, &size);
+	err = file_read(lastItem, &datas, &size);
 	if (err < 0) {
 		fprintf(stderr, "Unable to open %s\n", lastItem);
 		return NULL;
 	}
 	printf("file size: %i\n", size);
-	plist_from_bin(data, size, &plist);
-	printf("plist_from_bin: %s\n", plist);
-	return plist;
+	plist_from_xml(datas, size, &plist);
+	printf("plist_from_xml: %s\n", plist);
+	return plist; //FIXME: right now this is returning NULL for some unknown reason.
 }
 
 crashreporter_t* crashreporter_open(lockdown_t* lockdown) {

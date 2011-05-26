@@ -127,6 +127,7 @@ afc_t* afc_open(lockdown_t* lockdown) {
 	printf("afc_open\n");
 	if (lockdown->afc == NULL) {
 		lockdown->afc = afc_create(lockdown);
+		afc = lockdown->afc;
 	}
 	printf("afc_open2\n");
 	if (lockdown->nos != NULL) {
