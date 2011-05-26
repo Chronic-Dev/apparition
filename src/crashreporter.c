@@ -129,9 +129,8 @@ crashreporter_t* crashreporter_create(lockdown_t* lockdown) {
 	}
 	
 	memset(crashreporter, '\0', sizeof(crashreporter_t));
-		//lockdown->crashreporter = crashreporter;
+	lockdown->crashreporter = crashreporter;
 	return crashreporter;
-	return NULL;
 }
 
 int crashreporter_close(crashreporter_t* crashreporter) {

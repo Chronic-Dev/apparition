@@ -10,10 +10,12 @@
 #ifndef CRASHREPORTER_H_
 #define CRASHREPORTER_H_
 
-	//#include <libimobiledevice/libimobiledevice.h>
-	//#include <libimobiledevice/afc.h>
-#include "lockdown.h"
+#include <libimobiledevice/libimobiledevice.h>
+
+
+#include "crashreportcopy.h"
 #include "afc.h"
+
 
 
 typedef struct crashreporter_t {
@@ -21,6 +23,7 @@ typedef struct crashreporter_t {
 	afc_t* afc;
 	unsigned short port;
 	lockdown_t* lockdown;
+	crashreportcopy_t* copier;
 
 
 } crashreporter_t;

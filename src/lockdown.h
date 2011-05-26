@@ -19,6 +19,7 @@ typedef struct lockdown_t {
 	struct nos_t* nos;
 	struct mb2_t* mb2;
 	struct device_t* device;
+	struct crashreporter_t* crashreporter;
 	lockdownd_client_t client;
 } lockdown_t;
 
