@@ -15,10 +15,8 @@
 
 plist_t crashreporter_last_crash(crashreporter_t* crashreporter) {
 	
-	
 	lockdown_t *lockdown = crashreporter->lockdown;
 	idevice_t device = lockdown->device->client;
-	
 	
 	afc_error_t afc_error = AFC_E_SUCCESS;
 	afc_client_t afc = NULL;
@@ -91,16 +89,14 @@ plist_t crashreporter_last_crash(crashreporter_t* crashreporter) {
 		fprintf(stderr, "Unable to open %s\n", lastItem);
 		return NULL;
 	}
-	printf("file size: %i\n", size);
 	plist_from_xml(datas, size, &plist);
-	printf("plist_from_xml: %s\n", plist);
-	return plist; //FIXME: right now this is returning NULL for some unknown reason.
+		//printf("plist_from_xml: %s\n", plist);
+	return plist; 
 }
 
 crashreporter_t* crashreporter_open(lockdown_t* lockdown) {
 	
 	int err = 0;
-	
 	
 		// Create our crashreport object
 
@@ -113,14 +109,12 @@ crashreporter_t* crashreporter_open(lockdown_t* lockdown) {
 	crashreporter->mover = crashreportermover_open(lockdown);
 	if(crashreporter->mover == NULL) {
 		
-		printf("failed top open createreportermover!\n");
+		printf("failed to open crashreportermover_open!\n");
 		
 		return NULL;
 	}
 	
-	
 		// Startup crashreporter copy to copy them to mobile root??
-	
 	
 	crashreporter->copier = crashreportcopy_open(lockdown);
 	if(crashreporter->copier == NULL) {
