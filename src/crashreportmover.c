@@ -6,19 +6,27 @@
  */
 
 #include <stdlib.h>
+#include <stdio.h>
 #include "crashreportmover.h"
+#include "device.h"
 
 crashreportmover_t* crashreportermover_open(lockdown_t* lockdown) {
 	int err = 0;
 	unsigned short port = 0;
-	crashreportmover_t* mover = NULL;
-
-	err = lockdown_start_service(lockdown, "com.apple.crashreportmover", &port);
+	crashreportmover_t* mover = crashreportermover_create(lockdown);
+	device_t *device = lockdown->device;
+	
+	err = lockdownd_start_service(lockdown->client, "com.apple.crashreportmover", &port);
 	if(err < 0 ) {
 		return NULL;
 	}
+	
+		//mover->port = port;
 
-	err = idevice_connect(lockdown->device, mover->port, mover->connection);
+	
+	
+	
+	err = idevice_connect(device->client, port, &(mover->connection));
 	if(err < 0) {
 		return NULL;
 	}

@@ -18,8 +18,8 @@ typedef struct crashreportcopy_t {
 	idevice_connection_t connection;
 } crashreportcopy_t;
 
-crashreportcopy_t* crashreportercopy_open(lockdown_t* lockdown);
-crashreportcopy_t* crashreportercopy_create(lockdown_t* lockdown);
+crashreportcopy_t* crashreportcopy_open(lockdown_t* lockdown);
+crashreportcopy_t* crashreportcopy_create(lockdown_t* lockdown);
 int crashreportercopy_close(crashreportcopy_t* copier);
 void crashreportercopy_free(crashreportcopy_t* copier);
 

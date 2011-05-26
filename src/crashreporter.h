@@ -11,6 +11,7 @@
 #define CRASHREPORTER_H_
 
 #include <libimobiledevice/libimobiledevice.h>
+#include <libimobiledevice/afc.h>
 #include <plist/plist.h>
 
 #include "crashreportcopy.h"
@@ -21,7 +22,7 @@
 
 typedef struct crashreporter_t {
 	
-	afc_t* afc;
+	afc_t* afct;
 	unsigned short port;
 	lockdown_t* lockdown;
 	crashreportcopy_t* copier;

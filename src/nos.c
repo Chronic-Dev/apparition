@@ -57,7 +57,7 @@ nos_t* nos_open(lockdown_t* lockdown) {
 		fprintf(stderr, "Unable to create new notification client\n");
 		return NULL;
 	}
-	return 0;
+	return lockdown->nos;
 }
 
 int nos_register(nos_t* nos, np_notify_cb_t callback, idevice_t phone) {

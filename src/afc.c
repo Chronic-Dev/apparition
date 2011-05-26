@@ -124,15 +124,16 @@ afc_t* afc_open(lockdown_t* lockdown) {
 	int err = 0;
 	afc_t* afc = NULL;
 
+	printf("afc_open\n");
 	if (lockdown->afc == NULL) {
 		lockdown->afc = afc_create(lockdown);
 	}
-
+	printf("afc_open2\n");
 	if (lockdown->nos != NULL) {
 		afc->notifier = lockdown->nos;
 	}
 	afc->lockdown = lockdown;
-
+	printf("afc_open3\n");
 	device_t *device = lockdown->device;
 	uint16_t port = 0;
 	uint16_t i = 0;

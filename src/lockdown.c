@@ -33,7 +33,7 @@ lockdown_t* lockdown_open(device_t* device) {
 
 	lockdownd_client_t lockdownd = NULL;
 	if (lockdownd_client_new_with_handshake(device->client, &lockdownd, "apparition") != LOCKDOWN_E_SUCCESS) {
-		return -1;
+		return NULL;
 	}
 	device->lockdown->client = lockdownd;
 	return device->lockdown;
@@ -41,10 +41,12 @@ lockdown_t* lockdown_open(device_t* device) {
 
 int lockdown_start_service(lockdown_t* lockdown, const char* service, int* port) { //cant figure out hwo to get this working, too many levels of pointers for the port between this and lockdownd_start_service
 
-	lockdownd_start_service(lockdown->client, service, port);
+	uint64_t port_value = 0;
+	lockdownd_start_service(lockdown->client, service, &port_value);
 
-	if (port) {
+	if (port_value) {
 		printf("Started %s successfully!\n", service);
+		*port = port_value;
 		return 0;
 	} else {
 

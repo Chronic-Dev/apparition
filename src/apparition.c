@@ -29,6 +29,7 @@
 #include "apparition.h"
 #include "mbdx_record.h"
 #include "mbdb_record.h"
+#include "crashreporter.h"
 
 
 
@@ -136,6 +137,30 @@ int main(int argc, char* argv[]) {
 		return -1;
 	}
 
+		//Here we open crash reporter so we can download the mobilebackup2 crash report
+		//  and parse the "random" dylib addresses. Thank you ASLR for nothing :-P
+	//printf("Openning connection to crashreporter\n");
+	crashreporter_t* reporter = crashreporter_open(lockdown);
+	if (reporter == NULL) {
+		printf("Unable to open connection to crash reporter\n");
+		lockdown_free(lockdown);
+		device_free(device);
+		backup_free(backup);
+		return -1;
+	}
+	
+		// Read in the last crash since that's probably our fault anyways :-P
+	printf("Reading in crash reports from mobile backup\n");
+	plist_t crash = crashreporter_last_crash(reporter);
+	if(crash == NULL) {
+		printf("Unable to read last crash\n");
+		lockdown_free(lockdown);
+		device_free(device);
+		backup_free(backup);
+		return -1;
+	}
+	crashreporter_close(reporter);
+	
 	printf("Openning connection to notification service\n");
 	nos_t* nos = nos_open(lockdown);
 	if (nos == NULL) {
