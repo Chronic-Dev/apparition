@@ -124,17 +124,14 @@ afc_t* afc_open(lockdown_t* lockdown) {
 	int err = 0;
 	afc_t* afc = NULL;
 
-	printf("afc_open\n");
 	if (lockdown->afc == NULL) {
 		lockdown->afc = afc_create(lockdown);
 		afc = lockdown->afc;
 	}
-	printf("afc_open2\n");
 	if (lockdown->nos != NULL) {
 		afc->notifier = lockdown->nos;
 	}
 	afc->lockdown = lockdown;
-	printf("afc_open3\n");
 	device_t *device = lockdown->device;
 	uint16_t port = 0;
 	uint16_t i = 0;
@@ -143,7 +140,6 @@ afc_t* afc_open(lockdown_t* lockdown) {
 
 	lockdownd_start_service(lockdown->client, "com.apple.afc", &port);
 	if (port) {
-		printf("opened afc successfully!\n");//debug
 		afc->client = NULL;
 		afc_client_new(device->client, port, &(afc->client));
 		if ((afc->client = NULL)) {

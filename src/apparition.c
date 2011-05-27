@@ -56,8 +56,11 @@ int main(int argc, char* argv[]) {
 		printf("Unable to find a device to use\n");
 		return -1;
 	}
-	device_enable_debug();
+		//device_enable_debug();
 
+	backup_t *backup = NULL;
+	/*
+	
 	// Create our fake backup
 	// Create an empty backup_t object
 	printf("Opening backup directory\n");
@@ -68,7 +71,8 @@ int main(int argc, char* argv[]) {
 	}
 
 
-
+*/
+	
 	 //add example fstab file
 	
 	/*
@@ -112,7 +116,7 @@ int main(int argc, char* argv[]) {
 			//backup_free(backup);
 	}
 	*/
-
+/*
 	char backuppath[512];
 	
 	printf("Saving new backup directory\n");
@@ -125,7 +129,8 @@ int main(int argc, char* argv[]) {
 		printf("Unable to save backup\n");
 		return -1;
 	}
-
+*/
+	
 	printf("Openning lockdown service connection\n");
 	// TODO: Change this to lockdown_init and allow afc_t and nos_t to call lockdown_open theirself
 	lockdown_t* lockdown = lockdown_open(device);
@@ -159,6 +164,10 @@ int main(int argc, char* argv[]) {
 		backup_free(backup);
 		return -1;
 	}
+	
+	char *magic = magicFromDescription(crash);
+		//printf("%s", magic);
+	
 	crashreporter_close(reporter);
 	
 	printf("Openning connection to notification service\n");

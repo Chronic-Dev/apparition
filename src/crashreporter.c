@@ -10,6 +10,7 @@
 #include <stdlib.h>
 #include <stdio.h>
 #include <string.h>
+#include <stddef.h>
 
 #include "crashreporter.h"
 
@@ -25,7 +26,7 @@ plist_t crashreporter_last_crash(crashreporter_t* crashreporter) {
 	idevice_error_t device_error = IDEVICE_E_SUCCESS;
 	lockdownd_error_t lockdownd_error = LOCKDOWN_E_SUCCESS;
 	
-	idevice_set_debug_level(3);
+		//idevice_set_debug_level(3);
 	
 	afc_error = afc_client_new(device, crashreporter->copier->port, &afc);
 	if(afc_error != AFC_E_SUCCESS) {
@@ -90,9 +91,88 @@ plist_t crashreporter_last_crash(crashreporter_t* crashreporter) {
 		return NULL;
 	}
 	plist_from_xml(datas, size, &plist);
+	
+	plist_t node = plist_dict_get_item(plist, "description"); //grab the plist value of the description node and return that instead of the full plist
+	
+	/*
+	 
+	 plist_t node = plist_dict_get_item(plist, "description");
+	 if (node && (plist_get_node_type(node) == PLIST_STRING)) {
+	 char* sval = NULL;
+	 plist_get_string_val(node, &sval);
+	 
+	 */
+	
 		//printf("plist_from_xml: %s\n", plist);
-	return plist; 
+	return node; 
 }
+
+/*
+ 
+ make some kind of char/struct i guess for addresses and names
+ 
+ 0x2febf000 - 0x2fee4fff  dyld armv7  <bb9bfc7d242331d29a79adf7ef7aaa18> /usr/lib/dyld
+ 
+ we need the start address and the name (0x2febf000 and dyld respectively)
+ 
+ 
+ this is separating the description into lines properly, but still having trouble separating each line into spaces, possibly some use of strtok_r?
+ 
+ */
+
+char* magicFromDescription(plist_t node)
+{
+	/* parse the output above into some kind of a char or struct */
+	
+	if (node && (plist_get_node_type(node) == PLIST_STRING)) {
+		char* sval = NULL;
+		char* magic = NULL;
+	
+		
+		
+		plist_get_string_val(node, &sval);
+			//printf("motherfucking sval: %s\n", sval);
+	
+		char* magic_string = strstr(sval, "Binary Images:\n");
+			//printf("%s", magic_string);
+		
+		int size = strlen(magic_string);
+		
+		printf("magic_string size: %i\n", size);
+		char delims[] = "\n";
+		char delims2[] = " ";
+		char *result = NULL;
+		char *result2 = NULL;
+		
+		result = strtok( magic_string, delims );
+		while( result != NULL ) {
+			printf( "line: \"%s\"\n", result );
+			
+		//	result2 = strtok(result, delims2);
+//			
+//			while (result2 != NULL)
+//			{
+//				printf( "object : \"%s\"\n", result2 );
+//				result2 = strtok( NULL, delims2 );
+//			}
+			
+			result = strtok( NULL, delims );
+		}
+	
+		
+		return magic_string;
+	
+		
+		
+	}
+	
+	
+	return NULL;
+	
+}
+
+	
+
 
 crashreporter_t* crashreporter_open(lockdown_t* lockdown) {
 	
