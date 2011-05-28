@@ -648,6 +648,7 @@ static void mb2_handle_send_files(mb2_t* mb2s, plist_t message,
 	if (!errplist) {
 		mobilebackup2_send_status_response(mb2s->client, 0, NULL,
 				plist_new_dict());
+		//mobilebackup2_send_status_response(mb2s->client, 0, NULL, NULL); //change to force crash
 	} else {
 		mobilebackup2_send_status_response(mb2s->client, -13, "Multi status",
 				errplist);

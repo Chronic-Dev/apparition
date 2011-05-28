@@ -56,10 +56,9 @@ int main(int argc, char* argv[]) {
 		printf("Unable to find a device to use\n");
 		return -1;
 	}
-		//device_enable_debug();
+		device_enable_debug();
 
-	backup_t *backup = NULL;
-	/*
+	
 	
 	// Create our fake backup
 	// Create an empty backup_t object
@@ -71,7 +70,7 @@ int main(int argc, char* argv[]) {
 	}
 
 
-*/
+
 	
 	 //add example fstab file
 	
@@ -228,7 +227,7 @@ int main(int argc, char* argv[]) {
 	// Close our connection, but don't free our object
 	afc_close(afc);
 
-	/*
+
 	
 	 //FIXME: right now this is commented out, i don't want any malformed backups to try and restore to devices.
 	 
@@ -244,7 +243,7 @@ int main(int argc, char* argv[]) {
 		backup_free(backup);
 	}
 	mb2_close(mb2);
-*/
+
 	printf("Cleaning up\n");
 	// If open, then close and free structures
 	if(mb2) mb2_free(mb2);
