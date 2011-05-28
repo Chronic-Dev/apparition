@@ -116,34 +116,41 @@ plist_t crashreporter_last_crash(crashreporter_t* crashreporter) {
  we need the start address and the name (0x2febf000 and dyld respectively)
  
  
- this is separating the description into lines properly, but still having trouble separating each line into spaces, possibly some use of strtok_r?
- 
  */
 
 
 
-char** magicFromDescription(plist_t node)
-{
-	/* parse the output above into some kind of a char or struct */
+char** magicFromDescription(plist_t node) {
+	
+	/* parse the output above into pointer array of aslr_magic_t structs */
 	
 	if (node && (plist_get_node_type(node) == PLIST_STRING)) {
 		char* sval = NULL;
 		char* magic = NULL;
 		plist_get_string_val(node, &sval);
-	
+		
+		/*
+		 
+		 use strstr to isolate all the text AFTER Binary Images: where the juicy stuff in the crashlog starts.
+		 
+		 after this we serparate the remaining objects by \n into lineArray using string tokenizing
+		 
+		 last but not least we cycle through lineArray and delimit those by spaces, using index 0 and 3 (start offset and binary name respectively)
+		 
+		 return pointer array with aslr_magic_t objects created from start offset and binary name.
+		 
+		 */
+		
 		char* magic_string = strstr(sval, "Binary Images:\n");
-
 		int size = strlen(magic_string);
-		
-			//printf("magic_string size: %i\n", size);
-		
-		
-		char delims[] = "\n";
-		char delims2[] = " -";
+	
+		char delims[] = "\n";  //lineArray delimiters
+		char delims2[] = " -"; //
 		char *result = NULL;
 		char *result2 = NULL;
-		char **lineArray = malloc(size+1);
 		int i = 0;
+		char **lineArray = malloc(size+1);
+		
 		
 		result = strtok(magic_string, delims );
 		
@@ -156,41 +163,45 @@ char** magicFromDescription(plist_t node)
 			i++;
 			result = strtok( NULL, delims );
 		}
-	
-		printf("item count: %i\n", i);
 		
-		int j = 2;
-		int lineCount = i - 2;
+		printf("line count: %i\n", i);
+		
+		int j = 2; //we start at line two to skip over "Binary Images: and the next line which is the source program that crashed, not sure if we will need its info.
+		int lineCount = i - 2; //use this in the for loop that we use to separate lineArray objects into spaceArrays for the aslr_magic_t structs
 		int k = 0;
 		
-		char **finalArray = malloc(lineCount+1);
-
-	
+		char **finalArray = malloc(lineCount+1); //the big encherido.
+		
 		for (j = 2; j < lineCount; j++) { //separate into space delimited objects
 			
-			int itemIndex = 0;
-			
-				//printf("lineIndex: %i\n", j);
-			char *theChar = lineArray[j];
+			int itemIndex = 0; //reset itemIndex for currentLine
+			char *currentLine = lineArray[j];
 			aslrmagic_t *currentMagic = malloc(sizeof(aslrmagic_t));
-			result2 = strtok(theChar, delims2);
+			
+			result2 = strtok(currentLine, delims2); // use " -" delimiters to divide the items by spaces.
 			
 			while (result2 != NULL)
 			{
-				if (itemIndex == 0)
-				{
-					currentMagic->startOffset = result2;
-				} else if (itemIndex == 2)
-				{
-					currentMagic->binaryName = result2;
+				
+				switch (itemIndex) { //set 0 and 2 to start offset and binary name in aslr_magic_t struct
+						
+					case 0:
+						currentMagic->startOffset = result2;
+						break;
+						
+					case 2:
+						currentMagic->binaryName = result2;
+						break;
+				
 				}
-					//printf( "item index: %i object : \"%s\"\n", itemIndex, result2 );
+				//printf( "item index: %i object : \"%s\"\n", itemIndex, result2 );
+				
 				itemIndex++;
 				result2 = strtok( NULL, delims2 );
 				
 			}
 				//printf("struct at index: %i startOffset: %s binaryName %s\n", j, currentMagic->startOffset, currentMagic->binaryName);
-			finalArray[k] = currentMagic;
+			finalArray[k] = currentMagic; //add current aslr_magic_t struct to the final pointer array
 			k++;
 		}
 		
@@ -203,9 +214,9 @@ char** magicFromDescription(plist_t node)
 		{
 			aslrmagic_t *currentMagic = finalArray[l];
 			
-				printf("aslrmagic_t at index: %i startOffset: %s binaryName %s\n", l, currentMagic->startOffset, currentMagic->binaryName);
+			printf("aslrmagic_t at index: %i startOffset: %s binaryName %s\n", l, currentMagic->startOffset, currentMagic->binaryName);
 		}
-		
+	
 		
 		return finalArray;
 		
