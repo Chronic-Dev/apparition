@@ -13,39 +13,29 @@
 #include "device.h"
 #include "lockdown.h"
 
-lockdown_t* lockdown_init(device_t* device) {
+lockdown_t* lockdown_open(device_t* device) {
+	lockdownd_client_t lockdownd = NULL;
+	if (lockdownd_client_new_with_handshake(device->client, &lockdownd, "apparition") != LOCKDOWN_E_SUCCESS) {
+		return NULL;
+	}
+
 	lockdown_t* lockdown = (lockdown_t*) malloc(sizeof(lockdown_t));
 	if (lockdown == NULL) {
 		return NULL;
 	}
 	memset(lockdown, '\0', sizeof(lockdown_t));
+
+	lockdown->client = lockdownd;
 	lockdown->device = device;
 	return lockdown;
 }
 
-lockdown_t* lockdown_open(device_t* device) {
-	if(device->lockdown == NULL) {
-	 device->lockdown = lockdown_init(device);
-		if(device->lockdown == NULL) {
-			return NULL;
-		}
-	}
-
-	lockdownd_client_t lockdownd = NULL;
-	if (lockdownd_client_new_with_handshake(device->client, &lockdownd, "apparition") != LOCKDOWN_E_SUCCESS) {
-		return NULL;
-	}
-	device->lockdown->client = lockdownd;
-	return device->lockdown;
-}
-
-int lockdown_start_service(lockdown_t* lockdown, const char* service, int* port) { //cant figure out hwo to get this working, too many levels of pointers for the port between this and lockdownd_start_service
-
-	uint64_t port_value = 0;
+int lockdown_start_service(lockdown_t* lockdown, const char* service, uint16_t* port) {
+	uint16_t port_value = 0;
 	lockdownd_start_service(lockdown->client, service, &port_value);
 
 	if (port_value) {
-		printf("Started %s successfully!\n", service);
+		printf("Started %s successfully on port %d!\n", service, port_value);
 		*port = port_value;
 		return 0;
 	} else {

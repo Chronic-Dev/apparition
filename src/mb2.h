@@ -14,16 +14,14 @@
 #include "device.h"
 #include "backup.h"
 #include "lockdown.h"
-#include "afc.h"
 
 typedef struct mb2_t {
+	device_t* device;
 	lockdown_t* lockdown;
-	afc_t* afclient;
 	mobilebackup2_client_t client;
 } mb2_t;
 
 mb2_t* mb2_create(lockdown_t* lockdown);
-mb2_t* mb2_open(lockdown_t* lockdown);
 int mb2_restore(mb2_t* mb2, backup_t* backup);
 int mb2_process_messages(mb2_t* mb2, backup_t* backup);
 int dlmsg_status_from_string(char *dlmsg);

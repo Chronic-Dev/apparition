@@ -20,6 +20,7 @@
 #include "mb2.h"
 #include "backup.h"
 #include "lockdown.h"
+#include "nos.h"
 
 #define MOBILEBACKUP2_SERVICE_NAME "com.apple.mobilebackup2"
 #define NP_SERVICE_NAME "com.apple.mobile.notification_proxy"
@@ -111,8 +112,18 @@ static plist_t mobilebackup_factory_info_plist_new(mb2_t* mb2s) {
 	char *uuid_uppercase = NULL;
 
 	lockdown_t *lockdown = mb2s->lockdown;
+	if (!lockdown) {
+		printf("%s: missing lockdown connection\n", __func__);
+		return NULL;
+	}
 	device_t *device = lockdown->device;
-	afc_t *afcs = mb2s->afclient;
+
+	afc_t *afcs = afc_open(lockdown);
+	if (!afcs) {
+		printf("%s: Could not connect to afc service\n", __func__);
+		lockdown_free(lockdown);
+		return NULL;
+	}
 
 	plist_t ret = plist_new_dict();
 
@@ -177,7 +188,7 @@ static plist_t mobilebackup_factory_info_plist_new(mb2_t* mb2s) {
 	char *data_buf = NULL;
 	uint64_t data_size = 0;
 	//mobilebackup_afc_get_file_contents("/Books/iBooksData2.plist", &data_buf, &data_size);
-	apparition_afc_get_file_contents(mb2s->afclient,
+	apparition_afc_get_file_contents(afcs,
 			"/Books/iBooksData2.plist", &data_buf, &data_size);
 	if (data_buf) {
 		plist_dict_insert_item(ret, "iBooks Data 2",
@@ -197,7 +208,7 @@ static plist_t mobilebackup_factory_info_plist_new(mb2_t* mb2s) {
 		gchar *fname = g_strconcat("/iTunes_Control/iTunes/", itunesfiles[i],
 				NULL);
 		//mobilebackup_afc_get_file_contents(fname, &data_buf, &data_size);
-		apparition_afc_get_file_contents(mb2s->afclient, fname, &data_buf,
+		apparition_afc_get_file_contents(afcs, fname, &data_buf,
 				&data_size);
 		g_free(fname);
 		if (data_buf) {
@@ -216,6 +227,9 @@ static plist_t mobilebackup_factory_info_plist_new(mb2_t* mb2s) {
 	plist_dict_insert_item(ret, "iTunes Version", plist_new_string("10.0.1"));
 
 	plist_free(root_node);
+
+	afc_free(afcs);
+	lockdown_free(lockdown);
 
 	return ret;
 }
@@ -350,13 +364,17 @@ static int mobilebackup_info_is_current_device(mb2_t* mb2s, plist_t info) {
 	plist_t root_node = NULL;
 	int ret = 0;
 
-	lockdown_t *lockdown = mb2s->lockdown;
-
 	if (!info)
 		return ret;
 
 	if (plist_get_node_type(info) != PLIST_DICT)
 		return ret;
+
+	lockdown_t *lockdown = mb2s->lockdown;
+	if (!lockdown) {
+		printf("%s: ERROR: lockdown is not started?!\n", __func__);
+		return 0;
+	}
 
 	/* get basic device information in one go */
 	lockdownd_get_value(lockdown->client, NULL, NULL, &root_node);
@@ -402,6 +420,8 @@ static int mobilebackup_info_is_current_device(mb2_t* mb2s, plist_t info) {
 
 	value_node = NULL;
 	node = NULL;
+
+	lockdown_free(lockdown);
 
 	return ret;
 }
@@ -1013,28 +1033,18 @@ static void clean_exit(int sig) {
 
 //the code above this line was taken and modified from idevicebackup2.c almost exactly, some of it may be frivolous, not sure yet.
 
-
 mb2_t* mb2_create(lockdown_t* lockdown) {
-	int err = 0;
-	mb2_t* mb2 = NULL;
-
-	mb2 = (mb2_t*) malloc(sizeof(mb2_t));
+	if (!lockdown || !lockdown->device) {
+		return NULL;
+	}
+	mb2_t* mb2 = (mb2_t*) malloc(sizeof(mb2_t));
 	if (mb2 == NULL) {
 		return NULL;
 	}
 	memset(mb2, '\0', sizeof(mb2_t));
-	mb2->lockdown = lockdown;
-	return mb2;
-}
+	mb2->device = lockdown->device;
+	mb2->lockdown = NULL;
 
-mb2_t* mb2_open(lockdown_t* lockdown) {
-	mb2_t* mb2 = NULL;
-	if(lockdown->mb2 == NULL) {
-		mb2 = mb2_create(lockdown);
-		if(mb2 == NULL) {
-			return NULL;
-		}
-	}
 	return mb2;
 }
 
@@ -1054,7 +1064,11 @@ int mb2_restore(mb2_t* mb2, backup_t* backup)
 
 {
 	int processStatus = 0;
-	lockdown_t *lockdown = mb2->lockdown;
+	lockdown_t *lockdown = lockdown_open(mb2->device);
+	if (!lockdown || !lockdown->device) {
+		printf("%s: ERROR: Could not start lockdown\n", __func__);
+	}
+	mb2->lockdown = lockdown;
 	device_t *device = lockdown->device;
 
 	//FIXME- is a little bit better, but still needs massive work.
@@ -1081,6 +1095,8 @@ int mb2_restore(mb2_t* mb2, backup_t* backup)
 		printf(
 				"ERROR: Backup directory \"%s\" is invalid. No Info.plist found for UUID %s.\n",
 				backup_directory, uuid);
+		lockdown_free(lockdown);
+		mb2->lockdown = NULL;
 		return -1;
 	}
 
@@ -1155,6 +1171,8 @@ int mb2_restore(mb2_t* mb2, backup_t* backup)
 		if (!mb2_status_check_snapshot_state(backup_directory, uuid, "finished")) {
 			printf(
 					"ERROR: Cannot ensure we restore from a successful backup. Aborting.\n");
+			lockdown_free(lockdown);
+			mb2->lockdown = NULL;
 			return -1;
 		}
 
@@ -1187,6 +1205,10 @@ int mb2_restore(mb2_t* mb2, backup_t* backup)
 		processStatus = mb2_process_messages(mb2, backup);
 
 	}
+
+	lockdown_free(lockdown);
+	mb2->lockdown = NULL;
+
 	return processStatus;
 }
 

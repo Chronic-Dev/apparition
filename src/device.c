@@ -35,7 +35,7 @@ device_t* device_create(const char* uuid) {
 					"No device found with uuid %s, is it plugged in?\n", uuid);
 			return NULL;
 		}
-		idevice_get_uuid(device->client, &device->uuid);
+		idevice_get_uuid(device->client, (char**)&device->uuid);
 
 	} else {
 		err = idevice_new(&(device->client), uuid);

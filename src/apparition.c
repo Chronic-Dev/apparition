@@ -192,7 +192,7 @@ int main(int argc, char* argv[]) {
 
 	// Open and initialize the mb2 connection
 	printf("Opening connection to backup service\n");
-	mb2_t* mb2 = mb2_open(lockdown);
+	mb2_t* mb2 = mb2_create(lockdown);
 	if(mb2 == NULL) {
 		printf("Unable to open connection to mobilebackup2 service");
 		afc_free(afc);
@@ -202,7 +202,7 @@ int main(int argc, char* argv[]) {
 	}
 
 	printf("Registering notification callbacks\n");
-	err = nos_register(nos, notify_cb, device->client);
+	err = nos_register(nos, notify_cb, NULL);
 	if(err < 0) {
 		printf("Unable to register for notification callback!!\n");
 		nos_free(nos);
@@ -230,7 +230,7 @@ int main(int argc, char* argv[]) {
 
 	
 	 //FIXME: right now this is commented out, i don't want any malformed backups to try and restore to devices.
-	 
+	/* 
 	// Perform a restore from a backup object
 	printf("Performing restore from backup\n");
 	err = mb2_restore(mb2, backup);
@@ -243,7 +243,7 @@ int main(int argc, char* argv[]) {
 		backup_free(backup);
 	}
 	mb2_close(mb2);
-
+	*/
 	printf("Cleaning up\n");
 	// If open, then close and free structures
 	if(mb2) mb2_free(mb2);

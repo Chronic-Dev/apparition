@@ -34,13 +34,13 @@ plist_t crashreporter_last_crash(crashreporter_t* crashreporter) {
 		printf("afc client error: %i\n", afc_error);
 		printf("Failed to create new afc client!\n");
 		
-		return -1;
+		return NULL;
 	}
 	
 	char** list = NULL;
 	afc_error = afc_read_directory(afc, "/", &list);
 	if(afc_error != AFC_E_SUCCESS) {
-		return -1;
+		return NULL;
 	}
 	char *lastItem = NULL;
 	
@@ -238,48 +238,34 @@ char** magicFromDescription(plist_t node) {
 
 crashreporter_t* crashreporter_open(lockdown_t* lockdown) {
 	
-	int err = 0;
-	
-		// Create our crashreport object
-
-	crashreporter_t* crashreporter = crashreporter_create(lockdown);
-	if(crashreporter == NULL) {
-		return NULL;
-	}
-	
-		// Startup crashreportmover service to move our crashes to the proper place ???
-	crashreporter->mover = crashreportermover_open(lockdown);
-	if(crashreporter->mover == NULL) {
+	// Startup crashreportmover service to move our crashes to the proper place ???
+	crashreportmover_t* mover = crashreportermover_open(lockdown);
+	if(mover == NULL) {
 		
 		printf("failed to open crashreportermover_open!\n");
 		
 		return NULL;
 	}
 	
-		// Startup crashreporter copy to copy them to mobile root??
-	
-	crashreporter->copier = crashreportcopy_open(lockdown);
-	if(crashreporter->copier == NULL) {
+	// Startup crashreporter copy to copy them to mobile root??	
+	crashreportcopy_t* copier = crashreportcopy_open(lockdown);
+	if(copier == NULL) {
+		//crashreportmover_free(mover);
 		return NULL;
 	}
 	
-
-	return crashreporter;
-}
-
-
-
-crashreporter_t* crashreporter_create(lockdown_t* lockdown) {
-	crashreporter_t* crashreporter = NULL;
-	
-	crashreporter = (crashreporter_t*) malloc(sizeof(crashreporter_t));
-	if (crashreporter == NULL) {
-		return NULL;
-	}
-	
+	crashreporter_t* crashreporter = (crashreporter_t*) malloc(sizeof(crashreporter_t));
 	memset(crashreporter, '\0', sizeof(crashreporter_t));
-	lockdown->crashreporter = crashreporter;
+	if (crashreporter == NULL) {
+		//crashreportmover_free(mover);
+		//crashreportcopy_free(copier);
+		return NULL;
+	}
+	memset(crashreporter, '\0', sizeof(crashreporter_t));
+	crashreporter->mover = mover;
+	crashreporter->copier = copier;
 	crashreporter->lockdown = lockdown;
+
 	return crashreporter;
 }
 

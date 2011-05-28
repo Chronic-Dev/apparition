@@ -10,13 +10,9 @@
 #define AFC_H_
 
 #include <libimobiledevice/afc.h>
-#include "nos.h"
-#include "device.h"
 #include "lockdown.h"
 
 typedef struct afc_t {
-	lockdown_t* lockdown;
-	nos_t* notifier;
 	afc_client_t client;
 } afc_t;
 
