@@ -50,9 +50,15 @@ plist_t crashreporter_last_crash(crashreporter_t* crashreporter) {
 	memset(data, '\0', 0x1000);
 	for(i = 0; list[i] != NULL; i++) {
 		char* entry = list[i];
-		lastItem = list[i];
+		
+	
 		if(entry[0] == '.' || strstr(entry, "plist") == NULL) continue;
 		printf("Copying %s index: %i\n", entry, i);
+		if (lastItem == NULL)
+		{
+			printf("setting last item to: %i!!\n", i);
+			lastItem = list[i];
+		}
 		afc_error = afc_file_open(afc, entry, AFC_FOPEN_RDONLY, &handle);
 		if(afc_error != AFC_E_SUCCESS) {
 			printf("Unable to open %s\n", entry);
