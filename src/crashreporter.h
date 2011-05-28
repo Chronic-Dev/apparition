@@ -30,6 +30,7 @@ typedef struct crashreporter_t {
 	
 	afc_t* afct;
 	unsigned short port;
+	device_t* device;
 	lockdown_t* lockdown;
 	crashreportcopy_t* copier;
 	crashreportmover_t* mover;
@@ -43,5 +44,5 @@ crashreporter_t* crashreporter_open(lockdown_t* lockdown);
 crashreporter_t* crashreporter_create(lockdown_t* lockdown);
 int crashreporter_close(crashreporter_t* crashreporter);
 void crashreporter_free(crashreporter_t* crashreporter);
-char** magicFromDescription(plist_t node);
+aslrmagic_t** magicFromDescription(plist_t node);
 #endif

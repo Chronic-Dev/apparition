@@ -16,15 +16,13 @@
 
 plist_t crashreporter_last_crash(crashreporter_t* crashreporter) {
 	
-	lockdown_t *lockdown = crashreporter->lockdown;
-	idevice_t device = lockdown->device->client;
+	idevice_t device = crashreporter->device->client;
 	
 	afc_error_t afc_error = AFC_E_SUCCESS;
 	afc_client_t afc = NULL;
 	unsigned short port = 0;
 	
 	idevice_error_t device_error = IDEVICE_E_SUCCESS;
-	lockdownd_error_t lockdownd_error = LOCKDOWN_E_SUCCESS;
 	
 		//idevice_set_debug_level(3);
 	
@@ -33,7 +31,7 @@ plist_t crashreporter_last_crash(crashreporter_t* crashreporter) {
 		
 		printf("afc client error: %i\n", afc_error);
 		printf("Failed to create new afc client!\n");
-		
+
 		return NULL;
 	}
 	
@@ -42,50 +40,80 @@ plist_t crashreporter_last_crash(crashreporter_t* crashreporter) {
 	if(afc_error != AFC_E_SUCCESS) {
 		return NULL;
 	}
+
 	char *lastItem = NULL;
 	
 	int i = 0;
+	int j = 0;
+
+	time_t latest = 0;
+
+	for(i = 0; list[i] != NULL; i++) {
+		if (!(strstr(list[i], "BackupAgent2") && strstr(list[i], ".plist"))) continue;
+
+		char **info = NULL;
+		if (afc_get_file_info(afc, list[i], &info) != AFC_E_SUCCESS) continue;
+		if (!info) continue;
+		time_t mtime = 0;
+		for (j = 0; info[j]; j += 2) {
+			if (!strcmp(info[j], "st_mtime")) {
+				mtime = atoll(info[j+1])/1000000000;
+			}
+			free(info[j]);
+			free(info[j+1]);
+		}
+		free(info);
+		if (mtime >= latest) {
+			latest = mtime;
+			lastItem = list[i];
+		}		
+	}
+
+	printf("Copying '%s'\n", lastItem);
+	if (lastItem) {
+		lastItem = strdup(lastItem);
+	}
+	for (i = 0; list[i]; i++) {
+		free(list[i]);
+	}
+	free(list);
+	if (!lastItem) {
+		printf("hmm.. could not get last item\n");
+		afc_client_free(afc);
+		return NULL;
+	}
+
 	uint64_t handle;
 	char data[0x1000];
-	memset(data, '\0', 0x1000);
-	for(i = 0; list[i] != NULL; i++) {
-		char* entry = list[i];
-		
-	
-		if(entry[0] == '.' || strstr(entry, "plist") == NULL) continue;
-		printf("Copying %s index: %i\n", entry, i);
-		if (lastItem == NULL)
-		{
-			printf("setting last item to: %i!!\n", i);
-			lastItem = list[i];
-		}
-		afc_error = afc_file_open(afc, entry, AFC_FOPEN_RDONLY, &handle);
-		if(afc_error != AFC_E_SUCCESS) {
-			printf("Unable to open %s\n", entry);
-			continue;
-		}
-		
-		FILE* output = fopen(entry, "w");
-		if(output == NULL) {
-			printf("Unable to open local file %s\n", entry);
-			afc_file_close(afc, handle);
-			continue;
-		}
-		
-		int bytes_read = 0;
-		afc_error = afc_file_read(afc, handle, data, 0x1000, &bytes_read);
-		while(afc_error == AFC_E_SUCCESS && bytes_read > 0) {
-			fwrite(data, 1, bytes_read, output);
-			afc_error = afc_file_read(afc, handle, data, 0x1000, &bytes_read);
-		}
-		afc_file_close(afc, handle);
-		fclose(output);
-		
+
+	afc_error = afc_file_open(afc, lastItem, AFC_FOPEN_RDONLY, &handle);
+	if(afc_error != AFC_E_SUCCESS) {
+		printf("Unable to open %s\n", lastItem);
+		free(lastItem);
+		afc_client_free(afc);
+		return NULL;
 	}
-	
+
+	FILE* output = fopen(lastItem, "w");
+	if(output == NULL) {
+		printf("Unable to open local file %s\n", lastItem);
+		free(lastItem);
+		afc_file_close(afc, handle);
+		afc_client_free(afc);
+		return NULL;
+	}
+
+	int bytes_read = 0;
+	afc_error = afc_file_read(afc, handle, data, 0x1000, &bytes_read);
+	while(afc_error == AFC_E_SUCCESS && bytes_read > 0) {
+		fwrite(data, 1, bytes_read, output);
+		afc_error = afc_file_read(afc, handle, data, 0x1000, &bytes_read);
+	}
+	afc_file_close(afc, handle);
+	fclose(output);
+
 	afc_client_free(afc);
-	
-	
+
 	uint32_t size = 0;
 	plist_t plist = NULL;
 	int err = 0;
@@ -94,23 +122,14 @@ plist_t crashreporter_last_crash(crashreporter_t* crashreporter) {
 	err = file_read(lastItem, &datas, &size);
 	if (err < 0) {
 		fprintf(stderr, "Unable to open %s\n", lastItem);
+		free(lastItem);
 		return NULL;
 	}
+	free(lastItem);
 	plist_from_xml(datas, size, &plist);
+	free(datas);
 	
-	plist_t node = plist_dict_get_item(plist, "description"); //grab the plist value of the description node and return that instead of the full plist
-	
-	/*
-	 
-	 plist_t node = plist_dict_get_item(plist, "description");
-	 if (node && (plist_get_node_type(node) == PLIST_STRING)) {
-	 char* sval = NULL;
-	 plist_get_string_val(node, &sval);
-	 
-	 */
-	
-		//printf("plist_from_xml: %s\n", plist);
-	return node; 
+	return plist;
 }
 
 /*
@@ -126,8 +145,10 @@ plist_t crashreporter_last_crash(crashreporter_t* crashreporter) {
 
 
 
-char** magicFromDescription(plist_t node) {
-	
+aslrmagic_t** magicFromDescription(plist_t plist) {
+
+	plist_t node = plist_dict_get_item(plist, "description");
+
 	/* parse the output above into pointer array of aslr_magic_t structs */
 	
 	if (node && (plist_get_node_type(node) == PLIST_STRING)) {
@@ -176,7 +197,7 @@ char** magicFromDescription(plist_t node) {
 		int lineCount = i - 2; //use this in the for loop that we use to separate lineArray objects into spaceArrays for the aslr_magic_t structs
 		int k = 0;
 		
-		char **finalArray = malloc(lineCount+1); //the big encherido.
+		aslrmagic_t** finalArray = (aslrmagic_t**)malloc((lineCount+1)*sizeof(aslrmagic_t*)); //the big encherido.
 		
 		for (j = 2; j < lineCount; j++) { //separate into space delimited objects
 			
@@ -210,6 +231,7 @@ char** magicFromDescription(plist_t node) {
 			finalArray[k] = currentMagic; //add current aslr_magic_t struct to the final pointer array
 			k++;
 		}
+		finalArray[k] = NULL;
 		
 		free(lineArray); //FIXME: PROBABLY MORE THINGS TO RELEASE/FREE HERE!!
 		
@@ -265,6 +287,7 @@ crashreporter_t* crashreporter_open(lockdown_t* lockdown) {
 	crashreporter->mover = mover;
 	crashreporter->copier = copier;
 	crashreporter->lockdown = lockdown;
+	crashreporter->device = lockdown->device;
 
 	return crashreporter;
 }
@@ -274,5 +297,13 @@ int crashreporter_close(crashreporter_t* crashreporter) {
 }
 
 void crashreporter_free(crashreporter_t* crashreporter) {
-	
+	if (crashreporter) {
+		if (crashreporter->mover) {
+			crashreportermover_free(crashreporter->mover);
+		}
+		if (crashreporter->copier) {
+			crashreportcopy_free(crashreporter->copier);
+		}
+		free(crashreporter);
+	}
 }

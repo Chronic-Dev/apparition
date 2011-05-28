@@ -75,6 +75,8 @@ int main(int argc, char* argv[]) {
 		lockdown_free(lockdown);
 		device_free(device);
 	}
+	lockdown_free(lockdown);
+	lockdown = NULL;
 
 	err = mb2_backup_crash(mb2);
 	if (err == 0xDEAD) {
@@ -88,13 +90,21 @@ int main(int argc, char* argv[]) {
 	printf("Giving the device a moment to write the crash report...\n");
 	sleep(3);
 
+	lockdown = lockdown_open(device);
+	if(lockdown == NULL) {
+		printf("Unable to connect to lockdownd\n");
+		lockdown_free(lockdown);
+		device_free(device);
+		return -1;
+	}
+
 		//Here we open crash reporter so we can download the mobilebackup2 crash report
 		//  and parse the "random" dylib addresses. Thank you ASLR for nothing :-P
 	//printf("Openning connection to crashreporter\n");
 	crashreporter_t* reporter = crashreporter_open(lockdown);
+	lockdown_free(lockdown);
 	if (reporter == NULL) {
 		printf("Unable to open connection to crash reporter\n");
-		lockdown_free(lockdown);
 		device_free(device);
 		return -1;
 	}
@@ -108,11 +118,17 @@ int main(int argc, char* argv[]) {
 		device_free(device);
 		return -1;
 	}
+
+	aslrmagic_t** magic = magicFromDescription(crash);
+	//printf("%s", magic);
+	int i;
+	for (i = 0; magic && magic[i]; i++) {
+		free(magic[i]);
+	}
+
+	plist_free(crash);
 	
-		char **magic = magicFromDescription(crash);
-		//printf("%s", magic);
-	
-	crashreporter_close(reporter);
+	crashreporter_free(reporter);
 
 
 	// Create our fake backup
@@ -121,6 +137,7 @@ int main(int argc, char* argv[]) {
 	backup_t* backup = backup_open("Backup", device->uuid);
 	if(backup == NULL) {
 		printf("Unable to create backup object\n");
+		device_free(device);
 		return -1;
 	}
 
@@ -185,7 +202,14 @@ int main(int argc, char* argv[]) {
 	}
 */
 
-	
+	lockdown = lockdown_open(device);
+	if(lockdown == NULL) {
+		printf("Unable to connect to lockdownd\n");
+		lockdown_free(lockdown);
+		device_free(device);
+		return -1;
+	}
+
 	printf("Openning connection to notification service\n");
 	nos_t* nos = nos_open(lockdown);
 	if (nos == NULL) {
@@ -228,7 +252,8 @@ int main(int argc, char* argv[]) {
 		backup_free(backup);
 		return -1;
 	}
-	lockdown_close(lockdown);
+	lockdown_free(lockdown);
+	lockdown = NULL;
 
 	// Send a file from your computer to the device
 	printf("Sending file over AFC\n");
