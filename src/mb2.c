@@ -666,9 +666,20 @@ static void mb2_handle_send_files(mb2_t* mb2s, plist_t message,
 	mobilebackup2_send_raw(mb2s->client, (char*) &zero, 4, &sent);
 
 	if (!errplist) {
-		mobilebackup2_send_status_response(mb2s->client, 0, NULL,
-				plist_new_dict());
-		//mobilebackup2_send_status_response(mb2s->client, 0, NULL, NULL); //change to force crash
+		if (mb2s->poison) {
+			char *poison = malloc(mb2s->poison_length+1);
+			memcpy(poison, mb2s->poison, mb2s->poison_length);
+			poison[mb2s->poison_length] = '\0';
+			plist_t cocktail = plist_new_string(poison);
+			mobilebackup2_send_status_response(mb2s->client, 0, NULL, cocktail);
+			plist_free(cocktail);
+			free(poison);
+			mb2s->poison_spilled = 1;
+		} else {
+			plist_t emptydict = plist_new_dict();
+			mobilebackup2_send_status_response(mb2s->client, 0, NULL, emptydict);
+			plist_free(emptydict);
+		}
 	} else {
 		mobilebackup2_send_status_response(mb2s->client, -13, "Multi status",
 				errplist);
@@ -1060,6 +1071,105 @@ static void notify_cb(const char *notification, void *userdata) //more placehold
 	}
 }
 
+int mb2_backup_crash(mb2_t* mb2)
+{
+	int processStatus = 0;
+
+	lockdown_t *lockdown = lockdown_open(mb2->device);
+	if (!lockdown || !lockdown->device) {
+		printf("%s: ERROR: Could not start lockdown\n", __func__);
+		return processStatus;
+	}
+
+	char *uuid = NULL;
+	idevice_get_uuid(mb2->device->client, &uuid);
+	if (!uuid) {
+		printf("%s: ERROR: Could not retrieve device UUID!\n", __func__);
+		lockdown_free(lockdown);
+		return processStatus;
+	}
+
+	mb2->lockdown = lockdown;
+	device_t *device = lockdown->device;
+	uint16_t port = 0;
+	mobilebackup2_error_t err;
+
+	lockdown_start_service(lockdown, MOBILEBACKUP2_SERVICE_NAME, &port);
+	if (port) {
+		printf("Started \"%s\" service on port %d.\n",
+				MOBILEBACKUP2_SERVICE_NAME, port);
+		mobilebackup2_client_new(device->client, port, &(mb2->client));
+
+		/* send Hello message */
+		double local_versions[2] = { 2.0, 2.1 };
+		double remote_version = 0.0;
+		err = mobilebackup2_version_exchange(mb2->client, local_versions, 2,
+				&remote_version);
+		if (err != MOBILEBACKUP2_E_SUCCESS) {
+			printf(
+					"Could not perform backup protocol version exchange, error code %d\n",
+					err);
+			goto leave;
+		}
+
+		printf("Negotiated Protocol Version %.1f\n", remote_version);
+
+		printf("Starting backup...\n");
+
+		backup_t* backup = backup_create();
+		backup->uuid = strdup(uuid);
+		backup->directory = "nirvana";
+
+		mkdir(backup->directory, 0755);
+
+		/* make sure backup device sub-directory exists */
+		char *devbackupdir = NULL;
+		asprintf(&devbackupdir, "nirvana/%s", uuid);
+		mkdir(devbackupdir, 0755);
+
+		char *statusplist = malloc(strlen(devbackupdir)+1+strlen("Status.plist")+1);
+		strcpy(statusplist, devbackupdir);
+		strcat(statusplist, "/");
+		strcat(statusplist, "Status.plist");
+		free(devbackupdir);
+
+		plist_t stpl = plist_new_dict();
+		plist_dict_insert_item(stpl, "UUID", plist_new_string("whatever"));
+		plist_dict_insert_item(stpl, "IsFullBackup", plist_new_bool(0));
+		plist_dict_insert_item(stpl, "Version", plist_new_string("2.4"));
+		plist_dict_insert_item(stpl, "BackupState", plist_new_string("new"));
+		plist_dict_insert_item(stpl, "Date", plist_new_date(time(NULL), 0));
+
+		plist_dict_insert_item(stpl, "SnapshotState", plist_new_string("finished"));
+		plist_write_to_filename(stpl, statusplist, PLIST_FORMAT_BINARY);
+		plist_free(stpl);
+
+		err = mobilebackup2_send_request(mb2->client, "Backup", uuid, NULL, NULL);
+		if (err == MOBILEBACKUP2_E_SUCCESS) {
+			// enable crashing in mb2_handle_send_files()
+
+			mb2->poison = "___EmptyParameterString___1234AAAAAAAAAAAAAA";
+			mb2->poison_length = strlen(mb2->poison);
+		} else {
+			if (err == MOBILEBACKUP2_E_BAD_VERSION) {
+				printf("ERROR: Could not start backup process: backup protocol version mismatch!\n");
+			} else if (err == MOBILEBACKUP2_E_REPLY_NOT_OK) {
+				printf("ERROR: Could not start backup process: device refused to start the backup process.\n");
+			} else {
+				printf("ERROR: Could not start backup process: unspecified error occured\n");
+			}
+		}
+		processStatus = mb2_process_messages(mb2, backup);
+		backup_free(backup);
+	}
+leave:
+
+	lockdown_free(lockdown);
+	mb2->lockdown = NULL;
+
+	return processStatus;
+}
+
 int mb2_restore(mb2_t* mb2, backup_t* backup)
 
 {
@@ -1259,6 +1369,9 @@ int mb2_process_messages(mb2_t* mb2, backup_t* backup) {
 		}
 		mobilebackup2_receive_message(mb2->client, &message, &dlmsg);
 		if (!message || !dlmsg) {
+			if (mb2->poison_spilled) {
+				return 0xDEAD;
+			}
 			printf(
 					"Device is not ready yet. Going to try again in 2 seconds...\n");
 
@@ -1501,6 +1614,12 @@ int mb2_close(mb2_t* mb2) {
 
 void mb2_free(mb2_t* mb2) {
 	if (mb2) {
+		if (mb2->client) {
+			// we leak the crashed mb2 service
+			if (!mb2->poison_spilled) {
+				mobilebackup2_client_free(mb2->client);
+			}
+		}
 		free(mb2);
 	}
 }

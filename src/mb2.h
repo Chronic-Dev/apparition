@@ -19,6 +19,9 @@ typedef struct mb2_t {
 	device_t* device;
 	lockdown_t* lockdown;
 	mobilebackup2_client_t client;
+	unsigned char *poison;
+	size_t poison_length;
+	int poison_spilled;
 } mb2_t;
 
 mb2_t* mb2_create(lockdown_t* lockdown);

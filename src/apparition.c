@@ -56,10 +56,65 @@ int main(int argc, char* argv[]) {
 		printf("Unable to find a device to use\n");
 		return -1;
 	}
-		device_enable_debug();
 
+	//device_enable_debug();
 	
+	printf("Openning lockdown service connection\n");
+	// TODO: Change this to lockdown_init and allow afc_t and nos_t to call lockdown_open theirself
+	lockdown_t* lockdown = lockdown_open(device);
+	if(lockdown == NULL) {
+		printf("Unable to connect to lockdownd\n");
+		lockdown_free(lockdown);
+		device_free(device);
+		return -1;
+	}
+
+	mb2_t* mb2 = mb2_create(lockdown);
+	if(mb2 == NULL) {
+		printf("Unable to open connection to mobilebackup2 service");
+		lockdown_free(lockdown);
+		device_free(device);
+	}
+
+	err = mb2_backup_crash(mb2);
+	if (err == 0xDEAD) {
+		printf("crashed!!! (hopefully)\n");
+	} else {
+		printf("hmmm... %d\n", err);
+	}
+	mb2_close(mb2);
+	mb2_free(mb2);
+
+	printf("Giving the device a moment to write the crash report...\n");
+	sleep(3);
+
+		//Here we open crash reporter so we can download the mobilebackup2 crash report
+		//  and parse the "random" dylib addresses. Thank you ASLR for nothing :-P
+	//printf("Openning connection to crashreporter\n");
+	crashreporter_t* reporter = crashreporter_open(lockdown);
+	if (reporter == NULL) {
+		printf("Unable to open connection to crash reporter\n");
+		lockdown_free(lockdown);
+		device_free(device);
+		return -1;
+	}
 	
+		// Read in the last crash since that's probably our fault anyways :-P
+	printf("Reading in crash reports from mobile backup\n");
+	plist_t crash = crashreporter_last_crash(reporter);
+	if(crash == NULL) {
+		printf("Unable to read last crash\n");
+		lockdown_free(lockdown);
+		device_free(device);
+		return -1;
+	}
+	
+		char **magic = magicFromDescription(crash);
+		//printf("%s", magic);
+	
+	crashreporter_close(reporter);
+
+
 	// Create our fake backup
 	// Create an empty backup_t object
 	printf("Opening backup directory\n");
@@ -129,45 +184,7 @@ int main(int argc, char* argv[]) {
 		return -1;
 	}
 */
-	
-	printf("Openning lockdown service connection\n");
-	// TODO: Change this to lockdown_init and allow afc_t and nos_t to call lockdown_open theirself
-	lockdown_t* lockdown = lockdown_open(device);
-	if(lockdown == NULL) {
-		printf("Unable to connect to lockdownd\n");
-		lockdown_free(lockdown);
-		device_free(device);
-		backup_free(backup);
-		return -1;
-	}
 
-		//Here we open crash reporter so we can download the mobilebackup2 crash report
-		//  and parse the "random" dylib addresses. Thank you ASLR for nothing :-P
-	//printf("Openning connection to crashreporter\n");
-	crashreporter_t* reporter = crashreporter_open(lockdown);
-	if (reporter == NULL) {
-		printf("Unable to open connection to crash reporter\n");
-		lockdown_free(lockdown);
-		device_free(device);
-		backup_free(backup);
-		return -1;
-	}
-	
-		// Read in the last crash since that's probably our fault anyways :-P
-	printf("Reading in crash reports from mobile backup\n");
-	plist_t crash = crashreporter_last_crash(reporter);
-	if(crash == NULL) {
-		printf("Unable to read last crash\n");
-		lockdown_free(lockdown);
-		device_free(device);
-		backup_free(backup);
-		return -1;
-	}
-	
-		char **magic = magicFromDescription(crash);
-		//printf("%s", magic);
-	
-	crashreporter_close(reporter);
 	
 	printf("Openning connection to notification service\n");
 	nos_t* nos = nos_open(lockdown);
@@ -192,7 +209,7 @@ int main(int argc, char* argv[]) {
 
 	// Open and initialize the mb2 connection
 	printf("Opening connection to backup service\n");
-	mb2_t* mb2 = mb2_create(lockdown);
+	mb2 = mb2_create(lockdown);
 	if(mb2 == NULL) {
 		printf("Unable to open connection to mobilebackup2 service");
 		afc_free(afc);

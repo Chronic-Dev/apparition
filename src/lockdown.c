@@ -53,7 +53,7 @@ int lockdown_stop_service(lockdown_t* lockdown, const char* service) {
 }
 
 int lockdown_close(lockdown_t* lockdown) {
-	lockdownd_goodbye(lockdown->client);
+	lockdownd_client_free(lockdown->client);
 	lockdown->client = NULL;
 	return 0;
 }
