@@ -165,7 +165,7 @@ int main(int argc, char* argv[]) {
 		return -1;
 	}
 	
-	char *magic = magicFromDescription(crash);
+		char **magic = magicFromDescription(crash);
 		//printf("%s", magic);
 	
 	crashreporter_close(reporter);

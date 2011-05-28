@@ -43,5 +43,5 @@ crashreporter_t* crashreporter_open(lockdown_t* lockdown);
 crashreporter_t* crashreporter_create(lockdown_t* lockdown);
 int crashreporter_close(crashreporter_t* crashreporter);
 void crashreporter_free(crashreporter_t* crashreporter);
-char* magicFromDescription(plist_t node);
+char** magicFromDescription(plist_t node);
 #endif

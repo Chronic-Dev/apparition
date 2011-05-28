@@ -120,49 +120,94 @@ plist_t crashreporter_last_crash(crashreporter_t* crashreporter) {
  
  */
 
-char* magicFromDescription(plist_t node)
+
+
+char** magicFromDescription(plist_t node)
 {
 	/* parse the output above into some kind of a char or struct */
 	
 	if (node && (plist_get_node_type(node) == PLIST_STRING)) {
 		char* sval = NULL;
 		char* magic = NULL;
-	
-		
-		
 		plist_get_string_val(node, &sval);
-			//printf("motherfucking sval: %s\n", sval);
 	
 		char* magic_string = strstr(sval, "Binary Images:\n");
-			//printf("%s", magic_string);
-		
+
 		int size = strlen(magic_string);
 		
-		printf("magic_string size: %i\n", size);
+			//printf("magic_string size: %i\n", size);
+		
+		
 		char delims[] = "\n";
-		char delims2[] = " ";
+		char delims2[] = " -";
 		char *result = NULL;
 		char *result2 = NULL;
+		char **lineArray = malloc(size+1);
+		int i = 0;
 		
-		result = strtok( magic_string, delims );
-		while( result != NULL ) {
-			printf( "line: \"%s\"\n", result );
+		result = strtok(magic_string, delims );
+		
+		while( result != NULL ) { //separate into lines
 			
-		//	result2 = strtok(result, delims2);
-//			
-//			while (result2 != NULL)
-//			{
-//				printf( "object : \"%s\"\n", result2 );
-//				result2 = strtok( NULL, delims2 );
-//			}
-			
+			int lineSize = strlen(result);
+			char *currentLine = malloc(lineSize+1);
+			currentLine = result;
+			lineArray[i] = currentLine;
+			i++;
 			result = strtok( NULL, delims );
 		}
 	
+		printf("item count: %i\n", i);
 		
-		return magic_string;
+		int j = 2;
+		int lineCount = i - 2;
+		int k = 0;
+		
+		char **finalArray = malloc(lineCount+1);
+
 	
+		for (j = 2; j < lineCount; j++) { //separate into space delimited objects
+			
+			int itemIndex = 0;
+			
+				//printf("lineIndex: %i\n", j);
+			char *theChar = lineArray[j];
+			aslrmagic_t *currentMagic = malloc(sizeof(aslrmagic_t));
+			result2 = strtok(theChar, delims2);
+			
+			while (result2 != NULL)
+			{
+				if (itemIndex == 0)
+				{
+					currentMagic->startOffset = result2;
+				} else if (itemIndex == 2)
+				{
+					currentMagic->binaryName = result2;
+				}
+					//printf( "item index: %i object : \"%s\"\n", itemIndex, result2 );
+				itemIndex++;
+				result2 = strtok( NULL, delims2 );
+				
+			}
+				//printf("struct at index: %i startOffset: %s binaryName %s\n", j, currentMagic->startOffset, currentMagic->binaryName);
+			finalArray[k] = currentMagic;
+			k++;
+		}
 		
+		free(lineArray); //FIXME: PROBABLY MORE THINGS TO RELEASE/FREE HERE!!
+		
+			//FIXME: below is just to show a log of the values, not actually needed.
+		
+		int l = 0;
+		for (l = 0; l < k; l++)
+		{
+			aslrmagic_t *currentMagic = finalArray[l];
+			
+				printf("aslrmagic_t at index: %i startOffset: %s binaryName %s\n", l, currentMagic->startOffset, currentMagic->binaryName);
+		}
+		
+		
+		return finalArray;
 		
 	}
 	
