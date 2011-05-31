@@ -114,7 +114,6 @@ int main(int argc, char* argv[]) {
 	plist_t crash = crashreporter_last_crash(reporter);
 	if(crash == NULL) {
 		printf("Unable to read last crash\n");
-		lockdown_free(lockdown);
 		device_free(device);
 		return -1;
 	}
