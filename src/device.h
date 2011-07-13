@@ -16,8 +16,12 @@ typedef struct device_t {
 	unsigned char* ecid;
 } device_t;
 
-device_t* device_create(const char* uuid);
+device_t* device_create();
 void device_free(device_t* device);
-void device_enable_debug(	);
+
+device_t* device_open(const char* uuid);
+void device_close(device_t* device);
+
+void device_enable_debug(unsigned int level);
 
 #endif /* DEVICE_H_ */
