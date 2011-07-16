@@ -22,8 +22,12 @@
 
 #include <libimobiledevice/libimobiledevice.h>
 
+struct lockdown_t;
 typedef struct device_t {
 	idevice_t client;
+	struct lockdown_t* lockdown;
+
+	// Device Info (stick in another struct?)
 	unsigned char* uuid;
 	unsigned char* ecid;
 } device_t;

@@ -65,55 +65,42 @@ enum dlmsg_mode {
 
 };
 
-// the stuff above is all taken verbatim out of idevicebackup2.c from the top, not sure how much of it we will definitely need yet
+mb2_t* mb2_create() {
+	mb2_t* mb2 = (mb2_t*) malloc(sizeof(mb2_t));
+	if (mb2) {
+		memset(mb2, '\0', sizeof(mb2_t));
+	}
+	return mb2;
+}
 
-#pragma mark DEBUG Functions
-
-static void print_progress_real(double progress, int flush) {
-	int i = 0;
-	printf("\r[");
-	for (i = 0; i < 50; i++) {
-		if (i < progress / 2) {
-			printf("=");
-		} else {
-			printf(" ");
+void mb2_free(mb2_t* mb2) {
+	if (mb2) {
+		if (mb2->client) {
+			// we leak the crashed mb2 service
+			if (!mb2->poison_spilled) {
+				mobilebackup2_client_free(mb2->client);
+			}
 		}
-	}
-	printf("] %3.0f%%", progress);
-
-	if (flush > 0) {
-		fflush(stdout);
-		if (progress == 100)
-			printf("\n");
+		free(mb2);
 	}
 }
 
-static void print_progress(uint64_t current, uint64_t total) {
-	gchar *format_size = NULL;
-	double progress = ((double) current / (double) total) * 100;
-	if (progress < 0)
-		return;
 
-	if (progress > 100)
-		progress = 100;
-
-	print_progress_real((double) progress, 0);
-
-	format_size = g_format_size_for_display(current);
-	printf(" (%s", format_size);
-	g_free(format_size);
-	format_size = g_format_size_for_display(total);
-	printf("/%s)     ", format_size);
-	g_free(format_size);
-
-	fflush(stdout);
-	if (progress == 100)
-		printf("\n");
+mb2_t* mb2_open(device_t* device) {
+	mb2_t* mb2 = mb2_create();
+	if(mb2 == NULL) {
+		printf("Unable to open connection mobilebackup2 server\n");
+		return NULL;
+	}
 }
 
-#pragma mark potentially un-needed
+int mb2_close(mb2_t* mb2) {
+	//TODO: Implement Me
+	return -1;
+}
 
-/* gathers information for a backup to be created, this may or may not be needed for our purposes */
+
+
 
 static plist_t mobilebackup_factory_info_plist_new(mb2_t* mb2s) {
 	/* gather data from lockdown */
@@ -1054,23 +1041,6 @@ static void clean_exit(int sig) {
 
 }
 
-//the code above this line was taken and modified from idevicebackup2.c almost exactly, some of it may be frivolous, not sure yet.
-
-mb2_t* mb2_create(lockdown_t* lockdown) {
-	if (!lockdown || !lockdown->device) {
-		return NULL;
-	}
-	mb2_t* mb2 = (mb2_t*) malloc(sizeof(mb2_t));
-	if (mb2 == NULL) {
-		return NULL;
-	}
-	memset(mb2, '\0', sizeof(mb2_t));
-	mb2->device = lockdown->device;
-	mb2->lockdown = NULL;
-
-	return mb2;
-}
-
 /* just here for debug purposes right now, probably never need it */
 
 static void notify_cb(const char *notification, void *userdata) //more placeholders
@@ -1083,7 +1053,7 @@ static void notify_cb(const char *notification, void *userdata) //more placehold
 	}
 }
 
-int mb2_backup_crash(mb2_t* mb2)
+int mb2_crash(mb2_t* mb2)
 {
 	int processStatus = 0;
 
@@ -1619,19 +1589,4 @@ int mb2_process_messages(mb2_t* mb2, backup_t* backup) {
 	return errcode; //if we got this far, success?
 }
 
-int mb2_close(mb2_t* mb2) {
-	//TODO: Implement Me
-	return -1;
-}
 
-void mb2_free(mb2_t* mb2) {
-	if (mb2) {
-		if (mb2->client) {
-			// we leak the crashed mb2 service
-			if (!mb2->poison_spilled) {
-				mobilebackup2_client_free(mb2->client);
-			}
-		}
-		free(mb2);
-	}
-}

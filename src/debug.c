@@ -17,3 +17,46 @@
   * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  **/
 
+#include "debug.h"
+
+static void print_progress_real(double progress, int flush) {
+	int i = 0;
+	printf("\r[");
+	for (i = 0; i < 50; i++) {
+		if (i < progress / 2) {
+			printf("=");
+		} else {
+			printf(" ");
+		}
+	}
+	printf("] %3.0f%%", progress);
+
+	if (flush > 0) {
+		fflush(stdout);
+		if (progress == 100)
+			printf("\n");
+	}
+}
+
+static void print_progress(uint64_t current, uint64_t total) {
+	gchar *format_size = NULL;
+	double progress = ((double) current / (double) total) * 100;
+	if (progress < 0)
+		return;
+
+	if (progress > 100)
+		progress = 100;
+
+	print_progress_real((double) progress, 0);
+
+	format_size = g_format_size_for_display(current);
+	printf(" (%s", format_size);
+	g_free(format_size);
+	format_size = g_format_size_for_display(total);
+	printf("/%s)     ", format_size);
+	g_free(format_size);
+
+	fflush(stdout);
+	if (progress == 100)
+		printf("\n");
+}

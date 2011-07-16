@@ -21,16 +21,20 @@
 #define AFC_H_
 
 #include <libimobiledevice/afc.h>
-#include "lockdown.h"
 
+struct device_t;
+struct lockdown_t;
 typedef struct afc_t {
 	afc_client_t client;
+	struct lockdown_t* lockdown;
 } afc_t;
 
-afc_t* afc_open(lockdown_t* lockdown);
-afc_t* afc_create(lockdown_t* lockdown);
-int afc_send_file(afc_t* afc, const char* local, const char* remote);
-int afc_close(afc_t* afc);
+afc_t* afc_create();
 void afc_free(afc_t* afc);
+
+afc_t* afc_open(struct device_t* device);
+int afc_close(afc_t* afc);
+
+int afc_send_file(afc_t* afc, const char* local, const char* remote);
 void apparition_afc_get_file_contents(afc_t* afc, const char *filename, char **data, uint64_t *size);
 #endif /* AFC_H_ */

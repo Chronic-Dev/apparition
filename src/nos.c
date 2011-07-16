@@ -29,36 +29,50 @@
 
 #define ANP_SERVICE_NAME "com.apple.mobile.notification_proxy"
 
-nos_t* nos_open(lockdown_t* lockdown) {
+nos_t* nos_create() {
+	nos_t* nos = (nos_t*) malloc(sizeof(nos_t));
+	if (nos == NULL) {
+		return NULL;
+	}
+	memset(nos, '\0', sizeof(nos_t));
+	return nos;
+}
+
+nos_t* nos_open(device_t* device) {
+	int err = 0;
 	uint16_t port = 0;
 	np_client_t np = NULL;
-	np_error_t nos_error = NP_E_SUCCESS;
+	np_error_t error = NP_E_SUCCESS;
 	idevice_error_t ret = IDEVICE_E_UNKNOWN_ERROR;
 
-	lockdown_start_service(lockdown, ANP_SERVICE_NAME, &port);
-	if (!port) {
-		fprintf(stderr, "Unable to start notification sevice\n");
+	// Sanity check arguments
+	if(device == NULL || device->client == NULL) {
+		printf("Unable to open connection to notification service due to invalid arguments\n");
 		return NULL;
 	}
 
-	nos_error = np_client_new(lockdown->device->client, port, &np);
-	if(nos_error != NP_E_SUCCESS) {
+	if(device->lockdown->nos == NULL) {
+		device->lockdown->nos = nos_create();
+		if(device->lockdown->nos == NULL) {
+			fprintf(stderr, "Unable to create notification context\n");
+			return NULL;
+		}
+	}
+
+	lockdown_start_service(device->lockdown, ANP_SERVICE_NAME, &port);
+	if (port == 0) {
+		fprintf(stderr, "Unable to start notification sevice\n");
+		return NULL;
+	}
+	lockdown_close(device->lockdown);
+
+	error = np_client_new(device->client, port, &(device->lockdown->nos));
+	if(error != NP_E_SUCCESS) {
 		fprintf(stderr, "Unable to create new notification client\n");
 		return NULL;
 	}
 
-	nos_t* nos = NULL;
-
-	nos = (nos_t*) malloc(sizeof(nos_t));
-	if (nos == NULL) {
-		return NULL;
-	}
-
-	memset(nos, '\0', sizeof(nos_t));
-	nos->client = np;
-	nos->lockdown = lockdown;
-
-	return nos;
+	return device->lockdown->nos;
 }
 
 int nos_register(nos_t* nos, nos_cb_t callback, void *arg) {

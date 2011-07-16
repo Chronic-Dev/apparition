@@ -24,35 +24,40 @@
 #include <libimobiledevice/afc.h>
 #include <plist/plist.h>
 
-#include "crashreportcopy.h"
 #include "afc.h"
+#include "crashreportcopy.h"
 #include "crashreportmover.h"
 
+struct lockdown;
+typedef struct crashreport_t {
+	int zero;
+} crashreport_t;
 
 
-typedef struct aslrmagic_t
-{
+typedef struct aslrmagic_t {
 	char *startOffset;
 	char *binaryName;
 } aslrmagic_t;
 
 typedef struct crashreporter_t {
-	
-	afc_t* afct;
+	afc_t* afc;
 	unsigned short port;
 	device_t* device;
-	lockdown_t* lockdown;
 	crashreportcopy_t* copier;
 	crashreportmover_t* mover;
 	idevice_connection_t* connection;
-
-
+	struct lockdown_t* lockdown;
 } crashreporter_t;
 
-plist_t crashreporter_last_crash(crashreporter_t* crashreporter);
-crashreporter_t* crashreporter_open(lockdown_t* lockdown);
-crashreporter_t* crashreporter_create(lockdown_t* lockdown);
-int crashreporter_close(crashreporter_t* crashreporter);
+crashreporter_t* crashreporter_create();
 void crashreporter_free(crashreporter_t* crashreporter);
+
+crashreporter_t* crashreporter_open(device_t* lockdown);
+int crashreporter_close(crashreporter_t* crashreporter);
+
+plist_t crashreporter_last_crash(crashreporter_t* crashreporter);
 aslrmagic_t** magicFromDescription(plist_t node);
+
+void crashreport_free(crashreport_t* crash);
+
 #endif

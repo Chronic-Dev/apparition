@@ -21,11 +21,24 @@
 #define LOCKDOWN_H_
 
 #include <libimobiledevice/lockdown.h>
+
+#include "afc.h"
+#include "mb2.h"
+#include "nos.h"
 #include "device.h"
+#include "crashreporter.h"
 
 typedef struct lockdown_t {
+	// lockdownd client if we're connected,
+	//  and our device so we're currently connected to
 	device_t *device;
 	lockdownd_client_t client;
+
+	// Easy and quick access to our lockdown services
+	afc_t* afc;
+	mb2_t* mb2;
+	nos_t* nos;
+	crashreporter_t* crashreporter;
 } lockdown_t;
 
 lockdown_t* lockdown_open(device_t* device);

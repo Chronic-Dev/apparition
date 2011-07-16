@@ -26,30 +26,32 @@
 #include "lockdown.h"
 
 device_t* device_create() {
-	idevice_error_t err = 0;
 	device_t* device = NULL;
 	device = (device_t*) malloc(sizeof(device_t));
 	if (device == NULL) {
 		return NULL;
 	}
 	memset(device, '\0', sizeof(device_t));
-
+	device->lockdown = lockdown_create();
 	return device;
 }
 
 void device_free(device_t* device) {
 	if (device) {
-		if(device->client) {
-			device_close(device);
+		if(device->lockdown) {
+			free(device->lockdown);
+			device->lockdown = NULL;
 		}
 		if(device->uuid) {
 			free(device->uuid);
 			device->uuid = NULL;
 		}
+		if(device->client) {
+			device_close(device);
+		}
 		free(device);
 	}
 }
-
 
 device_t* device_open(const char* uuid) {
 	idevice_error_t err = 0;

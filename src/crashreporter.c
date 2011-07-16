@@ -24,6 +24,10 @@
 
 #include "crashreporter.h"
 
+void crashreport_free(crashreport_t* crash) {
+	free(crash);
+}
+
 plist_t crashreporter_last_crash(crashreporter_t* crashreporter) {
 	
 	idevice_t device = crashreporter->device->client;

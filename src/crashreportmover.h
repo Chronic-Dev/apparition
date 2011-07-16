@@ -24,13 +24,14 @@
 
 #include "lockdown.h"
 
+struct lockdown_t;
 typedef struct crashreportmover_t {
 	unsigned short port;
 	idevice_connection_t connection;
 } crashreportmover_t;
 
-crashreportmover_t* crashreportermover_open(lockdown_t* lockdown);
-crashreportmover_t* crashreportermover_create(lockdown_t* lockdown);
+crashreportmover_t* crashreportermover_open(struct lockdown_t* lockdown);
+crashreportmover_t* crashreportermover_create(struct lockdown_t* lockdown);
 int crashreportermover_close(crashreportmover_t* mover);
 void crashreportermover_free(crashreportmover_t* mover);
 

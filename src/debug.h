@@ -25,23 +25,25 @@
 #define APPARITION_ERROR 1
 
 #ifdef APPARITION_INFO
-#define INFO(...) if(APPARITION_INFO) printf(__VA_ARGS__)
+#define info(...) if(APPARITION_INFO) printf(__VA_ARGS__)
 #else
-#define INFO(...)
+#define info(...)
 #endif
 
 #ifdef APPARITION_DEBUG
-#define DEBUG(...) if(APPARITION_DEBUG) fprintf(stderr, __VA_ARGS__)
+#define debug(...) if(APPARITION_DEBUG) fprintf(stderr, __VA_ARGS__);fflush(stderr)
 #else
-#define DEBUG(...)
+#define debug(...)
 #endif
 
 #ifdef APPARITION_ERROR
-#define ERROR(...) if(APPARITION_ERROR) fprintf(stderr, __VA_ARGS__)
+#define error(...) if(APPARITION_ERROR) fprintf(stderr, __VA_ARGS__)
 #else
-#define ERROR(...)
+#define error(...)
 #endif
 
+void print_progress_real(double progress, int flush);
+void print_progress(uint64_t current, uint64_t total);
 
 
 #endif /* DEBUG_H_ */
