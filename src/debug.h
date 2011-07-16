@@ -42,8 +42,8 @@
 #define error(...)
 #endif
 
-void print_progress_real(double progress, int flush);
-void print_progress(uint64_t current, uint64_t total);
+static void print_progress_real(double progress, int flush);
+static void print_progress(uint64_t current, uint64_t total);
 
 
 #endif /* DEBUG_H_ */

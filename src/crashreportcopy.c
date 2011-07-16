@@ -17,38 +17,37 @@
   * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  **/
 
-#include <stdlib.h>
 #include <stdio.h>
-#include "crashreportcopy.h"
-#include "device.h"
+#include <stdlib.h>
 #include <string.h>
 
+#include "device.h"
+#include "lockdown.h"
+#include "crashreportcopy.h"
 
-crashreportcopy_t* crashreportcopy_open(lockdown_t* lockdown) {
+crashreportcopy_t* crashreportcopy_create() {
+	crashreportcopy_t* copier = (crashreportcopy_t*) malloc(sizeof(crashreportcopy_t));
+	if(copier == NULL) {
+		return NULL;
+	}
+	memset(copier, '\0', sizeof(crashreportcopy_t));
+	return copier;
+}
+
+crashreportcopy_t* crashreportcopy_open(device_t* device) {
 	int err = 0;
 	unsigned short port = 0;
-	crashreportcopy_t* copier = crashreportcopy_create(lockdown);
+	crashreportcopy_t* copier = crashreportcopy_create();
+	if(copier == NULL) {
+		printf("Unable to open crashreport copy service\n");
+		return NULL;
+	}
 	
-	err = lockdownd_start_service(lockdown->client, "com.apple.crashreportcopymobile", &(copier->port));
+	err = lockdownd_start_service(device->lockdown->client, "com.apple.crashreportcopymobile", &(copier->port));
 	if(err < 0 ) {
 		return NULL;
 	}
 
-	return copier;
-}
-
-crashreportcopy_t* crashreportcopy_create(lockdown_t* lockdown) {
-	crashreportcopy_t* copier = NULL;
-	if(lockdown == NULL) {
-		printf("Unable to create crashreportercopier object\n");
-		return NULL;
-	}
-	
-	copier = (crashreportcopy_t*) malloc(sizeof(crashreportcopy_t));
-	if(copier == NULL) {
-		return NULL;
-	}
-	
 	return copier;
 }
 

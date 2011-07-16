@@ -25,7 +25,10 @@
 struct device_t;
 struct lockdown_t;
 typedef struct afc_t {
+	uint16_t port;
 	afc_client_t client;
+	idevice_connection_t connection;
+	struct device_t* device;
 	struct lockdown_t* lockdown;
 } afc_t;
 

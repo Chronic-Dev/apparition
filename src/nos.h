@@ -27,7 +27,10 @@ typedef np_notify_cb_t nos_cb_t;
 struct device_t;
 struct lockdown_t;
 typedef struct nos_t {
+	uint16_t port;
 	np_client_t client;
+	idevice_connection_t connection;
+	struct device_t* device;
 	struct lockdown_t* lockdown;
 } nos_t;
 

@@ -23,6 +23,7 @@
 #include <libimobiledevice/afc.h>
 
 #include "afc.h"
+#include "device.h"
 #include "lockdown.h"
 
 afc_t* afc_create() {

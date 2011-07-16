@@ -23,17 +23,19 @@
 #include <plist/plist.h>
 #include <libimobiledevice/libimobiledevice.h>
 
-#include "lockdown.h"
-
+struct device_t;
+struct lockdown_t;
 typedef struct crashreportcopy_t {
-	unsigned short port;
+	uint16_t port;
 	idevice_connection_t connection;
+	struct device_t* device;
+	struct lockdown_t* lockdown;
 } crashreportcopy_t;
 
 crashreportcopy_t* crashreportcopy_create();
-void crashreportercopy_free(crashreportcopy_t* copier);
+void crashreportcopy_free(crashreportcopy_t* copier);
 
 crashreportcopy_t* crashreportcopy_open(device_t* device);
-int crashreportercopy_close(crashreportcopy_t* copier);
+int crashreportcopy_close(crashreportcopy_t* copier);
 
 #endif /* CRASHREPORTCOPY_H_ */

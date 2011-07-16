@@ -22,17 +22,19 @@
 
 #include <libimobiledevice/libimobiledevice.h>
 
-#include "lockdown.h"
-
+struct device_t;
 struct lockdown_t;
 typedef struct crashreportmover_t {
-	unsigned short port;
+	uint16_t port;
 	idevice_connection_t connection;
+	struct device_t* device;
+	struct lockdown_t* lockdown;
 } crashreportmover_t;
 
-crashreportmover_t* crashreportermover_open(struct lockdown_t* lockdown);
-crashreportmover_t* crashreportermover_create(struct lockdown_t* lockdown);
-int crashreportermover_close(crashreportmover_t* mover);
-void crashreportermover_free(crashreportmover_t* mover);
+crashreportmover_t* crashreportmover_create();
+void crashreportmover_free(crashreportmover_t* mover);
+
+crashreportmover_t* crashreportmover_open(struct device_t* device);
+int crashreportmover_close(crashreportmover_t* mover);
 
 #endif /* CRASHREPORTMOVER_H_ */

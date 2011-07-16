@@ -17,27 +17,47 @@
   * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  **/
 
-#include <stdlib.h>
 #include <stdio.h>
-#include "crashreportmover.h"
-#include "device.h"
+#include <stdlib.h>
+#include <string.h>
 
-crashreportmover_t* crashreportermover_open(lockdown_t* lockdown) {
+#include "device.h"
+#include "lockdown.h"
+#include "crashreportmover.h"
+
+crashreportmover_t* crashreportmover_create() {
+	crashreportmover_t* mover = (crashreportmover_t*) malloc(sizeof(crashreportmover_t));
+	if(mover == NULL) {
+		return NULL;
+	}
+	return mover;
+}
+
+void crashreportmover_free(crashreportmover_t* mover) {
+	if(mover) {
+		if(mover->connection) {
+			crashreportmover_close(mover);
+		}
+		free(mover);
+	}
+}
+
+crashreportmover_t* crashreportmover_open(device_t* device) {
 	int err = 0;
 	unsigned short port = 0;
-	crashreportmover_t* mover = crashreportermover_create(lockdown);
-	device_t *device = lockdown->device;
+	crashreportmover_t* mover = crashreportmover_create(device);
+	if(mover == NULL) {
+		printf("Unable to open crashreporter move service\n");
+		return NULL;
+	}
 	
-	err = lockdownd_start_service(lockdown->client, "com.apple.crashreportmover", &port);
+	err = lockdownd_start_service(device->lockdown->client, "com.apple.crashreportmover", &port);
 	if(err < 0 ) {
 		return NULL;
 	}
 	
-		//mover->port = port;
+	mover->port = port;
 
-	
-	
-	
 	err = idevice_connect(device->client, port, &(mover->connection));
 	if(err < 0) {
 		return NULL;
@@ -46,24 +66,8 @@ crashreportmover_t* crashreportermover_open(lockdown_t* lockdown) {
 	return mover;
 }
 
-crashreportmover_t* crashreportermover_create(lockdown_t* lockdown) {
-	crashreportmover_t* mover = NULL;
-	if(lockdown == NULL) {
-		printf("Unable to create crashreportermover object\n");
-		return NULL;
-	}
 
-	mover = (crashreportmover_t*) malloc(sizeof(crashreportmover_t));
-	if(mover == NULL) {
-		return NULL;
-	}
 
-	return mover;
-}
-
-int crashreportermover_close(crashreportmover_t* mover) {
+int crashreportmover_close(crashreportmover_t* mover) {
 	return -1;
-}
-
-void crashreportermover_free(crashreportmover_t* mover) {
 }

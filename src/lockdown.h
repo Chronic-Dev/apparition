@@ -25,13 +25,13 @@
 #include "afc.h"
 #include "mb2.h"
 #include "nos.h"
-#include "device.h"
 #include "crashreporter.h"
 
+struct device_t;
 typedef struct lockdown_t {
 	// lockdownd client if we're connected,
 	//  and our device so we're currently connected to
-	device_t *device;
+	struct device_t *device;
 	lockdownd_client_t client;
 
 	// Easy and quick access to our lockdown services
@@ -41,7 +41,7 @@ typedef struct lockdown_t {
 	crashreporter_t* crashreporter;
 } lockdown_t;
 
-lockdown_t* lockdown_open(device_t* device);
+lockdown_t* lockdown_open(struct device_t* device);
 int lockdown_start_service(lockdown_t* lockdown, const char* service, uint16_t* port);
 int lockdown_stop_service(lockdown_t* lockdown, const char* service);
 int lockdown_close(lockdown_t* lockdown);

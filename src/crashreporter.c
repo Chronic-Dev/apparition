@@ -22,33 +22,146 @@
 #include <string.h>
 #include <stddef.h>
 
+#include <libimobiledevice/libimobiledevice.h>
+
+#include "device.h"
+#include "lockdown.h"
 #include "crashreporter.h"
 
-void crashreport_free(crashreport_t* crash) {
-	free(crash);
+crashreporter_t* crashreporter_create() {
+	crashreporter_t* crashreporter = (crashreporter_t*) malloc(sizeof(crashreporter_t));
+	memset(crashreporter, '\0', sizeof(crashreporter_t));
+	if (crashreporter == NULL) {
+		//crashreportmover_free(mover);
+		//crashreportcopy_free(copier);
+		return NULL;
+	}
+	memset(crashreporter, '\0', sizeof(crashreporter_t));
+
+	crashreporter->mover = crashreportmover_create();
+	crashreporter->copier = crashreportcopy_create();
+	crashreporter->afc = afc_create();
+	return crashreporter;
 }
 
-plist_t crashreporter_last_crash(crashreporter_t* crashreporter) {
+void crashreporter_free(crashreporter_t* crashreporter) {
+	if (crashreporter) {
+		if (crashreporter->mover) {
+			crashreportmover_free(crashreporter->mover);
+		}
+		if (crashreporter->copier) {
+			crashreportcopy_free(crashreporter->copier);
+		}
+		free(crashreporter);
+	}
+}
+
+crashreporter_t* crashreporter_open(device_t* device) {
+	int err = 0;
+
+	// Sanity check the arguments as always
+	if(device == NULL || device->lockdown == NULL) {
+		printf("Unable to open crashreporter service due to invalid arguments\n");
+		return NULL;
+	}
+	lockdown_t* lockdown = device->lockdown;
+
+	// Check and make sure our crashreporter context has already been created
+	if(lockdown->crashreporter == NULL) {
+		lockdown->crashreporter = crashreporter_create();
+		if(lockdown->crashreporter == NULL) {
+			printf("Unable to create crashreporter context\n");
+			return NULL;
+		}
+	}
+	crashreporter_t* crashreporter = lockdown->crashreporter;
+
+	err = crashreporter_copy(crashreporter);
+	if(err < 0) {
+		printf("Unable to open crashreporter's copy service\n");
+		return NULL;
+	}
 	
-	idevice_t device = crashreporter->device->client;
-	
-	afc_error_t afc_error = AFC_E_SUCCESS;
+	err = crashreporter_move(crashreporter);
+	if(err < 0) {
+		printf("Unable to open crashreporter's copy service\n");
+		return NULL;
+	}
+	/*
+	afc_t* afc = afc_connect(device, port);
+	if(afc == NULL) {
+		printf("Unable to create afc context for crashreport\n");
+		return NULL;
+	}
+
+	idevice_t device = device->client;
+
 	afc_client_t afc = NULL;
+	afc_error_t afc_error = AFC_E_SUCCESS;
 	unsigned short port = 0;
-	
-	idevice_error_t device_error = IDEVICE_E_SUCCESS;
-	
-		//idevice_set_debug_level(3);
-	
-	afc_error = afc_client_new(device, crashreporter->copier->port, &afc);
+	afc_error = afc_client_new(device->client, crashreporter->copier->port, &afc);
 	if(afc_error != AFC_E_SUCCESS) {
-		
+
 		printf("afc client error: %i\n", afc_error);
 		printf("Failed to create new afc client!\n");
 
 		return NULL;
 	}
-	
+
+	// These are here mostly for easy access. We could probably remove the lockdown stuff
+	//   and always fetch it from device, but that wouldn't be very much fun, would it?
+	device->lockdown->crashreporter->device = device;
+	device->lockdown->crashreporter->lockdown = device->lockdown;
+	*/
+	return device->lockdown->crashreporter;
+}
+
+int crashreporter_close(crashreporter_t* crashreporter) {
+	return -1;
+}
+
+int crashreporter_move(crashreporter_t* crashreporter) {
+	// Startup crashreportmover service to move our crashes into the jailed
+	//   portion of the filesystem
+	crashreporter->mover = crashreportmover_open(crashreporter->device);
+	if(crashreporter->mover == NULL) {
+		printf("Unable to move crashreports for crashreporter\n");
+		return -1;
+	}
+	crashreportmover_free(crashreporter->mover);
+	return 0;
+}
+
+int crashreporter_copy(crashreporter_t* crashreporter) {
+	// Startup crashreporter copy service to copy crashes into the jailed
+	//   portion of our filesystem
+	crashreporter->copier = crashreportcopy_open(crashreporter->device);
+	if(crashreporter->copier == NULL) {
+		printf("Unable to copy crashreports for crashreporter\n");
+		return -1;
+	}
+	crashreportcopy_free(crashreporter->copier);
+	return 0;
+}
+
+
+
+crashreport_t* crashreporter_last_crash(crashreporter_t* crashreporter) {
+	uint16_t port = 0;
+	afc_client_t afc = NULL;
+	afc_error_t afc_error = AFC_E_SUCCESS;
+
+	idevice_error_t device_error = IDEVICE_E_SUCCESS;
+
+	afc_error = afc_client_new(crashreporter->device->client, crashreporter->copier->port, &afc);
+	if(afc_error != AFC_E_SUCCESS) {
+
+		printf("afc client error: %i\n", afc_error);
+		printf("Failed to create new afc client!\n");
+
+		return NULL;
+	}
+
 	char** list = NULL;
 	afc_error = afc_read_directory(afc, "/", &list);
 	if(afc_error != AFC_E_SUCCESS) {
@@ -56,7 +169,7 @@ plist_t crashreporter_last_crash(crashreporter_t* crashreporter) {
 	}
 
 	char *lastItem = NULL;
-	
+
 	int i = 0;
 	int j = 0;
 
@@ -80,7 +193,7 @@ plist_t crashreporter_last_crash(crashreporter_t* crashreporter) {
 		if (mtime >= latest) {
 			latest = mtime;
 			lastItem = list[i];
-		}		
+		}
 	}
 
 	printf("Copying '%s'\n", lastItem);
@@ -142,10 +255,13 @@ plist_t crashreporter_last_crash(crashreporter_t* crashreporter) {
 	free(lastItem);
 	plist_from_xml(datas, size, &plist);
 	free(datas);
-	
+
 	return plist;
 }
 
+/*
+ * crashreport_t stuff, we should probably more this to another file
+ */
 /*
  
  make some kind of char/struct i guess for addresses and names
@@ -159,7 +275,7 @@ plist_t crashreporter_last_crash(crashreporter_t* crashreporter) {
 
 
 
-aslrmagic_t** magicFromDescription(plist_t plist) {
+dylib_info_t* crashreport_parse_dylibs(plist_t plist) {
 
 	plist_t node = plist_dict_get_item(plist, "description");
 
@@ -211,13 +327,13 @@ aslrmagic_t** magicFromDescription(plist_t plist) {
 		int lineCount = i - 2; //use this in the for loop that we use to separate lineArray objects into spaceArrays for the aslr_magic_t structs
 		int k = 0;
 		
-		aslrmagic_t** finalArray = (aslrmagic_t**)malloc((lineCount+1)*sizeof(aslrmagic_t*)); //the big encherido.
+		dylib_info_t** finalArray = (dylib_info_t**)malloc((lineCount+1)*sizeof(dylib_info_t*)); //the big encherido.
 		
 		for (j = 2; j < lineCount; j++) { //separate into space delimited objects
 			
 			int itemIndex = 0; //reset itemIndex for currentLine
 			char *currentLine = lineArray[j];
-			aslrmagic_t *currentMagic = malloc(sizeof(aslrmagic_t));
+			dylib_info_t *currentMagic = malloc(sizeof(dylib_info_t));
 			
 			result2 = strtok(currentLine, delims2); // use " -" delimiters to divide the items by spaces.
 			
@@ -254,13 +370,13 @@ aslrmagic_t** magicFromDescription(plist_t plist) {
 		int l = 0;
 		for (l = 0; l < k; l++)
 		{
-			aslrmagic_t *currentMagic = finalArray[l];
+			dylib_info_t *currentMagic = finalArray[l];
 			
-			printf("aslrmagic_t at index: %i startOffset: %s binaryName %s\n", l, currentMagic->startOffset, currentMagic->binaryName);
+			printf("dylib_info_t at index: %i startOffset: %s binaryName %s\n", l, currentMagic->startOffset, currentMagic->binaryName);
 		}
 	
 		
-		return finalArray;
+		return *finalArray;
 		
 	}
 	
@@ -269,55 +385,10 @@ aslrmagic_t** magicFromDescription(plist_t plist) {
 	
 }
 
-	
-
-
-crashreporter_t* crashreporter_open(lockdown_t* lockdown) {
-	
-	// Startup crashreportmover service to move our crashes to the proper place ???
-	crashreportmover_t* mover = crashreportermover_open(lockdown);
-	if(mover == NULL) {
-		
-		printf("failed to open crashreportermover_open!\n");
-		
-		return NULL;
-	}
-	
-	// Startup crashreporter copy to copy them to mobile root??	
-	crashreportcopy_t* copier = crashreportcopy_open(lockdown);
-	if(copier == NULL) {
-		//crashreportmover_free(mover);
-		return NULL;
-	}
-	
-	crashreporter_t* crashreporter = (crashreporter_t*) malloc(sizeof(crashreporter_t));
-	memset(crashreporter, '\0', sizeof(crashreporter_t));
-	if (crashreporter == NULL) {
-		//crashreportmover_free(mover);
-		//crashreportcopy_free(copier);
-		return NULL;
-	}
-	memset(crashreporter, '\0', sizeof(crashreporter_t));
-	crashreporter->mover = mover;
-	crashreporter->copier = copier;
-	crashreporter->lockdown = lockdown;
-	crashreporter->device = lockdown->device;
-
-	return crashreporter;
+arm_state_t* crashreport_parse_state(plist_t plist) {
+	return NULL;
 }
 
-int crashreporter_close(crashreporter_t* crashreporter) {
-	return -1;
-}
-
-void crashreporter_free(crashreporter_t* crashreporter) {
-	if (crashreporter) {
-		if (crashreporter->mover) {
-			crashreportermover_free(crashreporter->mover);
-		}
-		if (crashreporter->copier) {
-			crashreportcopy_free(crashreporter->copier);
-		}
-		free(crashreporter);
-	}
+void crashreport_free(crashreport_t* crash) {
+	free(crash);
 }

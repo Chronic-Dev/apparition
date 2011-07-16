@@ -25,6 +25,7 @@
 #include <libimobiledevice/notification_proxy.h>
 
 #include "nos.h"
+#include "device.h"
 #include "lockdown.h"
 
 #define ANP_SERVICE_NAME "com.apple.mobile.notification_proxy"

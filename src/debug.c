@@ -17,6 +17,9 @@
   * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  **/
 
+#include <stdio.h>
+#include <stdint.h>
+
 #include "debug.h"
 
 static void print_progress_real(double progress, int flush) {
@@ -39,7 +42,7 @@ static void print_progress_real(double progress, int flush) {
 }
 
 static void print_progress(uint64_t current, uint64_t total) {
-	gchar *format_size = NULL;
+	char *format_size = NULL;
 	double progress = ((double) current / (double) total) * 100;
 	if (progress < 0)
 		return;
@@ -49,12 +52,8 @@ static void print_progress(uint64_t current, uint64_t total) {
 
 	print_progress_real((double) progress, 0);
 
-	format_size = g_format_size_for_display(current);
-	printf(" (%s", format_size);
-	g_free(format_size);
-	format_size = g_format_size_for_display(total);
-	printf("/%s)     ", format_size);
-	g_free(format_size);
+	printf(" (%llu", current);
+	printf("/%llu)     ", total);
 
 	fflush(stdout);
 	if (progress == 100)

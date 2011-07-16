@@ -22,12 +22,12 @@
 
 #include <libimobiledevice/mobilebackup2.h>
 
-#include "device.h"
 #include "backup.h"
 
+struct device_t;
 struct lockdown_t;
 typedef struct mb2_t {
-	device_t* device;
+	struct device_t* device;
 	struct lockdown_t* lockdown;
 	mobilebackup2_client_t client;
 	unsigned char *poison;
@@ -38,7 +38,7 @@ typedef struct mb2_t {
 mb2_t* mb2_create();
 void mb2_free(mb2_t* mb2);
 
-mb2_t* mb2_open(device_t* device);
+mb2_t* mb2_open(struct device_t* device);
 int mb2_close(mb2_t* mb2);
 
 int mb2_restore(mb2_t* mb2, backup_t* backup);

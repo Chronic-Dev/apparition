@@ -31,6 +31,7 @@
 #include "afc.h"
 #include "mb2.h"
 #include "backup.h"
+#include "device.h"
 #include "lockdown.h"
 #include "nos.h"
 
