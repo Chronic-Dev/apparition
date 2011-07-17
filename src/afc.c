@@ -52,26 +52,37 @@ afc_t* afc_open(device_t* device) {
 		return NULL;
 	}
 
-	afc_t* afc = afc_create();
+	afc_t* afc = device->lockdown->afc;
 	if(afc) {
 		memset(afc, '\0', sizeof(afc_t));
-
-		err = lockdown_start_service(device->lockdown, AFC_SERVICE, &(afc->port));
-		if (err < 0 && afc->port) {
-			printf("Unable to start AFC service\n");
-			afc_free(afc);
+		err = afc_connect(afc, 0);
+		if(err < 0) {
+			printf("Unable to connect to afc port\n");
 			return NULL;
 		}
 
-		afc_client_new(device->client, afc->port, &(afc->client));
-		if (afc->client == NULL) {
-			printf("Unable to open connection to AFC client\n");
-			afc_free(afc);
-			return NULL;
-		}
 	}
 
 	return afc;
+}
+
+int afc_connect(afc_t* afc, uint16_t port) {
+	int err = 0;
+	device_t* device = afc->device;
+
+	err = lockdown_start_service(device->lockdown, AFC_SERVICE, &(afc->port));
+	if (err < 0 || afc->port == 0) {
+		printf("Unable to start AFC service\n");
+		afc_free(afc);
+		return -1;
+	}
+
+	afc_client_new(device->client, afc->port, &(afc->client));
+	if (afc->client == NULL) {
+		printf("Unable to open connection to AFC client\n");
+		afc_free(afc);
+		return -1;
+	}
 }
 
 int afc_close(afc_t* afc) {

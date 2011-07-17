@@ -106,7 +106,7 @@ crashreporter_t* crashreporter_open(device_t* device) {
 	
 	err = crashreporter_move(crashreporter);
 	if(err < 0) {
-		printf("Unable to open crashreporter's copy service\n");
+		printf("Unable to open crashreporter's move service\n");
 		return NULL;
 	}
 	/*
@@ -135,7 +135,7 @@ crashreporter_t* crashreporter_open(device_t* device) {
 	device->lockdown->crashreporter->device = device;
 	device->lockdown->crashreporter->lockdown = device->lockdown;
 	*/
-	return device->lockdown->crashreporter;
+	return crashreporter;
 }
 
 int crashreporter_close(crashreporter_t* crashreporter) {

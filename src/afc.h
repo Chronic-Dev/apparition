@@ -38,6 +38,8 @@ void afc_free(afc_t* afc);
 afc_t* afc_open(struct device_t* device);
 int afc_close(afc_t* afc);
 
+int afc_connect(afc_t* afc, uint16_t port);
+
 int afc_send_file(afc_t* afc, const char* local, const char* remote);
 void apparition_afc_get_file_contents(afc_t* afc, const char *filename, char **data, uint64_t *size);
 #endif /* AFC_H_ */

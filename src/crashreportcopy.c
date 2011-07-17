@@ -21,6 +21,7 @@
 #include <stdlib.h>
 #include <string.h>
 
+#include "afc.h"
 #include "device.h"
 #include "lockdown.h"
 #include "crashreportcopy.h"
@@ -29,6 +30,13 @@ crashreportcopy_t* crashreportcopy_create() {
 	crashreportcopy_t* copier = (crashreportcopy_t*) malloc(sizeof(crashreportcopy_t));
 	if(copier) {
 		memset(copier, '\0', sizeof(crashreportcopy_t));
+
+		// Crashreporter borrows the afc client for communication with the copier
+		copier->afc = afc_create();
+		if(copier->afc == NULL) {
+			crashreportcopy_free(copier);
+			return NULL;
+		}
 	}
 	return copier;
 }
@@ -44,14 +52,37 @@ void crashreportcopy_free(crashreportcopy_t* copier) {
 
 crashreportcopy_t* crashreportcopy_open(device_t* device) {
 	int err = 0;
-	unsigned short port = 0;
-	crashreportcopy_t* copier = crashreportcopy_create();
+	uint16_t port = 0;
+
+	// Sanity check to make sure we were passed a device
+	if(device == NULL) {
+		printf("Unable to start crashreport copier due to invalid arguments\n");
+		return NULL;
+	}
+
+	// If lockdown isn't already open, then go ahead and open it
+	if(device->lockdown == NULL) {
+		device->lockdown = lockdown_open(device);
+		if(device->lockdown == NULL) {
+			printf("Unable to open lockdown connection for crashreports copy service\n");
+			return NULL;
+		}
+	}
+
+	// Finally check and make sure crashreporter context already exists
+	if(device->lockdown->crashreporter == NULL) {
+		printf("Unable to find crashreporter context\n");
+		return NULL;
+	}
+
+	// This should of been created in crashreporter_create()
+	crashreportcopy_t* copier = device->lockdown->crashreporter->copier;
 	if(copier == NULL) {
 		printf("Unable to open crashreport copy service\n");
 		return NULL;
 	}
 	
-	err = lockdownd_start_service(device->lockdown->client, "com.apple.crashreportcopymobile", &(copier->port));
+	err = lockdown_start_service(device->lockdown, "com.apple.crashreportcopymobile", &(copier->port));
 	if(err < 0 ) {
 		return NULL;
 	}

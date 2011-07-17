@@ -26,13 +26,16 @@
 #include "lockdown.h"
 
 device_t* device_create() {
-	device_t* device = NULL;
-	device = (device_t*) malloc(sizeof(device_t));
-	if (device == NULL) {
-		return NULL;
+	device_t* device = (device_t*) malloc(sizeof(device_t));
+	if (device) {
+		memset(device, '\0', sizeof(device_t));
+		device->lockdown = lockdown_create();
+		if(device->lockdown == NULL) {
+			printf("Unable to create lockdown context\n");
+			device_free(device);
+			return NULL;
+		}
 	}
-	memset(device, '\0', sizeof(device_t));
-	device->lockdown = lockdown_create();
 	return device;
 }
 
@@ -57,14 +60,14 @@ device_t* device_open(const char* uuid) {
 	idevice_error_t err = 0;
 	device_t* device = device_create();
 	if(device == NULL) {
+		printf("Unable to create device context\n");
 		return NULL;
 	}
 
 	if (uuid == NULL) {
-		err = idevice_new(&(device->client), NULL);
+		err = idevice_new(&(device->client), uuid);
 		if (err != IDEVICE_E_SUCCESS) {
-			fprintf(stderr,
-					"No device found with uuid %s, is it plugged in?\n", uuid);
+			fprintf(stderr, "No device found, is it plugged in?\n");
 			return NULL;
 		}
 		idevice_get_uuid(device->client, (char**)&device->uuid);

@@ -88,11 +88,33 @@ void mb2_free(mb2_t* mb2) {
 
 
 mb2_t* mb2_open(device_t* device) {
-	mb2_t* mb2 = mb2_create();
-	if(mb2 == NULL) {
-		printf("Unable to open connection mobilebackup2 server\n");
+	if(device == NULL) {
+		printf("Unable to start mobilebackup2 service due to invalid arguments\n");
 		return NULL;
 	}
+
+	if(device->lockdown != NULL && device->lockdown->client == NULL) {
+		lockdown_t* lockdown = lockdown_open(device);
+		if(lockdown == NULL) {
+			printf("WTF! lockdown is null!!\n");
+			return NULL;
+		}
+
+		mb2_t* mb2 = lockdown->mb2;
+		if(mb2 == NULL) {
+			printf("Now our mb2 context doesn't work anymore?!\n");
+			return NULL;
+		}
+		return NULL;
+	}
+
+	mb2_t* mb2 = device->lockdown->mb2;
+	if(mb2) {
+		memset(mb2, '\0', sizeof(mb2_t));
+
+
+	}
+	return mb2;
 }
 
 int mb2_close(mb2_t* mb2) {

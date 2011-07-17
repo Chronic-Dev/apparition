@@ -46,7 +46,7 @@ crashreport_t* fetch_crashreport(device_t* device) {
 	mb2_t* mb2 = mb2_open(device);
 	if (mb2 == NULL) {
 		printf("Unable to open connection to mobilebackup2 service");
-		return -1;
+		return NULL;
 	}
 
 	err = mb2_crash(mb2);
