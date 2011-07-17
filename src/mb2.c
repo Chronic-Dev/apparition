@@ -1076,12 +1076,15 @@ static void notify_cb(const char *notification, void *userdata) //more placehold
 	}
 }
 
-int mb2_crash(mb2_t* mb2)
-{
+int mb2_crash(mb2_t* mb2) {
 	int processStatus = 0;
 
+	if(mb2 == NULL) {
+		return -1;
+	}
+
 	lockdown_t *lockdown = lockdown_open(mb2->device);
-	if (!lockdown || !lockdown->device) {
+	if (!lockdown) {
 		printf("%s: ERROR: Could not start lockdown\n", __func__);
 		return processStatus;
 	}
