@@ -32,10 +32,9 @@
 
 nos_t* nos_create() {
 	nos_t* nos = (nos_t*) malloc(sizeof(nos_t));
-	if (nos == NULL) {
-		return NULL;
+	if (nos) {
+		memset(nos, '\0', sizeof(nos_t));
 	}
-	memset(nos, '\0', sizeof(nos_t));
 	return nos;
 }
 
@@ -100,7 +99,7 @@ int nos_register(nos_t* nos, nos_cb_t callback, void *arg) {
 void nos_perform_notification(nos_t* nos, const char *notification) {
 	if (!nos || !notification) {
 		printf("ERROR: missing or invalid parameters!\n");
-		return -1;
+		return;
 	}
 	printf("::::::::: PostNotification %s\n", notification);
 	np_post_notification(nos->client, notification);

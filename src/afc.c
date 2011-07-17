@@ -26,29 +26,57 @@
 #include "device.h"
 #include "lockdown.h"
 
+#define AFC_SERVICE "com.apple.afc"
+
 afc_t* afc_create() {
 	afc_t* afc = (afc_t*) malloc(sizeof(afc_t));
-	if (afc == NULL) {
-		return NULL;
+	if (afc) {
+		memset(afc, '\0', sizeof(afc_t));
 	}
-	memset(afc, '\0', sizeof(afc_t));
 	return afc;
 }
 
+void afc_free(afc_t* afc) {
+	if (afc) {
+		if(afc->connection) {
+			afc_close(afc);
+		}
+		free(afc);
+	}
+}
+
 afc_t* afc_open(device_t* device) {
-	uint16_t port = 0;
+	int err = 0;
+	if(device == NULL || device->lockdown == NULL) {
+		printf("Unable to open afc server due to invalid arguments\n");
+		return NULL;
+	}
 
-	afc_t *afc = NULL;
-	lockdown_start_service(device->lockdown, "com.apple.afc", &port);
-	if (port) {
+	afc_t* afc = afc_create();
+	if(afc) {
+		memset(afc, '\0', sizeof(afc_t));
 
-		afc_client_new(device->lockdown->client, port, &(afc->client));
-		if ((afc->client = NULL)) {
-			free(afc);
+		err = lockdown_start_service(device->lockdown, AFC_SERVICE, &(afc->port));
+		if (err < 0 && afc->port) {
+			printf("Unable to start AFC service\n");
+			afc_free(afc);
+			return NULL;
+		}
+
+		afc_client_new(device->client, afc->port, &(afc->client));
+		if (afc->client == NULL) {
+			printf("Unable to open connection to AFC client\n");
+			afc_free(afc);
 			return NULL;
 		}
 	}
+
 	return afc;
+}
+
+int afc_close(afc_t* afc) {
+	//TODO: Implement Me
+	return 0;
 }
 
 int afc_send_file(afc_t* afc, const char* local, const char* remote) {
@@ -76,17 +104,6 @@ int afc_send_file(afc_t* afc, const char* local, const char* remote) {
 	printf("afc all done.\n");
 
 	return 0;
-}
-
-int afc_close(afc_t* afc) {
-	//TODO: Implement Me
-	return -1;
-}
-
-void afc_free(afc_t* afc) {
-	if (afc) {
-		free(afc);
-	}
 }
 
 static void afc_free_dictionary(char **dictionary) //ghetto i know, not sure where/how to put a global function for this

@@ -27,11 +27,19 @@
 
 crashreportcopy_t* crashreportcopy_create() {
 	crashreportcopy_t* copier = (crashreportcopy_t*) malloc(sizeof(crashreportcopy_t));
-	if(copier == NULL) {
-		return NULL;
+	if(copier) {
+		memset(copier, '\0', sizeof(crashreportcopy_t));
 	}
-	memset(copier, '\0', sizeof(crashreportcopy_t));
 	return copier;
+}
+
+void crashreportcopy_free(crashreportcopy_t* copier) {
+	if(copier) {
+		if(copier->connection) {
+			crashreportcopy_close(copier);
+		}
+		free(copier);
+	}
 }
 
 crashreportcopy_t* crashreportcopy_open(device_t* device) {
@@ -53,7 +61,4 @@ crashreportcopy_t* crashreportcopy_open(device_t* device) {
 
 int crashreportcopy_close(crashreportcopy_t* copier) {
 	return -1;
-}
-
-void crashreportcopy_free(crashreportcopy_t* copier) {
 }

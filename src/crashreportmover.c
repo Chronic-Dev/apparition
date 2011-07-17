@@ -27,8 +27,8 @@
 
 crashreportmover_t* crashreportmover_create() {
 	crashreportmover_t* mover = (crashreportmover_t*) malloc(sizeof(crashreportmover_t));
-	if(mover == NULL) {
-		return NULL;
+	if(mover) {
+		memset(mover, '\0', sizeof(crashreportmover_t));
 	}
 	return mover;
 }

@@ -30,17 +30,33 @@
 
 crashreporter_t* crashreporter_create() {
 	crashreporter_t* crashreporter = (crashreporter_t*) malloc(sizeof(crashreporter_t));
-	memset(crashreporter, '\0', sizeof(crashreporter_t));
-	if (crashreporter == NULL) {
-		//crashreportmover_free(mover);
-		//crashreportcopy_free(copier);
-		return NULL;
-	}
-	memset(crashreporter, '\0', sizeof(crashreporter_t));
+	if(crashreporter) {
+		memset(crashreporter, '\0', sizeof(crashreporter_t));
 
-	crashreporter->mover = crashreportmover_create();
-	crashreporter->copier = crashreportcopy_create();
-	crashreporter->afc = afc_create();
+		// Create our crashreport mover context
+		crashreporter->mover = crashreportmover_create();
+		if(crashreporter->mover == NULL) {
+			// Whoops
+			crashreporter_free(crashreporter);
+			return NULL;
+		}
+
+		// Create our crashreporter copier context
+		crashreporter->copier = crashreportcopy_create();
+		if(crashreporter->copier == NULL) {
+			// Damnit
+			crashreporter_free(crashreporter);
+			return NULL;
+		}
+
+		// Crashreporter borrows the afc client for communication with the copier
+		crashreporter->afc = afc_create();
+		if(crashreporter->afc == NULL) {
+			crashreporter_free(crashreporter);
+			return NULL;
+		}
+	}
+
 	return crashreporter;
 }
 
@@ -48,9 +64,15 @@ void crashreporter_free(crashreporter_t* crashreporter) {
 	if (crashreporter) {
 		if (crashreporter->mover) {
 			crashreportmover_free(crashreporter->mover);
+			crashreporter->mover = NULL;
 		}
 		if (crashreporter->copier) {
 			crashreportcopy_free(crashreporter->copier);
+			crashreporter->copier = NULL;
+		}
+		if(crashreporter->afc) {
+			afc_free(crashreporter->afc);
+			crashreporter->afc = NULL;
 		}
 		free(crashreporter);
 	}

@@ -56,13 +56,12 @@ typedef struct arm_state_t {
 	uint32_t cpsr;
 } arm_state_t;
 
+typedef void* thread_info_t;
 typedef struct crashreport_t {
 	dylib_info_t* dylibs;
 	arm_state_t* registers;
+	thread_info_t* threads; //TODO: Implement and parse this structure if you're bored
 } crashreport_t;
-
-
-
 
 typedef struct crashreporter_t {
 	afc_t* afc;

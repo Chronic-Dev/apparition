@@ -36,7 +36,7 @@ lockdown_t* lockdown_create() {
 	memset(lockdown, '\0', sizeof(lockdown_t));
 
 	// Create our service structures. We allocate all these in the beginning to save time
-	//   rather then allocating them lazily. Memory vs Speed trade-off.
+	//   rather then allocating them lazily. Classic memory vs speed trade-off.
 	lockdown->afc = afc_create();
 	lockdown->mb2 = mb2_create();
 	lockdown->nos = nos_create();
