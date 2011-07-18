@@ -29,10 +29,12 @@
 #include "crashreporter.h"
 
 crashreporter_t* crashreporter_create() {
+	printf(">> %s called\n", __func__);
 	crashreporter_t* crashreporter = (crashreporter_t*) malloc(sizeof(crashreporter_t));
 	if(crashreporter) {
 		memset(crashreporter, '\0', sizeof(crashreporter_t));
 
+		/*
 		// Create our crashreport mover context
 		crashreporter->mover = crashreportmover_create();
 		if(crashreporter->mover == NULL) {
@@ -55,12 +57,14 @@ crashreporter_t* crashreporter_create() {
 			crashreporter_free(crashreporter);
 			return NULL;
 		}
+		*/
 	}
 
 	return crashreporter;
 }
 
 void crashreporter_free(crashreporter_t* crashreporter) {
+	printf(">> %s called\n", __func__);
 	if (crashreporter) {
 		if (crashreporter->mover) {
 			crashreportmover_free(crashreporter->mover);
@@ -79,37 +83,125 @@ void crashreporter_free(crashreporter_t* crashreporter) {
 }
 
 crashreporter_t* crashreporter_open(device_t* device) {
+	printf(">> %s called\n", __func__);
 	int err = 0;
+	lockdown_t* lockdown = NULL;
+	crashreporter_t* crashreporter = NULL;
 
 	// Sanity check the arguments as always
-	if(device == NULL || device->lockdown == NULL) {
+	if(device == NULL) {
 		printf("Unable to open crashreporter service due to invalid arguments\n");
 		return NULL;
 	}
-	lockdown_t* lockdown = device->lockdown;
+
+	if(device->lockdown == NULL) {
+		lockdown = lockdown_open(device);
+		if(lockdown == NULL) {
+			printf("Unable to open lockdown service to start crashreporter\n");
+			return NULL;
+		}
+	} else {
+		lockdown = device->lockdown;
+	}
 
 	// Check and make sure our crashreporter context has already been created
 	if(lockdown->crashreporter == NULL) {
-		lockdown->crashreporter = crashreporter_create();
-		if(lockdown->crashreporter == NULL) {
+		crashreporter = crashreporter_create();
+		if(crashreporter == NULL) {
 			printf("Unable to create crashreporter context\n");
 			return NULL;
 		}
+	} else {
+		crashreporter = lockdown->crashreporter;
 	}
-	crashreporter_t* crashreporter = lockdown->crashreporter;
 
 	err = crashreporter_copy(crashreporter);
 	if(err < 0) {
 		printf("Unable to open crashreporter's copy service\n");
 		return NULL;
 	}
-	
+
 	err = crashreporter_move(crashreporter);
 	if(err < 0) {
 		printf("Unable to open crashreporter's move service\n");
 		return NULL;
 	}
+
 	/*
+	afc_t* afc = afc_connect(device, port);
+	if(afc == NULL) {
+		printf("Unable to create afc context for crashreport\n");
+		return NULL;
+	}
+	*/
+
+	// If lockdown is still open at this point we can go ahead and close it
+	lockdown_close(lockdown);
+	return crashreporter;
+}
+
+int crashreporter_close(crashreporter_t* crashreporter) {
+	printf(">> %s called\n", __func__);
+	return 0;
+}
+
+crashreporter_t* crashreporter_start(struct device_t* device) {
+
+}
+
+int crashreporter_stop(crashreporter_t* crashreporter) {
+
+}
+
+int crashreporter_move(crashreporter_t* crashreporter) {
+	printf(">> %s called\n", __func__);
+	// Startup crashreportmover service to move our crashes into the jailed
+	//   portion of the filesystem
+	crashreporter->mover = crashreportmover_open(crashreporter->device);
+	if(crashreporter->mover == NULL) {
+		printf("Unable to move crashreports for crashreporter\n");
+		return -1;
+	}
+	crashreportmover_free(crashreporter->mover);
+	return 0;
+}
+
+int crashreporter_copy(crashreporter_t* crashreporter) {
+	printf(">> %s called\n", __func__);
+	// Startup crashreporter copy service to copy crashes into the jailed
+	//   portion of our filesystem
+	crashreporter->copier = crashreportcopy_open(crashreporter->device);
+	if(crashreporter->copier == NULL) {
+		printf("Unable to copy crashreports for crashreporter\n");
+		return -1;
+	}
+	crashreportcopy_free(crashreporter->copier);
+	return 0;
+}
+
+
+
+crashreport_t* crashreporter_last_crash(crashreporter_t* crashreporter) {
+	printf(">> %s called\n", __func__);
+	uint16_t port = 0;
+	afc_client_t afc = NULL;
+	afc_error_t afc_error = AFC_E_SUCCESS;
+
+	idevice_error_t device_error = IDEVICE_E_SUCCESS;
+
+	/*
+	err = crashreporter_copy(crashreporter);
+	if(err < 0) {
+		printf("Unable to open crashreporter's copy service\n");
+		return NULL;
+	}
+
+	err = crashreporter_move(crashreporter);
+	if(err < 0) {
+		printf("Unable to open crashreporter's move service\n");
+		return NULL;
+	}
+
 	afc_t* afc = afc_connect(device, port);
 	if(afc == NULL) {
 		printf("Unable to create afc context for crashreport\n");
@@ -135,45 +227,6 @@ crashreporter_t* crashreporter_open(device_t* device) {
 	device->lockdown->crashreporter->device = device;
 	device->lockdown->crashreporter->lockdown = device->lockdown;
 	*/
-	return crashreporter;
-}
-
-int crashreporter_close(crashreporter_t* crashreporter) {
-	return -1;
-}
-
-int crashreporter_move(crashreporter_t* crashreporter) {
-	// Startup crashreportmover service to move our crashes into the jailed
-	//   portion of the filesystem
-	crashreporter->mover = crashreportmover_open(crashreporter->device);
-	if(crashreporter->mover == NULL) {
-		printf("Unable to move crashreports for crashreporter\n");
-		return -1;
-	}
-	crashreportmover_free(crashreporter->mover);
-	return 0;
-}
-
-int crashreporter_copy(crashreporter_t* crashreporter) {
-	// Startup crashreporter copy service to copy crashes into the jailed
-	//   portion of our filesystem
-	crashreporter->copier = crashreportcopy_open(crashreporter->device);
-	if(crashreporter->copier == NULL) {
-		printf("Unable to copy crashreports for crashreporter\n");
-		return -1;
-	}
-	crashreportcopy_free(crashreporter->copier);
-	return 0;
-}
-
-
-
-crashreport_t* crashreporter_last_crash(crashreporter_t* crashreporter) {
-	uint16_t port = 0;
-	afc_client_t afc = NULL;
-	afc_error_t afc_error = AFC_E_SUCCESS;
-
-	idevice_error_t device_error = IDEVICE_E_SUCCESS;
 
 	afc_error = afc_client_new(crashreporter->device->client, crashreporter->copier->port, &afc);
 	if(afc_error != AFC_E_SUCCESS) {
@@ -298,6 +351,7 @@ crashreport_t* crashreporter_last_crash(crashreporter_t* crashreporter) {
 
 
 dylib_info_t* crashreport_parse_dylibs(plist_t plist) {
+	printf(">> %s called\n", __func__);
 
 	plist_t node = plist_dict_get_item(plist, "description");
 
@@ -408,9 +462,11 @@ dylib_info_t* crashreport_parse_dylibs(plist_t plist) {
 }
 
 arm_state_t* crashreport_parse_state(plist_t plist) {
-	return NULL;
+	printf(">> %s called\n", __func__);
+	return (void*) 1;
 }
 
 void crashreport_free(crashreport_t* crash) {
+	printf(">> %s called\n", __func__);
 	free(crash);
 }

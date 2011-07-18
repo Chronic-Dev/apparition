@@ -29,10 +29,11 @@
 #include "lockdown.h"
 
 lockdown_t* lockdown_create() {
+	printf("%s called\n", __func__);
 	lockdown_t* lockdown = (lockdown_t*) malloc(sizeof(lockdown_t));
 	if (lockdown) {
 		memset(lockdown, '\0', sizeof(lockdown_t));
-
+/*
 		// Create our service structures. We allocate all these in the beginning to save time
 		//   rather then allocating them lazily. Classic memory vs speed trade-off.
 		// AFC Service
@@ -66,39 +67,44 @@ lockdown_t* lockdown_create() {
 			lockdown_free(lockdown);
 			return NULL;
 		}
+*/
 	}
 
 	return lockdown;
 }
 
 lockdown_t* lockdown_open(device_t* device) {
-	lockdownd_error_t err = 0;
+	printf("%s called\n", __func__);
+	int err = 0;
+	lockdown_t* lockdown = NULL;
 
 	// Sanity check as always
 	if (device == NULL) {
 		printf("Unable to open lockdown daemon due to invalid arguments\n");
 		return NULL;
 	}
-	lockdown_t* lockdown = device->lockdown;
 
 	// Check and see if our lockdown context is already allocated
-	if (lockdown == NULL) {
+	if(device->lockdown == NULL) {
 		// Lockdown context hasn't been allocated yet, so allocate it now
 		lockdown = lockdown_create();
-		if (lockdown == NULL) {
+		if(lockdown == NULL) {
 			// We had an error allocating memory for lockdown context =(
-			printf("Unable to open lockdown client\n");
+			printf("Unable to create lockdown service context\n");
 			return NULL;
-
 		}
+		// Give our device a reference to our new lockdown context
+		device->lockdown = lockdown;
+
+	} else {
+		// Lockdown context already exists, so we'll just use it
+		lockdown = device->lockdown;
 	}
-	device->lockdown = lockdown;
 
 	// Check and see if we're already connected to lockdown or not
 	if (lockdown->client == NULL) {
 		// Open the device connection and perform the handshake if possible.
-		if (lockdownd_client_new_with_handshake(device->client,
-				&(lockdown->client), "apparition") != LOCKDOWN_E_SUCCESS) {
+		if (lockdownd_client_new_with_handshake(device->client, &(lockdown->client), "apparition") != LOCKDOWN_E_SUCCESS) {
 			// Error creating client or during handshake, cleanup self and return error
 			printf("Unable to pair with lockdown\n");
 			lockdown_free(device->lockdown);
@@ -113,12 +119,13 @@ lockdown_t* lockdown_open(device_t* device) {
 		printf("Connection to lockdown client is already open...\n");
 	}
 
-	// Copy our pointer to the device we're opening a connection to
+	// Copy our pointer to the device we're opening a connection
 	lockdown->device = device;
 	return lockdown;
 }
 
 int lockdown_close(lockdown_t* lockdown) {
+	printf("%s called\n", __func__);
 	lockdownd_error_t error = 0;
 
 	// Sanity check the arguments and make sure we're really trying to close something
@@ -129,8 +136,7 @@ int lockdown_close(lockdown_t* lockdown) {
 
 	// Check and make sure we really have a connection to close down
 	if (lockdown->client == NULL) {
-		printf(
-				"Unable to close lockdown connection because it's not even open... wtf are you doing?\n");
+		printf("Unable to close lockdown connection because it's not even open... wtf are you doing?\n");
 		return -1;
 	}
 
@@ -148,6 +154,7 @@ int lockdown_close(lockdown_t* lockdown) {
 }
 
 void lockdown_free(lockdown_t* lockdown) {
+	printf("%s called\n", __func__);
 	// Sanity check the arguments and make sure we're really trying to free something
 	if (lockdown) {
 		// Shutdown any services still open before freeing our lockdown context
@@ -178,8 +185,6 @@ void lockdown_free(lockdown_t* lockdown) {
 		// Close our lockdown client, this should free and NULL it as well
 		if (lockdown->client) {
 			lockdown_close(lockdown);
-			// But we'll do it again anyways =P
-			lockdown->client = NULL;
 		}
 
 		lockdown->device = NULL;
@@ -187,8 +192,8 @@ void lockdown_free(lockdown_t* lockdown) {
 	}
 }
 
-int lockdown_start_service(lockdown_t* lockdown, const char* service,
-		uint16_t* port) {
+int lockdown_start_service(lockdown_t* lockdown, const char* service, uint16_t* port) {
+	printf("%s called\n", __func__);
 	// Sanity check our arguments, and make sure a lockdown connection exists
 	//  by checking the client isn't null
 	if (lockdown == NULL || service == NULL || port == NULL) {
@@ -223,6 +228,8 @@ int lockdown_start_service(lockdown_t* lockdown, const char* service,
 }
 
 int lockdown_stop_service(lockdown_t* lockdown, const char* service) {
+	printf("%s called\n", __func__);
+
 	// Sanity check our arguments, and make sure a lockdown connection exists
 	//  by checking the client isn't null
 	if (lockdown == NULL || service == NULL || lockdown->client == NULL) {

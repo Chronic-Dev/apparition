@@ -26,20 +26,16 @@
 #include "lockdown.h"
 
 device_t* device_create() {
+	printf(">> %s called\n", __func__);
 	device_t* device = (device_t*) malloc(sizeof(device_t));
 	if (device) {
 		memset(device, '\0', sizeof(device_t));
-		device->lockdown = lockdown_create();
-		if(device->lockdown == NULL) {
-			printf("Unable to create lockdown context\n");
-			device_free(device);
-			return NULL;
-		}
 	}
 	return device;
 }
 
 void device_free(device_t* device) {
+	printf(">> %s called\n", __func__);
 	if (device) {
 		if(device->lockdown) {
 			free(device->lockdown);
@@ -57,6 +53,7 @@ void device_free(device_t* device) {
 }
 
 device_t* device_open(const char* uuid) {
+	printf(">> %s called\n", __func__);
 	idevice_error_t err = 0;
 	device_t* device = device_create();
 	if(device == NULL) {
@@ -67,7 +64,7 @@ device_t* device_open(const char* uuid) {
 	if (uuid == NULL) {
 		err = idevice_new(&(device->client), uuid);
 		if (err != IDEVICE_E_SUCCESS) {
-			fprintf(stderr, "No device found, is it plugged in?\n");
+			printf("No device found, is it plugged in?\n");
 			return NULL;
 		}
 		idevice_get_uuid(device->client, (char**)&device->uuid);
@@ -75,8 +72,7 @@ device_t* device_open(const char* uuid) {
 	} else {
 		err = idevice_new(&(device->client), uuid);
 		if (err != IDEVICE_E_SUCCESS) {
-			fprintf(stderr,
-					"No device found with uuid %s, is it plugged in?\n", uuid);
+			printf("No device found with uuid %s, is it plugged in?\n", uuid);
 			return NULL;
 		}
 		device->uuid = strdup(uuid);
@@ -86,6 +82,7 @@ device_t* device_open(const char* uuid) {
 }
 
 void device_close(device_t* device) {
+	printf(">> %s called\n", __func__);
 	if(device->client) {
 		idevice_free(device->client);
 		device->client == NULL;
@@ -93,5 +90,6 @@ void device_close(device_t* device) {
 }
 
 void device_enable_debug(unsigned int level) {
+	printf(">> %s called\n", __func__);
 	idevice_set_debug_level(3);
 }

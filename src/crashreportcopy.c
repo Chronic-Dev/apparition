@@ -27,6 +27,7 @@
 #include "crashreportcopy.h"
 
 crashreportcopy_t* crashreportcopy_create() {
+	printf(">> %s called\n", __func__);
 	crashreportcopy_t* copier = (crashreportcopy_t*) malloc(sizeof(crashreportcopy_t));
 	if(copier) {
 		memset(copier, '\0', sizeof(crashreportcopy_t));
@@ -42,6 +43,7 @@ crashreportcopy_t* crashreportcopy_create() {
 }
 
 void crashreportcopy_free(crashreportcopy_t* copier) {
+	printf(">> %s called\n", __func__);
 	if(copier) {
 		if(copier->connection) {
 			crashreportcopy_close(copier);
@@ -51,6 +53,7 @@ void crashreportcopy_free(crashreportcopy_t* copier) {
 }
 
 crashreportcopy_t* crashreportcopy_open(device_t* device) {
+	printf(">> %s called\n", __func__);
 	int err = 0;
 	uint16_t port = 0;
 
@@ -91,5 +94,6 @@ crashreportcopy_t* crashreportcopy_open(device_t* device) {
 }
 
 int crashreportcopy_close(crashreportcopy_t* copier) {
-	return -1;
+	printf(">> %s called\n", __func__);
+	return 0;
 }

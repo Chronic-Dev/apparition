@@ -29,14 +29,18 @@
 #define AFC_SERVICE "com.apple.afc"
 
 afc_t* afc_create() {
+	printf(">> %s called\n", __func__);
+
 	afc_t* afc = (afc_t*) malloc(sizeof(afc_t));
 	if (afc) {
 		memset(afc, '\0', sizeof(afc_t));
 	}
+
 	return afc;
 }
 
 void afc_free(afc_t* afc) {
+	printf(">> %s called\n", __func__);
 	if (afc) {
 		if(afc->connection) {
 			afc_close(afc);
@@ -46,13 +50,18 @@ void afc_free(afc_t* afc) {
 }
 
 afc_t* afc_open(device_t* device) {
+	printf(">> %s called\n", __func__);
+
 	int err = 0;
-	if(device == NULL || device->lockdown == NULL) {
+	afc_t* afc = NULL;
+	lockdown_t* lockdown = NULL;
+
+	if(device == NULL) {
 		printf("Unable to open afc server due to invalid arguments\n");
 		return NULL;
 	}
 
-	afc_t* afc = device->lockdown->afc;
+	afc = device->lockdown->afc;
 	if(afc) {
 		memset(afc, '\0', sizeof(afc_t));
 		err = afc_connect(afc, 0);
@@ -60,38 +69,50 @@ afc_t* afc_open(device_t* device) {
 			printf("Unable to connect to afc port\n");
 			return NULL;
 		}
-
 	}
 
 	return afc;
 }
 
+
 int afc_connect(afc_t* afc, uint16_t port) {
+	printf(">> %s called\n", __func__);
+
 	int err = 0;
+	//uint16_t port = 0;
 	device_t* device = afc->device;
 
-	err = lockdown_start_service(device->lockdown, AFC_SERVICE, &(afc->port));
-	if (err < 0 || afc->port == 0) {
+	/*
+	afc_t* afc = afc_open(device);
+	if(afc == NULL) {
+		return NULL;
+	}
+
+	err = lockdown_start_service(device->lockdown, AFC_SERVICE, &port);
+	if (err < 0 || port == 0) {
 		printf("Unable to start AFC service\n");
 		afc_free(afc);
-		return -1;
+		return NULL;
 	}
 
 	afc_client_new(device->client, afc->port, &(afc->client));
 	if (afc->client == NULL) {
 		printf("Unable to open connection to AFC client\n");
 		afc_free(afc);
-		return -1;
+		return NULL;
 	}
+*/
+	return 0;
 }
 
 int afc_close(afc_t* afc) {
+	printf(">> %s called\n", __func__);
 	//TODO: Implement Me
 	return 0;
 }
 
 int afc_send_file(afc_t* afc, const char* local, const char* remote) {
-
+	printf(">> %s called\n", __func__);
 	uint64_t lockfile = 0;
 	uint64_t my_file = 0;
 	unsigned int bytes = 0;
@@ -119,6 +140,7 @@ int afc_send_file(afc_t* afc, const char* local, const char* remote) {
 
 static void afc_free_dictionary(char **dictionary) //ghetto i know, not sure where/how to put a global function for this
 {
+	printf(">> %s called\n", __func__);
 	int i = 0;
 
 	if (!dictionary)
@@ -132,6 +154,7 @@ static void afc_free_dictionary(char **dictionary) //ghetto i know, not sure whe
 
 void apparition_afc_get_file_contents(afc_t* afc, const char *filename,
 		char **data, uint64_t *size) {
+	printf(">> %s called\n", __func__);
 	if (!afc || !data || !size) {
 		return;
 	}

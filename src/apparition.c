@@ -37,18 +37,22 @@
 // names of potential functions in this file?
 
 int exploit_mobilebackup2(device_t* device, crashreport_t* crashreport) {
+	printf(">> %s called\n", __func__);
 	return -1;
 }
 
 crashreport_t* fetch_crashreport(device_t* device) {
+	printf(">> %s called\n", __func__);
 	int err = 0;
 
+	// Startup mobilebackup2 service so we can crash it
 	mb2_t* mb2 = mb2_open(device);
 	if (mb2 == NULL) {
 		printf("Unable to open connection to mobilebackup2 service");
 		return NULL;
 	}
 
+	// Burn baby, burn
 	err = mb2_crash(mb2);
 	if (err == 0xDEAD) {
 		printf("crashed!!! (hopefully)\n");
@@ -61,28 +65,29 @@ crashreport_t* fetch_crashreport(device_t* device) {
 	printf("Giving the device a moment to write the crash report...\n");
 	sleep(3);
 
-	//Here we open crash reporter so we can download the mobilebackup2 crash report
+	// Here we open crash reporter so we can download the mobilebackup2 crash report
 	//  and parse the "random" dylib addresses. Thank you ASLR for nothing :-P
-	printf("Openning connection to crashreporter\n");
+	printf("Opening connection to crashreporter\n");
 	crashreporter_t* reporter = crashreporter_open(device);
 	if (reporter == NULL) {
 		printf("Unable to open connection to crash reporter\n");
-		return -1;
+		return NULL;
 	}
 
 	// Read in the last crash since that's probably our fault anyways :-P
-	printf("Reading in crash reports from mobile backup\n");
+	printf("Reading in most recent crashreport from device\n");
 	crashreport_t* crash = crashreporter_last_crash(reporter);
 	if (crash == NULL) {
 		printf("Unable to read last crash\n");
-		return -1;
+		return NULL;
 	}
-	crashreporter_free(reporter);
+	crashreporter_close(reporter);
 
 	return crash;
 }
 
 static void notify_cb(const char *notification, void *userdata) {
+	printf(">> %s called\n", __func__);
 	if (!strcmp(notification, NP_SYNC_CANCEL_REQUEST)) {
 		printf("User has cancelled the backup process on the device.\n");
 	} else {
@@ -91,30 +96,42 @@ static void notify_cb(const char *notification, void *userdata) {
 }
 
 int main(int argc, char* argv[]) {
+	device_t* device = NULL;
+	crashreport_t* crashreport = NULL;
+	crashreporter_t* crashreporter = NULL;
+
 	// Pass a UUID here if you want to target a single device,
 	//  or NULL to select the first one it finds
 	printf("Opening device connection\n");
-	device_t* device = device_open(NULL);
+	device = device_open(NULL);
 	if (device == NULL) {
 		printf("Unable to find a device to use\n");
-		return -1;
+		goto done;
 	}
 	device_enable_debug(3);
 
-	crashreport_t* crash = fetch_crashreport(device);
-	while (!exploit_mobilebackup2(device, crash)) {
-		crash = fetch_crashreport(device);
-		if(crash == NULL) {
-			printf("Error fetching crashreport\n");
-			break;
-		}
+	// Here we open crash reporter so we can download the mobilebackup2 crashreport
+	//  and parse the "random" dylib addresses. Thank you ASLR for nothing :-P
+	printf("Opening connection to crashreporter\n");
+	crashreporter = crashreporter_start(device);
+	if (crashreporter == NULL) {
+		printf("Unable to open connection to crash reporter\n");
+		goto done;
 	}
 
+	// Grab the last crash that occurred for analysis
+	crashreport = crashreporter_last_crash(crashreporter);
+	if(crashreport == NULL) {
+		printf("Unable to fetch last crash from crashreporter service\n");
+		goto done;
+	}
 
+done:
+	// Always clean up our mess when we're done
 	printf("Cleaning up\n");
-	if (crash) crashreport_free(crash);
-	if (device) device_free(device);
-
+	if(crashreporter) crashreporter_free(crashreporter);
+	if(crashreport) crashreport_free(crashreport);
+	if(device) device_free(device);
 	printf("Done\n");
 	return 0;
 }

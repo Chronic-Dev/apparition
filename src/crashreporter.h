@@ -79,6 +79,9 @@ void crashreporter_free(crashreporter_t* crashreporter);
 crashreporter_t* crashreporter_open(struct device_t* device);
 int crashreporter_close(crashreporter_t* crashreporter);
 
+crashreporter_t* crashreporter_start(struct device_t* device);
+int crashreporter_stop(crashreporter_t* crashreporter);
+
 int crashreporter_move(crashreporter_t* crashreporter);
 int crashreporter_copy(crashreporter_t* crashreporter);
 

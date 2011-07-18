@@ -31,6 +31,7 @@
 #define ANP_SERVICE_NAME "com.apple.mobile.notification_proxy"
 
 nos_t* nos_create() {
+	printf(">> %s called\n", __func__);
 	nos_t* nos = (nos_t*) malloc(sizeof(nos_t));
 	if (nos) {
 		memset(nos, '\0', sizeof(nos_t));
@@ -39,6 +40,7 @@ nos_t* nos_create() {
 }
 
 nos_t* nos_open(device_t* device) {
+	printf(">> %s called\n", __func__);
 	int err = 0;
 	uint16_t port = 0;
 	np_client_t np = NULL;
@@ -76,6 +78,7 @@ nos_t* nos_open(device_t* device) {
 }
 
 int nos_register(nos_t* nos, nos_cb_t callback, void *arg) {
+	printf(">> %s called\n", __func__);
 	if (!nos || !callback) {
 		printf("ERROR: missing or invalid parameters!\n");
 		return -1;
@@ -97,6 +100,7 @@ int nos_register(nos_t* nos, nos_cb_t callback, void *arg) {
 }
 
 void nos_perform_notification(nos_t* nos, const char *notification) {
+	printf(">> %s called\n", __func__);
 	if (!nos || !notification) {
 		printf("ERROR: missing or invalid parameters!\n");
 		return;
@@ -106,6 +110,7 @@ void nos_perform_notification(nos_t* nos, const char *notification) {
 }
 
 void nos_free(nos_t* nos) {
+	printf(">> %s called\n", __func__);
 	if (nos) {
 		if (nos->client) {
 			np_client_free(nos->client);

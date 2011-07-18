@@ -1,5 +1,5 @@
 /**
-  * GreenPois0n Apparition - afc.h
+  * GreenPois0n Apparition - service.h
   * Copyright (C) 2010 Chronic-Dev Team
   * Copyright (C) 2010 Joshua Hill
   *
@@ -17,30 +17,33 @@
   * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  **/
 
-#ifndef AFC_H_
-#define AFC_H_
-
-#include <libimobiledevice/afc.h>
+#ifndef SERVICE_H_
+#define SERVICE_H_
 
 struct device_t;
-struct lockdown_t;
-typedef struct afc_t {
+typedef struct service_t {
+	char* name;
 	uint16_t port;
-	afc_client_t client;
 	idevice_connection_t connection;
-	struct device_t* device;
-	struct lockdown_t* lockdown;
-} afc_t;
 
-afc_t* afc_create();
-void afc_free(afc_t* afc);
+	struct service_t*(*service_create)(void);
+	void(*service_free)(struct service_t* service);
 
-afc_t* afc_open(struct device_t* device);
-int afc_close(afc_t* afc);
+	struct service_t*(*service_open)(struct device_t* device, uint16_t port);
+	int service_close(struct service_t* service);
 
-int afc_connect(afc_t* afc, uint16_t port);
+	struct service_t*(*service_start)(struct device_t* device);
+	int(*service_stop)(struct service_t* service);
 
-int afc_send_file(afc_t* afc, const char* local, const char* remote);
-void apparition_afc_get_file_contents(afc_t* afc, const char *filename, char **data, uint64_t *size);
+} service_t;
 
-#endif /* AFC_H_ */
+service_t* service_create();
+void service_free(service_t* service);
+
+service_t* service_open(device_t* device, uint16_t port);
+int service_close(service_t* service);
+
+service_t* service_start(device_t* device, char* service_name);
+int service_stop(service_t* service);
+
+#endif /* SERVICE_H_ */

@@ -67,6 +67,7 @@ enum dlmsg_mode {
 };
 
 mb2_t* mb2_create() {
+	printf(">> %s called\n", __func__);
 	mb2_t* mb2 = (mb2_t*) malloc(sizeof(mb2_t));
 	if (mb2) {
 		memset(mb2, '\0', sizeof(mb2_t));
@@ -75,6 +76,7 @@ mb2_t* mb2_create() {
 }
 
 void mb2_free(mb2_t* mb2) {
+	printf(">> %s called\n", __func__);
 	if (mb2) {
 		if (mb2->client) {
 			// we leak the crashed mb2 service
@@ -88,6 +90,7 @@ void mb2_free(mb2_t* mb2) {
 
 
 mb2_t* mb2_open(device_t* device) {
+	printf(">> %s called\n", __func__);
 	if(device == NULL) {
 		printf("Unable to start mobilebackup2 service due to invalid arguments\n");
 		return NULL;
@@ -118,6 +121,7 @@ mb2_t* mb2_open(device_t* device) {
 }
 
 int mb2_close(mb2_t* mb2) {
+	printf(">> %s called\n", __func__);
 	//TODO: Implement Me
 	return -1;
 }
@@ -126,6 +130,7 @@ int mb2_close(mb2_t* mb2) {
 
 
 static plist_t mobilebackup_factory_info_plist_new(mb2_t* mb2s) {
+	printf(">> %s called\n", __func__);
 	/* gather data from lockdown */
 	GTimeVal tv = { 0, 0 };
 	plist_t value_node = NULL;
@@ -140,7 +145,7 @@ static plist_t mobilebackup_factory_info_plist_new(mb2_t* mb2s) {
 	}
 	device_t *device = lockdown->device;
 
-	afc_t *afcs = afc_open(lockdown);
+	afc_t *afcs = afc_open(device);
 	if (!afcs) {
 		printf("%s: Could not connect to afc service\n", __func__);
 		lockdown_free(lockdown);
@@ -259,8 +264,8 @@ static plist_t mobilebackup_factory_info_plist_new(mb2_t* mb2s) {
 #pragma mark PLIST_Functions
 /* used in plist_read_from_filename, im assuming it reads the file into a char buffer or something */
 
-static void buffer_read_from_filename(const char *filename, char **buffer,
-		uint64_t *length) {
+static void buffer_read_from_filename(const char *filename, char **buffer, uint64_t *length) {
+	printf(">> %s called\n", __func__);
 	FILE *f;
 	uint64_t size;
 
@@ -287,6 +292,7 @@ static void buffer_read_from_filename(const char *filename, char **buffer,
 }
 
 static int plist_read_from_filename(plist_t *plist, const char *filename) {
+	printf(">> %s called\n", __func__);
 	char *buffer = NULL;
 	uint64_t length;
 
@@ -312,8 +318,8 @@ static int plist_read_from_filename(plist_t *plist, const char *filename) {
 
 /* used in plist_write_to_filename assuming it writes a buffer into a file */
 
-static void buffer_write_to_filename(const char *filename, const char *buffer,
-		uint64_t length) {
+static void buffer_write_to_filename(const char *filename, const char *buffer, uint64_t length) {
+	printf(">> %s called\n", __func__);
 	FILE *f;
 
 	f = fopen(filename, "ab");
@@ -325,8 +331,8 @@ static void buffer_write_to_filename(const char *filename, const char *buffer,
 	}
 }
 
-static int plist_write_to_filename(plist_t plist, const char *filename,
-		enum plist_format_t format) {
+static int plist_write_to_filename(plist_t plist, const char *filename, enum plist_format_t format) {
+	printf(">> %s called\n", __func__);
 	char *buffer = NULL;
 	uint32_t length;
 
@@ -349,8 +355,8 @@ static int plist_write_to_filename(plist_t plist, const char *filename,
 
 /*  appears to check if a backup is complete before restoring from it, not sure if we will need to use it */
 
-static int mb2_status_check_snapshot_state(const char *path, const char *uuid,
-		const char *matches) {
+static int mb2_status_check_snapshot_state(const char *path, const char *uuid, const char *matches) {
+	printf(">> %s called\n", __func__);
 	int ret = -1;
 	plist_t status_plist = NULL;
 	gchar *file_path = g_build_path(G_DIR_SEPARATOR_S, path, uuid,
@@ -381,6 +387,7 @@ static int mb2_status_check_snapshot_state(const char *path, const char *uuid,
 /* this function verifies if our current device matches our backup */
 
 static int mobilebackup_info_is_current_device(mb2_t* mb2s, plist_t info) {
+	printf(">> %s called\n", __func__);
 	plist_t value_node = NULL;
 	plist_t node = NULL;
 	plist_t root_node = NULL;
@@ -450,8 +457,8 @@ static int mobilebackup_info_is_current_device(mb2_t* mb2s, plist_t info) {
 
 /* function appears to only be used when performing a backup, not restoring from one. potentially frivolous */
 
-static void apparition_do_post_notification(mb2_t* mb2s,
-		const char *notification) {
+static void apparition_do_post_notification(mb2_t* mb2s, const char *notification) {
+	printf(">> %s called\n", __func__);
 	uint16_t nport = 0;
 	np_client_t np;
 
@@ -479,8 +486,8 @@ static void apparition_do_post_notification(mb2_t* mb2s,
 
 /* not sure if we even need this returns if there is a error adding a file maybe?*/
 
-static void mb2_multi_status_add_file_error(plist_t status_dict,
-		const char *path, int error_code, const char *error_message) {
+static void mb2_multi_status_add_file_error(plist_t status_dict, const char *path, int error_code, const char *error_message) {
+	printf(">> %s called\n", __func__);
 	if (!status_dict)
 		return;
 	plist_t filedict = plist_new_dict();
@@ -506,8 +513,8 @@ static int errno_to_device_error(int errno_value) {
 
 #pragma mark MB2 File Management code
 
-static int mb2_handle_send_file(mb2_t* mb2s, const char *backup_dir,
-		const char *path, plist_t *errplist) {
+static int mb2_handle_send_file(mb2_t* mb2s, const char *backup_dir, const char *path, plist_t *errplist) {
+	printf(">> %s called\n", __func__);
 	uint32_t nlen = 0;
 	uint32_t pathlen = strlen(path);
 	uint32_t bytes = 0;
@@ -650,8 +657,8 @@ static int mb2_handle_send_file(mb2_t* mb2s, const char *backup_dir,
 	return result;
 }
 
-static void mb2_handle_send_files(mb2_t* mb2s, plist_t message,
-		const char *backup_dir) {
+static void mb2_handle_send_files(mb2_t* mb2s, plist_t message, const char *backup_dir) {
+	printf(">> %s called\n", __func__);
 	uint32_t cnt;
 	uint32_t i = 0;
 	uint32_t sent;
@@ -711,8 +718,8 @@ static void mb2_handle_send_files(mb2_t* mb2s, plist_t message,
 
 /* i dont think we ever have to receive files unless we are creating a backup, but leaving this here just in case */
 
-static int mb2_handle_receive_files(mb2_t* mb2s, plist_t message,
-		const char *backup_dir) {
+static int mb2_handle_receive_files(mb2_t* mb2s, plist_t message, const char *backup_dir) {
+	printf(">> %s called\n", __func__);
 	uint64_t backup_real_size = 0;
 	uint64_t backup_total_size = 0;
 	uint32_t blocksize;
@@ -892,8 +899,8 @@ static int mb2_handle_receive_files(mb2_t* mb2s, plist_t message,
 	return file_count;
 }
 
-static void mb2_handle_list_directory(mb2_t* mb2s, plist_t message,
-		const char *backup_dir) {
+static void mb2_handle_list_directory(mb2_t* mb2s, plist_t message, const char *backup_dir) {
+	printf(">> %s called\n", __func__);
 	if (!message || (plist_get_node_type(message) != PLIST_ARRAY)
 			|| plist_array_get_size(message) < 2 || !backup_dir)
 		return;
@@ -953,8 +960,8 @@ static void mb2_handle_list_directory(mb2_t* mb2s, plist_t message,
 	}
 }
 
-static void mb2_handle_make_directory(mb2_t* mb2s, plist_t message,
-		const char *backup_dir) {
+static void mb2_handle_make_directory(mb2_t* mb2s, plist_t message, const char *backup_dir) {
+	printf(">> %s called\n", __func__);
 	if (!message || (plist_get_node_type(message) != PLIST_ARRAY)
 			|| plist_array_get_size(message) < 2 || !backup_dir)
 		return;
@@ -984,6 +991,7 @@ static void mb2_handle_make_directory(mb2_t* mb2s, plist_t message,
 }
 
 static void mb2_copy_file_by_path(const gchar *src, const gchar *dst) {
+	printf(">> %s called\n", __func__);
 	FILE *from, *to;
 	char buf[BUFSIZ];
 	size_t length;
@@ -1015,6 +1023,7 @@ static void mb2_copy_file_by_path(const gchar *src, const gchar *dst) {
 }
 
 static void mb2_copy_directory_by_path(const gchar *src, const gchar *dst) {
+	printf(">> %s called\n", __func__);
 	if (!src || !dst) {
 		return;
 	}
@@ -1060,6 +1069,7 @@ static void mb2_copy_directory_by_path(const gchar *src, const gchar *dst) {
  * signal handler function for cleaning up properly
  */
 static void clean_exit(int sig) {
+	printf(">> %s called\n", __func__);
 	fprintf(stderr, "Exiting...\n");
 
 }
@@ -1068,6 +1078,7 @@ static void clean_exit(int sig) {
 
 static void notify_cb(const char *notification, void *userdata) //more placeholders
 {
+	printf(">> %s called\n", __func__);
 	if (!strcmp(notification, NP_SYNC_CANCEL_REQUEST)) {
 		printf("User has cancelled the backup process on the device.\n");
 
@@ -1077,30 +1088,30 @@ static void notify_cb(const char *notification, void *userdata) //more placehold
 }
 
 int mb2_crash(mb2_t* mb2) {
+	uint16_t port = 0;
 	int processStatus = 0;
+	mobilebackup2_error_t err = 0;
 
 	if(mb2 == NULL) {
 		return -1;
 	}
 
-	lockdown_t *lockdown = lockdown_open(mb2->device);
+	lockdown_t* lockdown = lockdown_open(mb2->device);
 	if (!lockdown) {
-		printf("%s: ERROR: Could not start lockdown\n", __func__);
+		printf("Unable to open lockdown service\n");
 		return processStatus;
 	}
 
-	char *uuid = NULL;
+	char* uuid = NULL;
 	idevice_get_uuid(mb2->device->client, &uuid);
 	if (!uuid) {
-		printf("%s: ERROR: Could not retrieve device UUID!\n", __func__);
+		printf("Unable to retrieve device UUID!\n");
 		lockdown_free(lockdown);
 		return processStatus;
 	}
 
 	mb2->lockdown = lockdown;
 	device_t *device = lockdown->device;
-	uint16_t port = 0;
-	mobilebackup2_error_t err;
 
 	lockdown_start_service(lockdown, MOBILEBACKUP2_SERVICE_NAME, &port);
 	if (port) {
@@ -1175,12 +1186,15 @@ leave:
 	lockdown_free(lockdown);
 	mb2->lockdown = NULL;
 
+	// TODO: close lockdown
+	// TODO: close mobilebackup2?
 	return processStatus;
 }
 
 int mb2_restore(mb2_t* mb2, backup_t* backup)
 
 {
+	printf(">> %s called\n", __func__);
 	int processStatus = 0;
 	lockdown_t *lockdown = lockdown_open(mb2->device);
 	if (!lockdown || !lockdown->device) {
@@ -1333,6 +1347,7 @@ int mb2_restore(mb2_t* mb2, backup_t* backup)
 /* convert the message string into an integer for switch processing in mb2_process_messages */
 
 int dlmsg_status_from_string(char *dlmsg) {
+	printf(">> %s called\n", __func__);
 	if (!strcmp(dlmsg, "DLMessageDownloadFiles"))
 		return DLMSG_DOWNLOAD_FILES;
 	else if (!strcmp(dlmsg, "DLMessageUploadFiles"))
@@ -1357,6 +1372,7 @@ int dlmsg_status_from_string(char *dlmsg) {
 /* we process the messages here that instruct what to do while restoring or backing up */
 
 int mb2_process_messages(mb2_t* mb2, backup_t* backup) {
+	printf(">> %s called\n", __func__);
 	plist_t node_tmp = NULL;
 	mobilebackup2_error_t err;
 	char *backup_directory = backup->directory; //should be the proper directory now? :)
